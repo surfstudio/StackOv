@@ -482,6 +482,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
 				PRODUCT_NAME = StackOv;
 				SUPPORTS_MACCATALYST = YES;
@@ -504,6 +505,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
 				PRODUCT_NAME = StackOv;
 				SUPPORTS_MACCATALYST = YES;
