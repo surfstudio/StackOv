@@ -41,7 +41,7 @@
 		6FD488662461DFF90010CFE0 /* PostsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsDTO.swift; sourceTree = "<group>"; };
 		6FD4886C246222730010CFE0 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		6FD4886E2462244B0010CFE0 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
-		6FF68A16245F5606007C1B84 /* StackoverflowIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StackoverflowIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FF68A16245F5606007C1B84 /* StackOv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StackOv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FF68A19245F5606007C1B84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6FF68A1B245F5606007C1B84 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6FF68A1D245F5606007C1B84 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		6FF68A17245F5606007C1B84 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6FF68A16245F5606007C1B84 /* StackoverflowIOS.app */,
+				6FF68A16245F5606007C1B84 /* StackOv.app */,
 				6FF68A2C245F5607007C1B84 /* StackoverflowIOSTests.xctest */,
 			);
 			name = Products;
@@ -225,7 +225,7 @@
 			);
 			name = StackoverflowIOS;
 			productName = StackoverflowIOS;
-			productReference = 6FF68A16245F5606007C1B84 /* StackoverflowIOS.app */;
+			productReference = 6FF68A16245F5606007C1B84 /* StackOv.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6FF68A2B245F5607007C1B84 /* StackoverflowIOSTests */ = {
@@ -482,8 +482,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackoverflowIOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
+				PRODUCT_NAME = StackOv;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -504,8 +504,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackoverflowIOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
+				PRODUCT_NAME = StackOv;
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
