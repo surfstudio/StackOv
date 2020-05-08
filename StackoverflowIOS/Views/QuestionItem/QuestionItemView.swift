@@ -27,14 +27,13 @@ struct QuestionItemView: View {
                 Text(model.title)
                     .foregroundColor(.title)
                     .font(.system(size: 16))
-                HStack(alignment: .firstTextBaseline, spacing: 6) {
-                    ForEach(Array(model.tags.enumerated()), id: \.offset) { (index, tag) in
-                        TagView(tag: tag) {
-                            UIApplication.shared.tryOpen(url: URL(string: "https://stackoverflow.com/search?q=\(tag)"))
-                        }
+                CollectionView(data: model.tags) { tag in
+                    TagView(tag: tag.name) {
+                        UIApplication.shared.tryOpen(url: URL(string: "https://stackoverflow.com/search?q=\(tag.name)"))
                     }
                 }
             }
+            .padding(.bottom, 8)
         }
         .onTapGesture {
             UIApplication.shared.tryOpen(url: self.model.link)
@@ -46,7 +45,7 @@ struct QuestionItemView: View {
 
 #if DEBUG
 struct QuestionItemView_Previews: PreviewProvider {
-    static let model = QuestionItemModel(id: 100, title: "Testasdasdasdasdadadsadadsadadasdassdadsasdasdadsasdad111111", isAnswered: true, viewCount: 0, answerCount: 10, score: 2012, tags: ["tag1", "tag2","tag1", "tag2","tag1", "tag2", "tag3", "tag4", "tag5"], link: URL(string: "www.google.com")!)
+    static let model = QuestionItemModel(id: 100, title: "Testasdasdasdasdadadsadadsadadasdassdadsasdasdadsasdad111111", isAnswered: true, viewCount: 0, answerCount: 10, score: 2012, tags: (1...20).map({ TagModel(name: "Tag \($0)") }), link: URL(string: "www.google.com")!)
     
     static var previews: some View {
         Group {
@@ -56,7 +55,7 @@ struct QuestionItemView_Previews: PreviewProvider {
             QuestionItemView(model: model)
                 .environment(\.colorScheme, .dark)
         }
-        .previewLayout(.fixed(width: 400, height: 137))
+        .previewLayout(.sizeThatFits)
     }
 }
 #endif

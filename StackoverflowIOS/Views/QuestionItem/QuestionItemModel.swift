@@ -15,7 +15,7 @@ struct QuestionItemModel: Identifiable {
     let viewCount: Int
     let answerCount: Int
     let score: Int
-    let tags: [String]
+    let tags: [TagModel]
     let link: URL
 }
 
@@ -28,7 +28,7 @@ extension QuestionItemModel {
             viewCount: dto.viewCount,
             answerCount: dto.answerCount,
             score: dto.score,
-            tags: dto.tags,
+            tags: dto.tags.map { TagModel(name: $0) },
             link: dto.link
         )
     }

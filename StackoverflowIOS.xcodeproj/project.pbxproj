@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F6C836A2464034C00138E59 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C83692464034C00138E59 /* Notifications.swift */; };
+		6F6C836E246403E400138E59 /* TransitionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C836D246403E400138E59 /* TransitionStore.swift */; };
+		6F6C83702464043800138E59 /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C836F2464043800138E59 /* UIUserInterfaceIdiom.swift */; };
+		6F6C83722464236900138E59 /* UIDeviceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C83712464236900138E59 /* UIDeviceOrientation.swift */; };
+		6F6C83742464293A00138E59 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C83732464293A00138E59 /* HostingController.swift */; };
+		6FA76E322464BE0C004115C1 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA76E312464BE0C004115C1 /* CollectionView.swift */; };
+		6FA76E352464CBC0004115C1 /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA76E342464CBC0004115C1 /* TagModel.swift */; };
 		6FD488602460D6F90010CFE0 /* QuestionItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD4885F2460D6F90010CFE0 /* QuestionItemModel.swift */; };
 		6FD488652461D7EB0010CFE0 /* StackoverflowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD488642461D7EB0010CFE0 /* StackoverflowStore.swift */; };
 		6FD488672461DFF90010CFE0 /* PostsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD488662461DFF90010CFE0 /* PostsDTO.swift */; };
@@ -36,6 +43,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F6C83692464034C00138E59 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		6F6C836D246403E400138E59 /* TransitionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionStore.swift; sourceTree = "<group>"; };
+		6F6C836F2464043800138E59 /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
+		6F6C83712464236900138E59 /* UIDeviceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceOrientation.swift; sourceTree = "<group>"; };
+		6F6C83732464293A00138E59 /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
+		6FA76E312464BE0C004115C1 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		6FA76E342464CBC0004115C1 /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		6FD4885F2460D6F90010CFE0 /* QuestionItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionItemModel.swift; sourceTree = "<group>"; };
 		6FD488642461D7EB0010CFE0 /* StackoverflowStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowStore.swift; sourceTree = "<group>"; };
 		6FD488662461DFF90010CFE0 /* PostsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsDTO.swift; sourceTree = "<group>"; };
@@ -77,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6FA76E332464CBAE004115C1 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				6FA76E342464CBC0004115C1 /* TagModel.swift */,
+				6FF68A3E2460410D007C1B84 /* TagView.swift */,
+			);
+			path = Tag;
+			sourceTree = "<group>";
+		};
 		6FD4885E2460D6DA0010CFE0 /* QuestionItem */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +117,7 @@
 				6FF68A19245F5606007C1B84 /* AppDelegate.swift */,
 				6FF68A1B245F5606007C1B84 /* SceneDelegate.swift */,
 				6FF68A24245F5607007C1B84 /* LaunchScreen.storyboard */,
+				6F6C83732464293A00138E59 /* HostingController.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -111,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				6FD488642461D7EB0010CFE0 /* StackoverflowStore.swift */,
+				6F6C836D246403E400138E59 /* TransitionStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -120,6 +145,9 @@
 			children = (
 				6FD4886C246222730010CFE0 /* String.swift */,
 				6FD4886E2462244B0010CFE0 /* UIApplication.swift */,
+				6F6C83692464034C00138E59 /* Notifications.swift */,
+				6F6C836F2464043800138E59 /* UIUserInterfaceIdiom.swift */,
+				6F6C83712464236900138E59 /* UIDeviceOrientation.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -185,8 +213,9 @@
 		6FF68A432460B98B007C1B84 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6FA76E332464CBAE004115C1 /* Tag */,
 				6FD4885E2460D6DA0010CFE0 /* QuestionItem */,
-				6FF68A3E2460410D007C1B84 /* TagView.swift */,
+				6FA76E312464BE0C004115C1 /* CollectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -309,16 +338,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F6C836E246403E400138E59 /* TransitionStore.swift in Sources */,
 				6FD4886F2462244B0010CFE0 /* UIApplication.swift in Sources */,
 				6FF68A3D245F5687007C1B84 /* QuestionItemView.swift in Sources */,
+				6F6C83742464293A00138E59 /* HostingController.swift in Sources */,
 				6FD4886D246222730010CFE0 /* String.swift in Sources */,
 				6FF68A1A245F5606007C1B84 /* AppDelegate.swift in Sources */,
+				6F6C83702464043800138E59 /* UIUserInterfaceIdiom.swift in Sources */,
 				6FD488672461DFF90010CFE0 /* PostsDTO.swift in Sources */,
+				6F6C836A2464034C00138E59 /* Notifications.swift in Sources */,
 				6FF68A3F2460410D007C1B84 /* TagView.swift in Sources */,
 				6FF68A4B2460C556007C1B84 /* QuestionDTO.swift in Sources */,
 				6FF68A1C245F5606007C1B84 /* SceneDelegate.swift in Sources */,
 				6FF68A1E245F5606007C1B84 /* MainView.swift in Sources */,
+				6FA76E352464CBC0004115C1 /* TagModel.swift in Sources */,
+				6FA76E322464BE0C004115C1 /* CollectionView.swift in Sources */,
 				6FD488602460D6F90010CFE0 /* QuestionItemModel.swift in Sources */,
+				6F6C83722464236900138E59 /* UIDeviceOrientation.swift in Sources */,
 				6FD488652461D7EB0010CFE0 /* StackoverflowStore.swift in Sources */,
 				6FF68A482460C37B007C1B84 /* StackoverflowService.swift in Sources */,
 			);
@@ -478,7 +514,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StackoverflowIOS/Application/StackoverflowIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = S8BXS2P4Z9;
 				ENABLE_PREVIEWS = YES;
@@ -502,7 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StackoverflowIOS/Application/StackoverflowIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = S8BXS2P4Z9;
 				ENABLE_PREVIEWS = YES;
