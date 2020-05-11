@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "RService",
+        "repositoryURL": "https://github.com/ephedra-software/RService.git",
+        "state": {
+          "branch": null,
+          "revision": "6b25f3c15403b276e055a7266492d30b16c85e83",
+          "version": "0.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

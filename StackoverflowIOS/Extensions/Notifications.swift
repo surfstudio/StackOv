@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import UIKit.UIResponder
 
 extension Notification.Name {
-    
     static let deviceWillTransition = Notification.Name("MainUIHostingController_viewWillTransition")
-    
+    static let keyboardWillShow = UIResponder.keyboardWillShowNotification
+    static let keyboardWillHide = UIResponder.keyboardWillHideNotification
+    static let keyboardDidHide = UIResponder.keyboardDidHideNotification
 }

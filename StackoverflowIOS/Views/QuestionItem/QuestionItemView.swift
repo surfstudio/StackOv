@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct QuestionItemView: View {
+    @EnvironmentObject var stackoverflowStore: StackoverflowStore
+    
+    @State private var collectionHeight: CGFloat = .zero
     let model: QuestionItemModel
     
     init(model: QuestionItemModel) {
@@ -17,26 +20,43 @@ struct QuestionItemView: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
-            VStack(spacing: 6) {
-                ScoreView(value: model.score)
-                AnswersView(value: model.answerCount, isAnswered: model.isAnswered)
-            }
-            .padding(.bottom, 8)
-            .frame(width: 58)
-            VStack(alignment: .leading, spacing: 8) {
-                Text(model.title)
-                    .foregroundColor(.title)
-                    .font(.system(size: 16))
-                CollectionView(data: model.tags) { tag in
-                    TagView(tag: tag.name) {
-                        UIApplication.shared.tryOpen(url: URL(string: "https://stackoverflow.com/search?q=\(tag.name)"))
-                    }
-                }
-            }
-            .padding(.bottom, 8)
+            questionInfo
+                .padding(.bottom, 8)
+                .frame(width: 58)
+            content
+                .padding(.bottom, 8)
         }
-        .onTapGesture {
-            UIApplication.shared.tryOpen(url: self.model.link)
+        .onAppear {
+            self.stackoverflowStore.itemWasShowed(id: self.model.id)
+        }
+    }
+    
+    var questionInfo: some View {
+        VStack(spacing: 6) {
+            ScoreView(value: model.score)
+            AnswersView(value: model.answerCount, isAnswered: model.isAnswered)
+        }
+    }
+    
+    var content: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(model.title)
+                .foregroundColor(.title)
+                .font(.system(size: 16))
+            
+            tagsCollection
+                .frame(height: self.collectionHeight)
+        }
+        .onPreferenceChange(CollectionViewSizeKey.self) {
+            self.collectionHeight = $0.height
+        }
+    }
+    
+    var tagsCollection: some View {
+        return CollectionView(data: model.tags) { tag in
+            TagView(tag: tag.name) {
+                self.stackoverflowStore.searchStore.search(tag: tag)
+            }
         }
     }
 }

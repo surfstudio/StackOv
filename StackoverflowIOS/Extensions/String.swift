@@ -22,4 +22,8 @@ extension String {
         
         self.init(attributedString.string)
     }
+    
+    var urlQueryAllowed: String? {
+        addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+    }
 }

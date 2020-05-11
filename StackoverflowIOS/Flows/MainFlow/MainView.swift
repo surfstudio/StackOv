@@ -14,60 +14,101 @@ struct MainView: View {
     @EnvironmentObject var transitionStore: TransitionStore
     
     var body: some View {
-        ZStack {
-            Color.background.edgesIgnoringSafeArea(.all)
-            
-            Group { () -> AnyView in
-                switch stackoverflowStore.state {
-                case .unknown:
-                    return AnyView(EmptyView())
-                case .emptyContent:
-                    return AnyView(emptyContent)
-                case .content:
-                    return AnyView(content)
-                case .loading:
-                    return AnyView(loading)
-                case .error:
-                    return AnyView(error)
+        NavigationView {
+            ZStack(alignment: .top) {
+                Color.background
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture { UIApplication.shared.endEditing() }
+                
+                GeometryReader { _ in
+                    ZStack(alignment: .center) { // this is cheat to change the base aligment
+                        self.content
+                    }
                 }
+                .padding(.top, NavigationBarView.Constants.height)
+                
+                NavigationBarView()
+                    .edgesIgnoringSafeArea([.leading, .trailing])
+                    .environmentObject(self.stackoverflowStore)
+                    .disabled(stackoverflowStore.state.isUnknown)
             }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
         .onAppear {
             UITableView.appearance().separatorColor = .separator
             UITableView.appearance().separatorInset = UIEdgeInsets.zero
             UITableView.appearance().backgroundColor = UIColor.background
+            UITableView.appearance().keyboardDismissMode = .onDrag
             self.stackoverflowStore.loadQuestions()
         }
     }
     
     var content: some View {
+        Group { () -> AnyView in
+            switch stackoverflowStore.state {
+            case .unknown:
+                return AnyView(EmptyView())
+            case .emptyContent:
+                return AnyView(emptyContent)
+            case .content:
+                return AnyView(contentList)
+            case .loading:
+                return AnyView(loading)
+            case .error:
+                return AnyView(error)
+            }
+        }
+    }
+    
+    var contentList: some View {
         GeometryReader { geometry in
             List {
-                ForEach(self.stackoverflowStore.state.content) {
-                    QuestionItemView(model: $0)
-                        .modifier(QuestionItemPaddingsModifier(
-                            orientation: self.transitionStore.deviceOrientation,
-                            geometry: geometry
-                        ))
-                        
+                ForEach(self.stackoverflowStore.state.content) { item in
+                    self.navigationLink(forItem: item, safeAreaInsets: geometry.safeAreaInsets)
                 }
                 .listRowBackground(Color.background)
             }
         }
-        .padding(.top, 0.3)
         .modifier(ListEdgesModifier(orientation: transitionStore.deviceOrientation))
     }
     
     var emptyContent: some View {
-        Text("Not found")
+        UIApplication.shared.endEditing()
+        return Image(systemName: "eye.slash.fill")
+            .foregroundColor(Color("loadingIndicatorForeground"))
+            .frame(width: 36, height: 36)
     }
     
     var loading: some View {
-        Text("Loading")
+        UIApplication.shared.endEditing()
+        return LoadingIndicatorView()
+            .frame(width: 30, height: 30)
     }
     
     var error: some View {
-        Text(stackoverflowStore.state.error?.localizedDescription ?? "")
+        UIApplication.shared.endEditing()
+        return Text(stackoverflowStore.state.error?.localizedDescription ?? "")
+    }
+    
+    func navigationLink(forItem item: QuestionItemModel, safeAreaInsets: EdgeInsets) -> some View {
+        ZStack {
+            questionItem(item, safeAreaInsets: safeAreaInsets)
+            NavigationLink(destination: Text(item.title), isActive: .constant(false)) {
+                EmptyView()
+            }
+            .hidden()
+        }
+        .listRowInsets(EdgeInsets.zero)
+    }
+    
+    func questionItem(_ item: QuestionItemModel, safeAreaInsets: EdgeInsets) -> some View {
+        QuestionItemView(model: item)
+            .environmentObject(self.stackoverflowStore)
+            .modifier(QuestionItemPaddingsModifier(
+                orientation: self.transitionStore.deviceOrientation,
+                safeAreaInsets: safeAreaInsets
+            ))
     }
 }
 
@@ -82,6 +123,8 @@ struct MainView_Previews: PreviewProvider {
     }
 }
 #endif
+
+// MARK: - Extensions
 
 fileprivate extension Color {
     static let background = Color("mainBackground")
@@ -112,18 +155,18 @@ fileprivate struct ListEdgesModifier: ViewModifier {
 
 fileprivate struct QuestionItemPaddingsModifier: ViewModifier {
     var orientation: UIDeviceOrientation
-    var geometry: GeometryProxy
+    var safeAreaInsets: EdgeInsets
     
     func body(content: Content) -> some View {
-        content.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        content
             .padding(.top, 8)
             .padding(
                 .leading,
-                orientation == .landscapeLeft ? geometry.safeAreaInsets.leading : 16
+                orientation == .landscapeLeft ? safeAreaInsets.leading : 16
             )
             .padding(
                 .trailing,
-                orientation == .landscapeRight ? geometry.safeAreaInsets.trailing : 16
+                orientation == .landscapeRight ? safeAreaInsets.trailing : 16
             )
             .background(Color.background)
     }

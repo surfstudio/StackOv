@@ -18,4 +18,8 @@ extension UIApplication {
             open(url, options: options, completionHandler: completion)
         }
     }
+    
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
