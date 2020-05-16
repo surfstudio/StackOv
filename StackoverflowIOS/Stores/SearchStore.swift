@@ -13,8 +13,8 @@ import Combine
 final class SearchStore: ObservableObject {
     // MARK: - Parameters
     
-    @Published var query: String = ""
-    @Published var isEditing: Bool = false
+    @Published private(set) var query: String = ""
+    @Published private(set) var isEditing: Bool = false
     
     private var cancelBag: Set<AnyCancellable> = []
     
@@ -35,6 +35,10 @@ final class SearchStore: ObservableObject {
     }
     
     // MARK: - Methods
+    
+    func search(query: String) {
+        self.query = query
+    }
     
     func search(tag: TagModel) {
         query = tag.name

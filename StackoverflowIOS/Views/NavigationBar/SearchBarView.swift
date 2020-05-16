@@ -7,9 +7,12 @@
 //
 
 import SwiftUI
+import Combine
  
 struct SearchBarView: View {
     @EnvironmentObject var searchStore: SearchStore
+    
+    private var cancelBag: Set<AnyCancellable> = []
  
     var body: some View {
         HStack(spacing: .zero) {
@@ -34,13 +37,20 @@ struct SearchBarView: View {
     }
     
     var textField: some View {
-        TextField("Search...", text: self.$searchStore.query)
-            .foregroundColor(Color.foreground)
-            .font(.system(size: 13))
-            .background(Color.clear)
-            .onTapGesture {
-                self.searchStore.startEditing()
+        TextField(
+            "Search...",
+            text: Binding(get: {
+                self.searchStore.query
+            }, set: { query in
+                self.searchStore.search(query: query)
+            }),
+            onEditingChanged: {
+                $0 ? self.searchStore.startEditing() : self.searchStore.endEditing()
             }
+        )
+        .foregroundColor(Color.foreground)
+        .font(.system(size: 13))
+        .background(Color.clear)
     }
     
     var accessoryButton: some View {
