@@ -6,6 +6,7 @@
 //  Copyright © 2020 Ephedra Software. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
 
 struct TagView: View {

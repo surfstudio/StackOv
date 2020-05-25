@@ -13,7 +13,7 @@ import Combine
 final class StackoverflowStore: ObservableObject {
     // MARK: - Nested types
     
-    enum ViewState {
+    enum State {
         case unknown
         case emptyContent
         case content([QuestionItemModel])
@@ -33,11 +33,13 @@ final class StackoverflowStore: ObservableObject {
     
     // MARK: - Substores
     
-    let searchStore = SearchStore()
+    private(set) lazy var searchStore = SearchStore()
+    private(set) lazy var questionStore = QuestionStore()
+    private(set) lazy var answersStore = AnswersStore()
     
     // MARK: - Parameters
     
-    @Published private(set) var state: ViewState = .unknown
+    @Published private(set) var state: State = .unknown
     
     lazy var service = StackoverflowService()
     
@@ -169,7 +171,7 @@ final class StackoverflowStore: ObservableObject {
 
 // MARK: - Extensions
 
-extension StackoverflowStore.ViewState {
+extension StackoverflowStore.State {
     var content: [QuestionItemModel] {
         if case let .content(questions) = self { return questions }
         return []

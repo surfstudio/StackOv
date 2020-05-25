@@ -1,14 +1,14 @@
 //
-//  QuestionItemModel.swift
+//  QuestionModel.swift
 //  StackoverflowIOS
 //
-//  Created by Erik Basargin on 05/05/2020.
+//  Created by Erik Basargin on 16/05/2020.
 //  Copyright © 2020 Ephedra Software. All rights reserved.
 //
 
 import Foundation
 
-struct QuestionItemModel: Identifiable {
+struct QuestionModel: Identifiable {
     let id: QuestionId
     let title: String
     let isAnswered: Bool
@@ -17,19 +17,24 @@ struct QuestionItemModel: Identifiable {
     let score: Int
     let tags: [TagModel]
     let link: URL
+    let body: String
+    let acceptedAnswerId: AnswerId?
 }
 
-extension QuestionItemModel {
-    static func from(dto: QuestionDTO) -> QuestionItemModel {
-        QuestionItemModel(
+extension QuestionModel {
+    static func from(dto: QuestionDTO) -> QuestionModel {
+        QuestionModel(
             id: dto.id,
             title: String(htmlString: dto.title) ?? dto.title,
-            isAnswered: dto.acceptedAnswerId != nil,
+            isAnswered: dto.isAnswered,
             viewCount: dto.viewCount,
             answerCount: dto.answerCount,
             score: dto.score,
             tags: dto.tags.map { TagModel(name: $0) },
-            link: dto.link
+            link: dto.link,
+            body: dto.body ?? "",
+            acceptedAnswerId: dto.acceptedAnswerId
         )
     }
 }
+
