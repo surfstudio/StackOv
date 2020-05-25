@@ -7,11 +7,18 @@
 //
 
 import Foundation
+import UIKit
 
 struct TagModel: Hashable, Identifiable {
     let name: String
     
     var id: Int { hashValue }
+    
+    var size: CGSize {
+        let tagSize = (name as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 12)])
+        return CGSize(width: round(12 + tagSize.width), height: round(9.6 + tagSize.height))
+    }
+
     
     static func == (lhs: TagModel, rhs: TagModel) -> Bool {
         return lhs.hashValue == rhs.hashValue

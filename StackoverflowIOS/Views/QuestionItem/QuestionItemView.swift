@@ -33,8 +33,8 @@ struct QuestionItemView: View {
     
     var questionInfo: some View {
         VStack(spacing: 6) {
-            ScoreView(value: model.score)
-            AnswersView(value: model.answerCount, isAnswered: model.isAnswered)
+            ScoreCounterView(value: model.score)
+            AnswersCounterView(value: model.answerCount, isAnswered: model.isAnswered)
         }
     }
     
@@ -43,19 +43,11 @@ struct QuestionItemView: View {
             Text(model.title)
                 .foregroundColor(.title)
                 .font(.system(size: 16))
-            
-            tagsCollection
-                .frame(height: self.collectionHeight)
-        }
-        .onPreferenceChange(CollectionViewSizeKey.self) {
-            self.collectionHeight = $0.height
-        }
-    }
-    
-    var tagsCollection: some View {
-        return CollectionView(data: model.tags) { tag in
-            TagView(tag: tag.name) {
-                self.stackoverflowStore.searchStore.search(tag: tag)
+
+            TagsCollectionView(model.tags) { tag in
+                TagView(tag: tag.name) {
+                    self.stackoverflowStore.searchStore.search(tag: tag)
+                }
             }
         }
     }
@@ -71,9 +63,11 @@ struct QuestionItemView_Previews: PreviewProvider {
         Group {
             QuestionItemView(model: model)
                 .environment(\.colorScheme, .light)
-            
+                .environmentObject(StackoverflowStore())
+
             QuestionItemView(model: model)
                 .environment(\.colorScheme, .dark)
+                .environmentObject(StackoverflowStore())
         }
         .previewLayout(.sizeThatFits)
     }
@@ -82,7 +76,7 @@ struct QuestionItemView_Previews: PreviewProvider {
 
 // MARK: - Subviews
 
-fileprivate struct ScoreView: View {
+fileprivate struct ScoreCounterView: View {
     let value: Int
     
     var body: some View {
@@ -99,7 +93,7 @@ fileprivate struct ScoreView: View {
     }
 }
 
-fileprivate struct AnswersView: View {
+fileprivate struct AnswersCounterView: View {
     let value: Int
     let isAnswered: Bool
     

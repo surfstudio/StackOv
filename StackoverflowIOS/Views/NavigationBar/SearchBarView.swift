@@ -77,12 +77,14 @@ struct SearchBarView_Previews: PreviewProvider {
                 .previewLayout(.sizeThatFits)
                 .background(Color.mainBackground)
                 .environment(\.colorScheme, .light)
+                .environmentObject(SearchStore())
             
             SearchBarView()
                 .padding()
                 .previewLayout(.sizeThatFits)
                 .background(Color.mainBackground)
                 .environment(\.colorScheme, .dark)
+                .environmentObject(SearchStore())
         }
     }
 }

@@ -10,18 +10,23 @@ import Foundation
 import RService
 import Combine
 
-final class StackoverflowService: HTTPServiceProtocol {
+struct StackoverflowService: HTTPServiceProtocol {
     // MARK: - Nested types
     
     enum Constants {
         static let baseUrl = URL(string: "https://api.stackexchange.com/2.2")!
-        static let questionsFilter = "!iCFKZYSfKkDllaaViW.sv)"
+        static let questionsFilter = "!*7PZ(S77sKA3Rc8i4h4)QI0bM8HG"
+        static let questionFilter = "!PvyfxTBzonJRcqwIa*BHYvqSvHDWMY"
+        static let answerFilter = "!3xJkL2qoqNZw7Litv"
     }
     
     // MARK: - Endpoints
     
     enum LoadQuestions {}
     enum SearchQuestions {}
+    enum LoadQuestion {}
+    enum LoadAnswer {}
+    enum LoadAnswers {}
     
     // MARK: - Requests
     
@@ -30,6 +35,15 @@ final class StackoverflowService: HTTPServiceProtocol {
     
     @GET(Constants.baseUrl, "/search/advanced?filter=\(Constants.questionsFilter)&site=stackoverflow&order=desc&sort=activity&q=%@&page=%d&pagesize=%d")
     var searchQuestions: Request<SearchQuestions, PostsDTO<QuestionDTO>>
+    
+    @GET(Constants.baseUrl, "/questions/%d?filter=\(Constants.questionFilter)&site=stackoverflow")
+    var loadQuestion: Request<LoadQuestion, PostsDTO<QuestionDTO>>
+    
+    @GET(Constants.baseUrl, "/answers/%d?&filter=\(Constants.answerFilter)&site=stackoverflow")
+    var loadAnswer: Request<LoadAnswer, PostsDTO<AnswerDTO>>
+    
+    @GET(Constants.baseUrl, "/answers?filter=\(Constants.answerFilter)&site=stackoverflow&order=desc&sort=activity&page=%d&pagesize=%d")
+    var loadAnswers: Request<LoadAnswers, PostsDTO<AnswerDTO>>
 }
 
 extension HTTP.Request where Endpoint == StackoverflowService.LoadQuestions, Output == PostsDTO<QuestionDTO> {
@@ -48,6 +62,36 @@ extension HTTP.Request where Endpoint == StackoverflowService.SearchQuestions, O
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
         print("Search: \(urlString)")
+        return process(urlString)
+    }
+}
+
+extension HTTP.Request where Endpoint == StackoverflowService.LoadQuestion, Output == PostsDTO<QuestionDTO> {
+    func callAsFunction(id: QuestionId) -> Response {
+        guard let urlString = String(format: urlMask, id).urlQueryAllowed else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        print("Loading question by id (\(id)): \(urlString)")
+        return process(urlString)
+    }
+}
+
+extension HTTP.Request where Endpoint == StackoverflowService.LoadAnswer, Output == PostsDTO<AnswerDTO> {
+    func callAsFunction(id: AnswerId) -> Response {
+        guard let urlString = String(format: urlMask, id).urlQueryAllowed else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        print("Loading answer by id (\(id)): \(urlString)")
+        return process(urlString)
+    }
+}
+
+extension HTTP.Request where Endpoint == StackoverflowService.LoadAnswers, Output == PostsDTO<AnswerDTO> {
+    func callAsFunction(page: Int, pageSize: Int) -> Response {
+        guard let urlString = String(format: urlMask, page, pageSize).urlQueryAllowed else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        print("Loading answer: \(urlString)")
         return process(urlString)
     }
 }

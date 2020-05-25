@@ -2,12 +2,39 @@
   "object": {
     "pins": [
       {
+        "package": "Down",
+        "repositoryURL": "https://github.com/iwasrobbed/Down",
+        "state": {
+          "branch": null,
+          "revision": "2aada56e6a0a5593a58e1ad583bd605b6d0b58dd",
+          "version": "0.9.2"
+        }
+      },
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
+        "state": {
+          "branch": null,
+          "revision": "910d808ade2a576e1a292ceb458a6fa43f67f594",
+          "version": "5.14.0"
+        }
+      },
+      {
         "package": "RService",
         "repositoryURL": "https://github.com/ephedra-software/RService.git",
         "state": {
           "branch": null,
           "revision": "6b25f3c15403b276e055a7266492d30b16c85e83",
           "version": "0.0.1"
+        }
+      },
+      {
+        "package": "HTMLEntities",
+        "repositoryURL": "https://github.com/IBM-Swift/swift-html-entities.git",
+        "state": {
+          "branch": null,
+          "revision": "744c094976355aa96ca61b9b60ef0a38e979feb7",
+          "version": "3.0.14"
         }
       }
     ]

@@ -27,7 +27,7 @@ struct MainView: View {
                 }
                 .padding(.top, NavigationBarView.Constants.height)
                 
-                NavigationBarView()
+                NavigationBarView(.searchBar)
                     .edgesIgnoringSafeArea([.leading, .trailing])
                     .environmentObject(self.stackoverflowStore)
                     .disabled(stackoverflowStore.state.isUnknown)
@@ -75,9 +75,7 @@ struct MainView: View {
     
     var emptyContent: some View {
         UIApplication.shared.endEditing()
-        return Image(systemName: "eye.slash.fill")
-            .foregroundColor(Color("loadingIndicatorForeground"))
-            .frame(width: 36, height: 36)
+        return EmptyContentView()
     }
     
     var loading: some View {
@@ -94,7 +92,7 @@ struct MainView: View {
     func navigationLink(forItem item: QuestionItemModel, safeAreaInsets: EdgeInsets) -> some View {
         ZStack {
             questionItem(item, safeAreaInsets: safeAreaInsets)
-            NavigationLink(destination: Text(item.title), isActive: .constant(false)) {
+            NavigationLink(destination: destinationFor(item: item)) {
                 EmptyView()
             }
             .hidden()
@@ -109,6 +107,11 @@ struct MainView: View {
                 orientation: self.transitionStore.deviceOrientation,
                 safeAreaInsets: safeAreaInsets
             ))
+    }
+    
+    func destinationFor(item: QuestionItemModel) -> some View {
+        QuestionDetailsView(item: item)
+            .environmentObject(stackoverflowStore)
     }
 }
 
