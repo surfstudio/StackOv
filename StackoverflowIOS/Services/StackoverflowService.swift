@@ -42,7 +42,7 @@ struct StackoverflowService: HTTPServiceProtocol {
     @GET(Constants.baseUrl, "/answers/%d?&filter=\(Constants.answerFilter)&site=stackoverflow")
     var loadAnswer: Request<LoadAnswer, PostsDTO<AnswerDTO>>
     
-    @GET(Constants.baseUrl, "/answers?filter=\(Constants.answerFilter)&site=stackoverflow&order=desc&sort=activity&page=%d&pagesize=%d")
+    @GET(Constants.baseUrl, "/questions/%d/answers?filter=\(Constants.answerFilter)&site=stackoverflow&order=desc&sort=votes&page=%d&pagesize=%d")
     var loadAnswers: Request<LoadAnswers, PostsDTO<AnswerDTO>>
 }
 
@@ -87,11 +87,11 @@ extension HTTP.Request where Endpoint == StackoverflowService.LoadAnswer, Output
 }
 
 extension HTTP.Request where Endpoint == StackoverflowService.LoadAnswers, Output == PostsDTO<AnswerDTO> {
-    func callAsFunction(page: Int, pageSize: Int) -> Response {
-        guard let urlString = String(format: urlMask, page, pageSize).urlQueryAllowed else {
+    func callAsFunction(questionId: QuestionId, page: Int, pageSize: Int) -> Response {
+        guard let urlString = String(format: urlMask, questionId, page, pageSize).urlQueryAllowed else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-        print("Loading answer: \(urlString)")
+        print("Loading answer for question [\(questionId)]: \(urlString)")
         return process(urlString)
     }
 }

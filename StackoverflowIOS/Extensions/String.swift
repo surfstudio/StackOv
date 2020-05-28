@@ -26,4 +26,13 @@ extension String {
     var urlQueryAllowed: String? {
         addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
     }
+    
+    func firstMatch(regex: String, group: Int) throws -> String? {
+        let regex = try NSRegularExpression(pattern: regex)
+        if let match = regex.firstMatch(in: self, options: [], range: NSRange(0..<self.count)),
+            let range = Range(match.range(at: group), in: self) {
+            return String(self[range])
+        }
+        return nil
+    }
 }

@@ -39,7 +39,7 @@ enum Markdown {
         
         // MARK: - Custom block
         
-        case snippetBlock(codeType: String?, code: String)
+        case snippetBlock(_ units: [Unit])
         
         // MARK: - Inline
         
@@ -115,6 +115,8 @@ enum Markdown {
             self.parent = parent
             
             var snippetBlock = false
+            var snippetCodeType: String?
+            var snippet: [Unit] = []
             switch type {
             case .document, .blockQuote, .list, .item:
                 self.data = nil
@@ -124,13 +126,22 @@ enum Markdown {
                     }
                     switch unit.type {
                     case let .htmlBlock(htmlText):
-                        if htmlText.contains("begin snippet") {
+                        let htmlContent = htmlText.lowercased()
+                        if htmlContent.contains("begin snippet") {
                             snippetBlock = true
                             return nil
-                        } else if htmlText.contains("end snippet") {
-                            snippetBlock = false
+                        } else if snippetBlock, htmlContent.contains("language") {
+                            snippetCodeType = try? htmlText.firstMatch(regex: #"lang\-(\w*)"#, group: 1)
                             return nil
-                        } else if htmlText.starts(with: "<pre>"), !snippetBlock {
+                        } else if htmlContent.contains("end snippet") {
+                            defer {
+                                snippetBlock = false
+                                snippet = []
+                            }
+                            return snippet.isEmpty
+                                ? nil
+                                : Unit(id: child.offset, type: .snippetBlock(snippet), parent: self, children: [])
+                        } else if htmlContent.starts(with: "<pre>"), !snippetBlock {
                             let code = htmlText.htmlUnescape()
                                 .replacingOccurrences(of: "<pre>", with: "")
                                 .replacingOccurrences(of: "</pre>", with: "")
@@ -138,9 +149,11 @@ enum Markdown {
                         } else {
                             return snippetBlock ? nil : unit
                         }
-                    case let .codeBlock(codeType, code):
+                    case let .codeBlock(_, code):
                         if snippetBlock {
-                            return Unit(id: child.offset, type: .snippetBlock(codeType: codeType, code: code), parent: self, children: [])
+                            snippet.append(Unit(id: snippet.count, type: .codeBlock(codeType: snippetCodeType, code: code), parent: self, children: []))
+                            snippetCodeType = nil
+                            return nil
                         } else {
                             return unit
                         }

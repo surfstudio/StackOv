@@ -14,23 +14,21 @@ struct AnswersView: View {
     @EnvironmentObject var questionStore: QuestionStore
     @EnvironmentObject var answersStore: AnswersStore
     
+    @State var isLoading: Bool = false
+    
     var body: some View {
         Group { () -> AnyView in
             switch answersStore.state {
-            case .unknown:
-                print("Answers store state -> \(answersStore.state)")
+            case .unknown, .emptyContent:
                 return AnyView(EmptyView())
-            case .emptyContent:
-                print("Answers store state -> \(answersStore.state)")
-                return AnyView(emptyContent)
             case let .content(model):
-                print("Answers store state -> \(answersStore.state)")
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                }
                 return AnyView(content(model))
             case .loading:
-                print("Answers store state -> \(answersStore.state)")
                 return AnyView(loading)
             case .error:
-                print("Answers store state -> \(answersStore.state)")
                 return AnyView(error)
             }
         }
@@ -39,17 +37,14 @@ struct AnswersView: View {
                 return
             }
             if let id = model.acceptedAnswerId {
+                self.answersStore.setNeedHasMore(model.answerCount > 1)
                 self.answersStore.loadAnswer(id: id)
             } else {
-                self.answersStore.loadAnswers(.reload)
+                self.answersStore.loadAnswers(questionId: model.id, .reload)
             }
         }
     }
-    
-    var emptyContent: some View {
-        EmptyContentView()
-    }
-    
+
     var loading: some View {
         LoadingIndicatorView()
             .frame(width: 30, height: 30)
@@ -74,12 +69,30 @@ struct AnswersView: View {
     }
     
     func content(_ model: [AnswerModel]) -> some View {
-        print("Set new content")
-        return VStack(alignment: .leading, spacing: .zero) {
+        VStack(alignment: .center, spacing: .zero) {
             sectionHeader
                 .padding(.horizontal, 16)
-            ForEach(model) {
-                AnswerView(model: $0)
+            
+            VStack(alignment: .leading, spacing: .zero) {
+                ForEach(model) {
+                    AnswerView(model: $0)
+                    
+                    if $0.id != model.last?.id || self.answersStore.hasMore {
+                        Divider()
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 10)
+                    }
+                }
+            }
+            
+            if self.answersStore.hasMore {
+                LoadMoreButton(isLoading: $isLoading) {
+                    guard let id = self.questionStore.state.content?.id else {
+                        return
+                    }
+                    self.answersStore.loadAnswers(questionId: id, .next)
+                    self.isLoading = true
+                }
             }
         }
     }

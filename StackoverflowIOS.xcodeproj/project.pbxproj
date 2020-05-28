@@ -42,6 +42,7 @@
 		6FB9BCD12479AE6F003F9025 /* AnswersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB9BCD02479AE6F003F9025 /* AnswersStore.swift */; };
 		6FB9BCD32479B3B9003F9025 /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB9BCD22479B3B9003F9025 /* AnswerModel.swift */; };
 		6FD27107247A8E4D00946EF6 /* AnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD27106247A8E4D00946EF6 /* AnswerView.swift */; };
+		6FD29C6324805B38001848A4 /* LoadMoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD29C6224805B38001848A4 /* LoadMoreButton.swift */; };
 		6FD488602460D6F90010CFE0 /* QuestionItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD4885F2460D6F90010CFE0 /* QuestionItemModel.swift */; };
 		6FD488652461D7EB0010CFE0 /* StackoverflowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD488642461D7EB0010CFE0 /* StackoverflowStore.swift */; };
 		6FD488672461DFF90010CFE0 /* PostsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD488662461DFF90010CFE0 /* PostsDTO.swift */; };
@@ -109,6 +110,7 @@
 		6FB9BCD02479AE6F003F9025 /* AnswersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersStore.swift; sourceTree = "<group>"; };
 		6FB9BCD22479B3B9003F9025 /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
 		6FD27106247A8E4D00946EF6 /* AnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerView.swift; sourceTree = "<group>"; };
+		6FD29C6224805B38001848A4 /* LoadMoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadMoreButton.swift; sourceTree = "<group>"; };
 		6FD4885F2460D6F90010CFE0 /* QuestionItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionItemModel.swift; sourceTree = "<group>"; };
 		6FD488642461D7EB0010CFE0 /* StackoverflowStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowStore.swift; sourceTree = "<group>"; };
 		6FD488662461DFF90010CFE0 /* PostsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsDTO.swift; sourceTree = "<group>"; };
@@ -230,6 +232,14 @@
 			path = Tag;
 			sourceTree = "<group>";
 		};
+		6FD29C6124805AFC001848A4 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				6FD29C6224805B38001848A4 /* LoadMoreButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		6FD4885E2460D6DA0010CFE0 /* QuestionItem */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +359,7 @@
 		6FF68A432460B98B007C1B84 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6FD29C6124805AFC001848A4 /* Buttons */,
 				6F8FA76624715510002544B9 /* Markdown */,
 				6F9F2CEE24703E3400C7866C /* QuestionDetails */,
 				6F70F10224697F050082AF10 /* Collections */,
@@ -499,6 +510,7 @@
 				6F8FA77224717EC3002544B9 /* GlobalBlockView.swift in Sources */,
 				6FB9BCCD2479A485003F9025 /* AnswersView.swift in Sources */,
 				6F6C836E246403E400138E59 /* TransitionStore.swift in Sources */,
+				6FD29C6324805B38001848A4 /* LoadMoreButton.swift in Sources */,
 				6FD4886F2462244B0010CFE0 /* UIApplication.swift in Sources */,
 				6FFF65D324706B4B00E2AED3 /* MarkdownView.swift in Sources */,
 				6F2E653F2468901000EBAE37 /* NavigationBarView.swift in Sources */,
@@ -698,7 +710,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StackoverflowIOS/Application/StackoverflowIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = S8BXS2P4Z9;
 				ENABLE_PREVIEWS = YES;
@@ -723,7 +735,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StackoverflowIOS/Application/StackoverflowIOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = S8BXS2P4Z9;
 				ENABLE_PREVIEWS = YES;

@@ -33,11 +33,15 @@ final class AnswersStore: ObservableObject {
     // MARK: - Parameters
     
     @Published private(set) var state: State = .unknown
-    @Published private(set) var hasMore: Bool = true
+    @Published private(set) var hasMore: Bool = false
     
     lazy var service = StackoverflowService()
+    
+    var isLoading: Bool {
+        loadingProcess != nil
+    }
 
-    private var loadingState: LoadingState = .loadAnswers(page: 1, pageSize: 5)
+    private var loadingState: LoadingState = .loadAnswers(page: 0, pageSize: 5)
     private var cancelBag: Set<AnyCancellable> = []
     private var loadingProcess: AnyCancellable?
     
@@ -51,16 +55,25 @@ final class AnswersStore: ObservableObject {
     // MARK: - Methods
     
     func reload() {
+        print("[AnswersStore] Reload process")
         cancelLoadingProcess()
         state = .unknown
+        hasMore = false
+        loadingState = .loadAnswers(page: 0, pageSize: 5)
+    }
+    
+    func setNeedHasMore(_ value: Bool) {
+        hasMore = value
     }
     
     func cancelLoadingProcess() {
+        print("[AnswersStore] Loading process will cancel")
         loadingProcess?.cancel()
         loadingProcess = nil
     }
     
     func loadAnswer(id: AnswerId) {
+        print("[AnswersStore] Process loadAnswer \(id)")
         state = .loading
         cancelLoadingProcess()
         loadingProcess = service.loadAnswer(id: id)
@@ -79,7 +92,7 @@ final class AnswersStore: ObservableObject {
             }
     }
     
-    func loadAnswers(_ step: LoadingStep) {
+    func loadAnswers(questionId: QuestionId, _ step: LoadingStep) {
         switch step {
         case .reload:
             state = .loading
@@ -87,14 +100,16 @@ final class AnswersStore: ObservableObject {
         case .next:
             loadingState += 1
         }
+        print("[AnswersStore] Process loadAnswers \(loadingState)")
         cancelLoadingProcess()
-        loadingProcess = service.loadAnswers(page: loadingState.page, pageSize: loadingState.pageSize)
+        loadingProcess = service.loadAnswers(questionId: questionId, page: loadingState.page, pageSize: loadingState.pageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
-                guard case let .failure(error) = completion else {
+                guard case let .failure(_) = completion else {
                     return
                 }
-                self.state = .error(error)
+//                self.state = .error(error)
+                self.hasMore = true
             }) { [unowned self] data in
                 let answers = data.items.map { AnswerModel.from(dto: $0) }.filter { !$0.isAccepted }
                 switch step {
@@ -102,7 +117,7 @@ final class AnswersStore: ObservableObject {
                     self.state = answers.isEmpty ? .emptyContent : .content(answers)
                 case .next:
                     let content = self.state.content + answers
-                    self.state = content.isEmpty ? .emptyContent : .content(answers)
+                    self.state = content.isEmpty ? .emptyContent : .content(content)
                 }
                 self.hasMore = data.hasMore
         }

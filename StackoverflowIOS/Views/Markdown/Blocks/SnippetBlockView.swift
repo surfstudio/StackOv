@@ -14,25 +14,21 @@ extension Markdown {
         let unit: Unit
         
         var body: some View {
-            guard case let .snippetBlock(_, code) = unit.type else {
+            guard case let .snippetBlock(units) = unit.type else {
                 return AnyView(EmptyView())
             }
-            return AnyView(content(code))
+            return AnyView(content(units))
         }
         
-        private func content(_ code: String) -> some View {
-            ScrollView(.horizontal, showsIndicators: true) {
-                Text(code)
-                    .font(.custom("Menlo-Regular", size: 13))
-                    .foregroundColor(.foreground)
-                    .fixedSize(horizontal: false, vertical: true)
+        private func content(_ units: [Unit]) -> some View {
+            VStack(spacing: 13) {
+                ForEach(units) { unit in
+                    CodeBlockView(unit: unit)
+                }
             }
-            .padding([.leading, .top, .trailing], 12)
-            .padding(.bottom, 0.3)
-            .background(Color.background)
-            .cornerRadius(6)
             .padding(.all, 12)
             .border(Color.border)
+            .padding(.bottom, 3)
         }
     }
     
@@ -79,8 +75,6 @@ struct SnippetBlockView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     static let border = Color("snippetBlockBorder")
-    static let background = Color("codeBlockBackground")
-    static let foreground = Color("codeBlockForeground")
     #if DEBUG
     static let mainBackground = Color("mainBackground")
     #endif

@@ -99,6 +99,9 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
         }
         
         func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+            guard UIApplication.shared.canOpenURL(URL) else {
+                return true
+            }
             DispatchQueue.main.async {
                 self.view.safariStatus = .enable(URL)
             }
@@ -112,7 +115,10 @@ fileprivate struct SafariView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
         guard let url = url else { fatalError() }
-        return SFSafariViewController(url: url)
+        let controller = SFSafariViewController(url: url)
+        controller.preferredBarTintColor = UIColor.background
+        controller.preferredControlTintColor = UIColor.title
+        return controller
     }
 
     func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {}
@@ -120,4 +126,6 @@ fileprivate struct SafariView: UIViewControllerRepresentable {
 
 fileprivate extension UIColor {
     static let foreground = UIColor(named: "questionTextForeground")
+    static let title = UIColor(named: "questionTitle")
+    static let background = UIColor(named: "mainBackground")
 }

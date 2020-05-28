@@ -43,29 +43,26 @@ final class QuestionStore: ObservableObject {
     // MARK: - Initializing and deinitializing
     
     deinit {
-        print("Deinit")
         cancelLoadingProcess()
         cancelBag.forEach { $0.cancel() }
     }
     
     // MARK: - Methods
     
-    func reload(forQuestionId id: QuestionId) {
-        if case let .content(model) = state, model.id == id {
-            return
-        }
+    func reload() {
+        print("[QuestionStore] Reload process")
         cancelLoadingProcess()
         state = .unknown
     }
     
     func cancelLoadingProcess() {
-        print("Process will cancel")
+        print("[QuestionStore] Loading process will cancel")
         loadingProcess?.cancel()
         loadingProcess = nil
     }
     
     func loadQuestion(id: QuestionId) {
-        print("Process loadQuestion")
+        print("[QuestionStore] Process loadQuestion \(id)")
         state = .loading
         cancelLoadingProcess()
         loadingProcess = service.loadQuestion(id: id)

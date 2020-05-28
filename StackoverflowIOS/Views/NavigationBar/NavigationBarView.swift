@@ -13,7 +13,7 @@ struct NavigationBarView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     enum Constants {
-        static let height: CGFloat = 47
+        static let height: CGFloat = 44
     }
     
     enum Style {
@@ -58,16 +58,17 @@ struct NavigationBarView: View {
     
     var simpleBar: some View {
         HStack(spacing: .zero) {
-            Button(action: { self.presentationMode.wrappedValue.dismiss() }) {
-                Image.back
-                    .resizable()
-                    .frame(width: 12, height: 21)
-            }
-            .frame(width: 32)
-            .background(Color.clear)
-            .foregroundColor(Color.foreground)
-            
             Spacer()
+//            Button(action: { self.presentationMode.wrappedValue.dismiss() }) {
+//                Image.back
+//                    .resizable()
+//                    .frame(width: 12, height: 21)
+//            }
+//            .frame(width: 32)
+//            .background(Color.clear)
+//            .foregroundColor(Color.foreground)
+//
+//            Spacer()
         }
         .frame(height: 33)
         .padding(.horizontal, 6)

@@ -14,6 +14,14 @@ struct QuestionDetailsView: View {
     let questionItem: QuestionItemModel
     
     init(item: QuestionItemModel) {
+        // https://medium.com/@francisco.gindre/customizing-swiftui-navigation-bar-8369d42b8805
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().tintColor = .navBurForeground
+        
         questionItem = item
     }
     
@@ -38,19 +46,21 @@ struct QuestionDetailsView: View {
                     }
                     .frame(width: geometry.size.width)
                 }
-                .padding(.top, NavigationBarView.Constants.height)
+                .padding(.top, 0.3)
             }
             
             NavigationBarView()
                 .edgesIgnoringSafeArea([.leading, .trailing])
+                .padding(.top, -NavigationBarView.Constants.height)
                 .environmentObject(self.stackoverflowStore)
         }
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+        .navigationBarTitle("", displayMode: .inline)
         .onAppear {
-            self.stackoverflowStore.questionStore.reload(forQuestionId: self.questionItem.id)
+            self.stackoverflowStore.questionStore.loadQuestion(id: self.questionItem.id) //meta: 269753 // 61979056 // 61978105
+        }
+        .onDisappear {
+            self.stackoverflowStore.questionStore.reload()
             self.stackoverflowStore.answersStore.reload()
-            self.stackoverflowStore.questionStore.loadQuestion(id: self.questionItem.id) // 61979056 // 61978105
         }
     }
 }
@@ -81,6 +91,10 @@ struct QuestionDetailsView_Previews: PreviewProvider {
 #endif
 
 // MARK: - Extensions
+
+fileprivate extension UIColor {
+    static let navBurForeground = UIColor(named: "searchBarForeground")
+}
 
 fileprivate extension Color {
     static let background = Color("mainBackground")

@@ -19,10 +19,6 @@ struct AnswerView: View {
                 MarkdownView(text: .constant(model.body.htmlUnescape()))
             }
             .fixedSize(horizontal: false, vertical: true)
-            
-            Divider()
-                .padding(.leading, 10)
-                .padding(.bottom, 6)
         }
         .padding(.leading, 6)
         .padding(.trailing, 16)

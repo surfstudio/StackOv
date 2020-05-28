@@ -17,19 +17,14 @@ struct QuestionView: View {
         Group { () -> AnyView in
             switch questionStore.state {
             case .unknown:
-                print("Question store state -> \(questionStore.state)")
                 return AnyView(EmptyView())
             case .emptyContent:
-                print("Question store state -> \(questionStore.state)")
                 return AnyView(emptyContent)
             case let .content(model):
-                print("Question store state -> \(questionStore.state)")
                 return AnyView(content(model))
             case .loading:
-                print("Question store state -> \(questionStore.state)")
                 return AnyView(loading)
             case .error:
-                print("Question store state -> \(questionStore.state)")
                 return AnyView(error)
             }
         }
@@ -56,7 +51,7 @@ struct QuestionView: View {
                 .fontWeight(.bold)
                 .foregroundColor(Color.title)
                 .lineLimit(nil)
-                .padding(.top, 6)
+                .padding(.top, 8)
             
             Divider()
                 .padding(.vertical, 6)
