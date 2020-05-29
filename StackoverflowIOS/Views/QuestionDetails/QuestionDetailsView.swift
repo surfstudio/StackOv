@@ -14,6 +14,8 @@ struct QuestionDetailsView: View {
     let questionItem: QuestionItemModel
     
     init(item: QuestionItemModel) {
+        self.questionItem = item
+        
         // https://medium.com/@francisco.gindre/customizing-swiftui-navigation-bar-8369d42b8805
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
@@ -21,8 +23,6 @@ struct QuestionDetailsView: View {
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().tintColor = .navBurForeground
-        
-        questionItem = item
     }
     
     var body: some View {
@@ -57,6 +57,7 @@ struct QuestionDetailsView: View {
         .navigationBarTitle("", displayMode: .inline)
         .onAppear {
             self.stackoverflowStore.questionStore.loadQuestion(id: self.questionItem.id) //meta: 269753 // 61979056 // 61978105
+            // problems with images in question 59767456 and answer 59767698
         }
         .onDisappear {
             self.stackoverflowStore.questionStore.reload()

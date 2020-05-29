@@ -22,7 +22,7 @@ struct LoadMoreButton: View {
                         .frame(minHeight: 20)
                 }
                 if self.isLoading {
-                    LoadingIndicatorView()
+                    LoadingIndicatorView(.foreground)
                         .frame(width: 20, height: 20)
                 }
                 Spacer()
@@ -30,9 +30,10 @@ struct LoadMoreButton: View {
             .foregroundColor(.foreground)
             .padding()
         }
-        .background(Color.background)
-        .cornerRadius(3)
-        .padding(.horizontal, 16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 3)
+                .stroke(Color.border, lineWidth: 0.5)
+        )
         .disabled(isLoading)
     }
     
@@ -67,7 +68,7 @@ struct LoadMoreButton_Previews: PreviewProvider {
 
 fileprivate extension Color {
     static let foreground = Color("loadMoreForeground")
-    static let background = Color("loadMoreBackground")
+    static let border = Color(.systemGray2)
     #if DEBUG
     static let mainBackground = Color("mainBackground")
     #endif

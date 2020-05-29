@@ -36,7 +36,9 @@ struct MainView: View {
             .navigationBarHidden(true)
         }
         .onAppear {
-            UITableView.appearance().separatorColor = .separator
+            UITableView.appearance().allowsSelection = false
+            UITableViewCell.appearance().selectionStyle = .none
+            UITableView.appearance().separatorColor = .clear
             UITableView.appearance().separatorInset = UIEdgeInsets.zero
             UITableView.appearance().backgroundColor = UIColor.background
             UITableView.appearance().keyboardDismissMode = .onDrag
@@ -91,22 +93,27 @@ struct MainView: View {
     
     func navigationLink(forItem item: QuestionItemModel, safeAreaInsets: EdgeInsets) -> some View {
         ZStack {
-            questionItem(item, safeAreaInsets: safeAreaInsets)
             NavigationLink(destination: destinationFor(item: item)) {
                 EmptyView()
             }
             .hidden()
+            
+            questionItem(item, safeAreaInsets: safeAreaInsets)
         }
         .listRowInsets(EdgeInsets.zero)
     }
     
     func questionItem(_ item: QuestionItemModel, safeAreaInsets: EdgeInsets) -> some View {
-        QuestionItemView(model: item)
-            .environmentObject(self.stackoverflowStore)
-            .modifier(QuestionItemPaddingsModifier(
-                orientation: self.transitionStore.deviceOrientation,
-                safeAreaInsets: safeAreaInsets
-            ))
+        VStack(spacing: .zero) {
+            QuestionItemView(model: item)
+                .environmentObject(self.stackoverflowStore)
+                .modifier(QuestionItemPaddingsModifier(
+                    orientation: self.transitionStore.deviceOrientation,
+                    safeAreaInsets: safeAreaInsets
+                ))
+            
+            Divider()
+        }
     }
     
     func destinationFor(item: QuestionItemModel) -> some View {

@@ -99,7 +99,7 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
         }
         
         func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-            guard UIApplication.shared.canOpenURL(URL) else {
+            guard UIApplication.shared.canOpenURL(URL), ["http", "https"].contains(URL.scheme ?? "") else {
                 return true
             }
             DispatchQueue.main.async {

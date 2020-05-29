@@ -52,18 +52,12 @@ struct QuestionView: View {
                 .foregroundColor(Color.title)
                 .lineLimit(nil)
                 .padding(.top, 8)
+                .fixedSize(horizontal: false, vertical: true)
             
             Divider()
                 .padding(.vertical, 6)
             
             MarkdownView(text: .constant(model.body.htmlUnescape()))
-            
-            TagsCollectionView(model.tags) { tag in
-                TagView(tag: tag.name) {
-//                    self.stackoverflowStore.searchStore.search(tag: tag)
-                }
-            }
-            .padding(.top)
         }
         // https://stackoverflow.com/questions/61910373/how-to-multiply-certain-columns-fields-in-a-large-array-of-objects
     }

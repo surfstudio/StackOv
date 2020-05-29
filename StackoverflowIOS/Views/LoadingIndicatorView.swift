@@ -11,6 +11,8 @@ import SwiftUI
 struct LoadingIndicatorView: View {
     @State private var isAnimating: Bool = false
     
+    private var loaderColor: Color = Color.foreground
+    
     var body: some View {
         GeometryReader { geometry in
             ForEach(0..<5) { index in
@@ -28,10 +30,16 @@ struct LoadingIndicatorView: View {
             }
         }
         .aspectRatio(1, contentMode: .fit)
-        .foregroundColor(.foreground)
+        .foregroundColor(loaderColor)
         .onAppear {
             self.isAnimating = true
         }
+    }
+    
+    init() {}
+    
+    init(_ color: Color) {
+        loaderColor = color
     }
 }
 

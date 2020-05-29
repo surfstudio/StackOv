@@ -33,7 +33,8 @@ struct AnswersView: View {
             }
         }
         .onReceive(questionStore.$state) { state in
-            guard case let .content(model) = state else {
+            guard case let .content(model) = state, model.answerCount != .zero else {
+                self.answersStore.setNeedHasMore(false)
                 return
             }
             if let id = model.acceptedAnswerId {
@@ -93,6 +94,7 @@ struct AnswersView: View {
                     self.answersStore.loadAnswers(questionId: id, .next)
                     self.isLoading = true
                 }
+                .padding(.horizontal, 16)
             }
         }
     }
@@ -110,6 +112,7 @@ struct AnswersView_Previews: PreviewProvider {
                 .background(Color.background)
                 .environment(\.colorScheme, .light)
                 .environmentObject(QuestionStore())
+                .environmentObject(AnswersStore())
             
             AnswersView()
                 .padding()
@@ -117,6 +120,7 @@ struct AnswersView_Previews: PreviewProvider {
                 .background(Color.background)
                 .environment(\.colorScheme, .dark)
                 .environmentObject(QuestionStore())
+                .environmentObject(AnswersStore())
         }
     }
 }
