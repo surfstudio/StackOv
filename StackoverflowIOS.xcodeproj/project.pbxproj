@@ -19,6 +19,7 @@
 		6F6C83742464293A00138E59 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C83732464293A00138E59 /* HostingController.swift */; };
 		6F7C24F824767036003E452A /* SnippetBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7C24F724767036003E452A /* SnippetBlockView.swift */; };
 		6F7C24FE2477DE1F003E452A /* TagsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7C24FD2477DE1F003E452A /* TagsCollectionView.swift */; };
+		6F88C79A248305DB005C7E2D /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F88C799248305DB005C7E2D /* SafariView.swift */; };
 		6F8FA76824715585002544B9 /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8FA76724715585002544B9 /* DocumentView.swift */; };
 		6F8FA76A247155EA002544B9 /* MarkdownUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8FA769247155EA002544B9 /* MarkdownUnitView.swift */; };
 		6F8FA76E24716B28002544B9 /* BlockQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8FA76D24716B28002544B9 /* BlockQuoteView.swift */; };
@@ -88,6 +89,7 @@
 		6F6C83732464293A00138E59 /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
 		6F7C24F724767036003E452A /* SnippetBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetBlockView.swift; sourceTree = "<group>"; };
 		6F7C24FD2477DE1F003E452A /* TagsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsCollectionView.swift; sourceTree = "<group>"; };
+		6F88C799248305DB005C7E2D /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		6F8FA76724715585002544B9 /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
 		6F8FA769247155EA002544B9 /* MarkdownUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownUnitView.swift; sourceTree = "<group>"; };
 		6F8FA76D24716B28002544B9 /* BlockQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockQuoteView.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				6FD4885E2460D6DA0010CFE0 /* QuestionItem */,
 				6F3311902469F36F006B9C02 /* LoadingIndicatorView.swift */,
 				6F9F2CF524704E1400C7866C /* EmptyContentView.swift */,
+				6F88C799248305DB005C7E2D /* SafariView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				6FB9BCD12479AE6F003F9025 /* AnswersStore.swift in Sources */,
 				6FD488602460D6F90010CFE0 /* QuestionItemModel.swift in Sources */,
 				6F6C83722464236900138E59 /* UIDeviceOrientation.swift in Sources */,
+				6F88C79A248305DB005C7E2D /* SafariView.swift in Sources */,
 				6F9F2CF624704E1400C7866C /* EmptyContentView.swift in Sources */,
 				6FD488652461D7EB0010CFE0 /* StackoverflowStore.swift in Sources */,
 				6FB9BCD32479B3B9003F9025 /* AnswerModel.swift in Sources */,

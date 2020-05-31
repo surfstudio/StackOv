@@ -8,7 +8,6 @@
 
 import Foundation
 import SwiftUI
-import SafariServices
 
 struct MarkdownTextView: View {
     @State private var desiredHeight: CGFloat = .zero
@@ -26,7 +25,7 @@ struct MarkdownTextView: View {
         .sheet(isPresented: Binding<Bool>(get: { self.safariStatus.isEnable }, set: { _ in }), onDismiss: {
             self.safariStatus = .disable
         }) {
-            return AnyView(SafariView(url: self.safariStatus.url))
+            SafariView(url: self.safariStatus.url)
         }
     }
 }
@@ -108,20 +107,6 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
             return false
         }
     }
-}
-
-fileprivate struct SafariView: UIViewControllerRepresentable {
-    let url: URL?
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
-        guard let url = url else { fatalError() }
-        let controller = SFSafariViewController(url: url)
-        controller.preferredBarTintColor = UIColor.background
-        controller.preferredControlTintColor = UIColor.title
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {}
 }
 
 fileprivate extension UIColor {

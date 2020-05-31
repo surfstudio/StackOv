@@ -13,6 +13,8 @@ struct QuestionDetailsView: View {
     
     let questionItem: QuestionItemModel
     
+    @State private var safariStatus: Bool = false
+    
     init(item: QuestionItemModel) {
         self.questionItem = item
         
@@ -55,9 +57,32 @@ struct QuestionDetailsView: View {
                 .environmentObject(self.stackoverflowStore)
         }
         .navigationBarTitle("", displayMode: .inline)
+        .navigationBarItems(trailing:
+            HStack(alignment: .center, spacing: .zero) {
+                Button(action: {
+                    self.safariStatus = true
+                }) {
+                    Image.share
+                }
+                .frame(width: 44, height: 44)
+                
+                Button(action: {
+                    self.stackoverflowStore.questionStore.reload()
+                    self.stackoverflowStore.answersStore.reload()
+                    self.stackoverflowStore.questionStore.loadQuestion(id: self.questionItem.id)
+                }) {
+                    Image.reload
+                }
+                .frame(width: 44, height: 44)
+            }
+        )
+        .sheet(isPresented: $safariStatus) {
+            SafariView(url: self.questionItem.link)
+        }
         .onAppear {
             self.stackoverflowStore.questionStore.loadQuestion(id: self.questionItem.id) //meta: 269753 // 61979056 // 61978105
             // problems with images in question 59767456 and answer 59767698
+            // snippets 62108080
         }
         .onDisappear {
             self.stackoverflowStore.questionStore.reload()
@@ -99,4 +124,10 @@ fileprivate extension UIColor {
 
 fileprivate extension Color {
     static let background = Color("mainBackground")
+}
+
+
+fileprivate extension Image {
+    static let share = Image(systemName: "square.and.arrow.up")
+    static let reload = Image(systemName: "arrow.clockwise")
 }

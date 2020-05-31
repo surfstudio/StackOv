@@ -13,6 +13,15 @@ struct MainView: View {
     @EnvironmentObject var stackoverflowStore: StackoverflowStore
     @EnvironmentObject var transitionStore: TransitionStore
     
+    init() {
+        UITableViewCell.appearance().selectionStyle = .none
+        UITableView.appearance().allowsSelection = false
+        UITableView.appearance().separatorColor = .clear
+        UITableView.appearance().separatorInset = UIEdgeInsets.zero
+        UITableView.appearance().backgroundColor = UIColor.background
+        UITableView.appearance().keyboardDismissMode = .onDrag
+    }
+    
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
@@ -36,12 +45,6 @@ struct MainView: View {
             .navigationBarHidden(true)
         }
         .onAppear {
-            UITableView.appearance().allowsSelection = false
-            UITableViewCell.appearance().selectionStyle = .none
-            UITableView.appearance().separatorColor = .clear
-            UITableView.appearance().separatorInset = UIEdgeInsets.zero
-            UITableView.appearance().backgroundColor = UIColor.background
-            UITableView.appearance().keyboardDismissMode = .onDrag
             self.stackoverflowStore.loadQuestions()
         }
     }
@@ -67,9 +70,20 @@ struct MainView: View {
         GeometryReader { geometry in
             List {
                 ForEach(self.stackoverflowStore.state.content) { item in
-                    self.navigationLink(forItem: item, safeAreaInsets: geometry.safeAreaInsets)
+                    self.navigationLink(forItem: item, geometry: geometry)
                 }
                 .listRowBackground(Color.background)
+                
+                if self.stackoverflowStore.nextLoading {
+                    HStack(spacing: .zero) {
+                        Spacer()
+                        LoadingIndicatorView(.loadMoreForeground)
+                            .frame(width: 20, height: 20)
+                        Spacer()
+                    }
+                    .listRowInsets(EdgeInsets.zero)
+                    .listRowBackground(Color.background)
+                }
             }
         }
         .modifier(ListEdgesModifier(orientation: transitionStore.deviceOrientation))
@@ -91,25 +105,25 @@ struct MainView: View {
         return Text(stackoverflowStore.state.error?.localizedDescription ?? "")
     }
     
-    func navigationLink(forItem item: QuestionItemModel, safeAreaInsets: EdgeInsets) -> some View {
+    func navigationLink(forItem item: QuestionItemModel, geometry: GeometryProxy) -> some View {
         ZStack {
             NavigationLink(destination: destinationFor(item: item)) {
                 EmptyView()
             }
             .hidden()
             
-            questionItem(item, safeAreaInsets: safeAreaInsets)
+            questionItem(item, geometry: geometry)
         }
         .listRowInsets(EdgeInsets.zero)
     }
     
-    func questionItem(_ item: QuestionItemModel, safeAreaInsets: EdgeInsets) -> some View {
+    func questionItem(_ item: QuestionItemModel, geometry: GeometryProxy) -> some View {
         VStack(spacing: .zero) {
-            QuestionItemView(model: item)
+            QuestionItemView(model: item, globalGeometry: geometry)
                 .environmentObject(self.stackoverflowStore)
                 .modifier(QuestionItemPaddingsModifier(
                     orientation: self.transitionStore.deviceOrientation,
-                    safeAreaInsets: safeAreaInsets
+                    safeAreaInsets: geometry.safeAreaInsets
                 ))
             
             Divider()
@@ -137,6 +151,7 @@ struct MainView_Previews: PreviewProvider {
 // MARK: - Extensions
 
 fileprivate extension Color {
+    static let loadMoreForeground = Color("loadMoreForeground")
     static let background = Color("mainBackground")
 }
 

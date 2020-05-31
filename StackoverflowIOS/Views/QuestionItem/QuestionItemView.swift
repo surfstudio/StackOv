@@ -13,19 +13,20 @@ struct QuestionItemView: View {
     
     @State private var collectionHeight: CGFloat = .zero
     let model: QuestionItemModel
+    let geometry: GeometryProxy
     
-    init(model: QuestionItemModel) {
+    init(model: QuestionItemModel, globalGeometry: GeometryProxy) {
         self.model = model
+        self.geometry = globalGeometry
     }
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             questionInfo
-                .padding(.bottom, 8)
                 .frame(width: 58)
             content
-                .padding(.bottom, 8)
         }
+        .padding(.bottom, 8)
         .onAppear {
             self.stackoverflowStore.itemWasShowed(id: self.model.id)
         }
@@ -39,16 +40,20 @@ struct QuestionItemView: View {
     }
     
     var content: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: .zero) {
             Text(model.title)
                 .foregroundColor(.title)
                 .font(.system(size: 16))
-
-            TagsCollectionView(model.tags) { tag in
+                .fixedSize(horizontal: false, vertical: true)
+            
+            Spacer()
+            
+            TagsCollectionView(model.tags, preferredWidth: geometry.size.width - 16*3 - 58) { tag in
                 TagView(tag: tag.name) {
                     self.stackoverflowStore.searchStore.search(tag: tag)
                 }
             }
+            .padding(.bottom, .zero)
         }
     }
 }
@@ -60,16 +65,18 @@ struct QuestionItemView_Previews: PreviewProvider {
     static let model = QuestionItemModel(id: 100, title: "Testasdasdasdasdadadsadadsadadasdassdadsasdasdadsasdad111111", isAnswered: true, viewCount: 0, answerCount: 10, score: 2012, tags: (1...20).map({ TagModel(name: "Tag \($0)") }), link: URL(string: "www.google.com")!)
     
     static var previews: some View {
-        Group {
-            QuestionItemView(model: model)
-                .environment(\.colorScheme, .light)
-                .environmentObject(StackoverflowStore())
-
-            QuestionItemView(model: model)
-                .environment(\.colorScheme, .dark)
-                .environmentObject(StackoverflowStore())
+        GeometryReader { geometry in
+            Group {
+                QuestionItemView(model: model, globalGeometry: geometry)
+                    .environment(\.colorScheme, .light)
+                    .environmentObject(StackoverflowStore())
+                
+                QuestionItemView(model: model, globalGeometry: geometry)
+                    .environment(\.colorScheme, .dark)
+                    .environmentObject(StackoverflowStore())
+            }
+            .previewLayout(.sizeThatFits)
         }
-        .previewLayout(.sizeThatFits)
     }
 }
 #endif

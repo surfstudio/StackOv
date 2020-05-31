@@ -18,6 +18,7 @@ extension Markdown {
                 Color.background.frame(width: 4)
                 GlobalBlockView(unit: unit)
             }
+            .padding(.bottom, 3)
             .fixedSize(horizontal: false, vertical: true)
         }
     }

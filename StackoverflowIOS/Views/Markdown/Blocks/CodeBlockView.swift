@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import Highlightr
+//import Highlightr
 
 extension Markdown {
     

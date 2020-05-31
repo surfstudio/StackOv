@@ -40,6 +40,8 @@ final class StackoverflowStore: ObservableObject {
     // MARK: - Parameters
     
     @Published private(set) var state: State = .unknown
+    @Published private(set) var hasMore: Bool = true
+    @Published private(set) var nextLoading: Bool = false
     
     lazy var service = StackoverflowService()
     
@@ -89,12 +91,14 @@ final class StackoverflowStore: ObservableObject {
     
     func checkSearchParams(query: String, isEditing: Bool) {
         if query.isEmpty, currentQuery != query, !isEditing {
+            hasMore = true
             currentQuery = ""
             cancelSearchProcess()
             loadQuestions()
             return
         }
         if !query.isEmpty, currentQuery != query {
+            hasMore = true
             currentQuery = query
             cancelLoadingProcess()
             searchQuestions()
@@ -114,17 +118,22 @@ final class StackoverflowStore: ObservableObject {
     }
     
     func loadQuestions(_ step: LoadingStep = .reload) {
+        guard loadingProcess == nil, hasMore else {
+            return
+        }
         switch step {
         case .reload:
             state = .loading
             loadingState = .loadQuestions(page: 1, pageSize: 30)
         case .next:
             loadingState += 1
+            nextLoading = true
         }
-        cancelLoadingProcess()
         loadingProcess = service.loadQuestions(page: loadingState.page, pageSize: loadingState.pageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
+                self.cancelLoadingProcess()
+                self.nextLoading = false
                 guard case let .failure(error) = completion else {
                     return
                 }
@@ -138,20 +147,26 @@ final class StackoverflowStore: ObservableObject {
                     let content = self.state.content + questions
                     self.state = content.isEmpty ? .emptyContent : .content(content)
                 }
+                self.hasMore = data.hasMore
             }
     }
     
     func searchQuestions(_ step: LoadingStep = .reload) {
+        guard searchProcess == nil, hasMore else {
+            return
+        }
         switch step {
         case .reload:
             loadingState = .searchQuestion(page: 1, pageSize: 30)
         case .next:
             loadingState += 1
+            nextLoading = true
         }
-        cancelSearchProcess()
         searchProcess = service.searchQuestions(query: currentQuery, page: loadingState.page, pageSize: loadingState.pageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
+                self.cancelSearchProcess()
+                self.nextLoading = false
                 guard case let .failure(error) = completion else {
                     return
                 }
@@ -165,6 +180,7 @@ final class StackoverflowStore: ObservableObject {
                     let content = self.state.content + questions
                     self.state = content.isEmpty ? .emptyContent : .content(content)
                 }
+                self.hasMore = data.hasMore
             }
     }
 }
