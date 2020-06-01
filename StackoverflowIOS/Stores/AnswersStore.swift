@@ -35,7 +35,8 @@ final class AnswersStore: ObservableObject {
     @Published private(set) var state: State = .unknown
     @Published private(set) var hasMore: Bool = false
     
-    lazy var service = StackoverflowService()
+    private lazy var service = StackoverflowService()
+    private var questionId: QuestionId?
     
     var isLoading: Bool {
         loadingProcess != nil
@@ -54,11 +55,12 @@ final class AnswersStore: ObservableObject {
     
     // MARK: - Methods
     
-    func reload() {
+    func cancel() {
         print("[AnswersStore] Reload process")
         cancelLoadingProcess()
         state = .unknown
         hasMore = false
+        questionId = nil
         loadingState = .loadAnswers(page: 0, pageSize: 5)
     }
     
@@ -72,13 +74,29 @@ final class AnswersStore: ObservableObject {
         loadingProcess = nil
     }
     
+    func reload(byQuestion question: QuestionModel) {
+        questionId = question.id
+        if let id = question.acceptedAnswerId {
+            setNeedHasMore(question.answerCount > 1)
+            loadAnswer(id: id)
+        } else if question.answerCount != .zero {
+            setNeedHasMore(false)
+            loadAnswers(.reload)
+        } else {
+            setNeedHasMore(false)
+        }
+    }
+    
     func loadAnswer(id: AnswerId) {
+        guard loadingProcess == nil else {
+            return
+        }
         print("[AnswersStore] Process loadAnswer \(id)")
         state = .loading
-        cancelLoadingProcess()
         loadingProcess = service.loadAnswer(id: id)
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [unowned self] completion in
+                self.cancelLoadingProcess()
                 guard case let .failure(error) = completion else {
                     return
                 }
@@ -92,7 +110,10 @@ final class AnswersStore: ObservableObject {
             }
     }
     
-    func loadAnswers(questionId: QuestionId, _ step: LoadingStep) {
+    func loadAnswers(_ step: LoadingStep) {
+        guard loadingProcess == nil, let questionId = questionId else {
+            return
+        }
         switch step {
         case .reload:
             state = .loading
@@ -101,10 +122,10 @@ final class AnswersStore: ObservableObject {
             loadingState += 1
         }
         print("[AnswersStore] Process loadAnswers \(loadingState)")
-        cancelLoadingProcess()
         loadingProcess = service.loadAnswers(questionId: questionId, page: loadingState.page, pageSize: loadingState.pageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
+                self.cancelLoadingProcess()
                 guard case let .failure(_) = completion else {
                     return
                 }

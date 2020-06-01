@@ -9,15 +9,11 @@
 import SwiftUI
 
 struct QuestionDetailsView: View {
-    @EnvironmentObject var stackoverflowStore: StackoverflowStore
-    
-    let questionItem: QuestionItemModel
+    @EnvironmentObject var questionStore: QuestionStore
     
     @State private var safariStatus: Bool = false
     
-    init(item: QuestionItemModel) {
-        self.questionItem = item
-        
+    init() {
         // https://medium.com/@francisco.gindre/customizing-swiftui-navigation-bar-8369d42b8805
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
@@ -37,11 +33,10 @@ struct QuestionDetailsView: View {
                     VStack {
                         QuestionView()
                             .padding(.horizontal, 16)
-                            .environmentObject(self.stackoverflowStore.questionStore)
+                            .environmentObject(self.questionStore)
                         
                         AnswersView()
-                            .environmentObject(self.stackoverflowStore.questionStore)
-                            .environmentObject(self.stackoverflowStore.answersStore)
+                            .environmentObject(self.questionStore.answersStore)
                         
                         Color.clear
                             .frame(height: geometry.safeAreaInsets.bottom)
@@ -54,7 +49,6 @@ struct QuestionDetailsView: View {
             NavigationBarView()
                 .edgesIgnoringSafeArea([.leading, .trailing])
                 .padding(.top, -NavigationBarView.Constants.height)
-                .environmentObject(self.stackoverflowStore)
         }
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarItems(trailing:
@@ -66,55 +60,52 @@ struct QuestionDetailsView: View {
                 }
                 .frame(width: 44, height: 44)
                 
-                Button(action: {
-                    self.stackoverflowStore.questionStore.reload()
-                    self.stackoverflowStore.answersStore.reload()
-                    self.stackoverflowStore.questionStore.loadQuestion(id: self.questionItem.id)
-                }) {
+                Button(action: { self.questionStore.reload() }) { //self.reload(withQuestion: true) }) {
                     Image.reload
                 }
                 .frame(width: 44, height: 44)
             }
         )
         .sheet(isPresented: $safariStatus) {
-            SafariView(url: self.questionItem.link)
-        }
-        .onAppear {
-            self.stackoverflowStore.questionStore.loadQuestion(id: self.questionItem.id) //meta: 269753 // 61979056 // 61978105
-            // problems with images in question 59767456 and answer 59767698
-            // snippets 62108080
-        }
-        .onDisappear {
-            self.stackoverflowStore.questionStore.reload()
-            self.stackoverflowStore.answersStore.reload()
+            SafariView(url: self.questionStore.state.content?.link)
         }
     }
+    
+//    func reload(withQuestion: Bool = false) {
+//        stackoverflowStore.answersStore.cancel()
+//        stackoverflowStore.questionStore.cancel()
+//        if withQuestion {
+//            stackoverflowStore.questionStore.loadQuestion(id: questionItem.id) //meta: 269753 // 61979056 // 61978105
+//            // problems with images in question 59767456 and answer 59767698
+//            // snippets 62108080
+//        }
+//    }
 }
 
 // MARK: - Previews
 
-#if DEBUG
-struct QuestionDetailsView_Previews: PreviewProvider {
-    static let model = QuestionItemModel(id: 56892691, title: "", isAnswered: false, viewCount: 0, answerCount: 0, score: 0, tags: [], link: URL(string: "google.com")!)
-    static var previews: some View {
-        Group {
-            QuestionDetailsView(item: model)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Color.background)
-                .environment(\.colorScheme, .light)
-                .environmentObject(StackoverflowStore())
-            
-            QuestionDetailsView(item: model)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Color.background)
-                .environment(\.colorScheme, .dark)
-                .environmentObject(StackoverflowStore())
-        }
-    }
-}
-#endif
+//#if DEBUG
+//struct QuestionDetailsView_Previews: PreviewProvider {
+//    static let model = QuestionItemModel(id: 56892691, title: "", isAnswered: false, viewCount: 0, answerCount: 0, score: 0, tags: [], link: URL(string: "google.com")!)
+//    static var previews: some View {
+//        Group {
+//            QuestionDetailsView(item: model)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//                .background(Color.background)
+//                .environment(\.colorScheme, .light)
+//                .environmentObject(StackoverflowStore())
+//
+//            QuestionDetailsView(item: model)
+//                .padding()
+//                .previewLayout(.sizeThatFits)
+//                .background(Color.background)
+//                .environment(\.colorScheme, .dark)
+//                .environmentObject(StackoverflowStore())
+//        }
+//    }
+//}
+//#endif
 
 // MARK: - Extensions
 

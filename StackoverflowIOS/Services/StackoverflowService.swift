@@ -30,10 +30,10 @@ struct StackoverflowService: HTTPServiceProtocol {
     
     // MARK: - Requests
     
-    @GET(Constants.baseUrl, "/questions?filter=\(Constants.questionsFilter)&site=stackoverflow&order=desc&sort=activity&page=%d&pagesize=%d")
+    @GET(Constants.baseUrl, "/questions?filter=\(Constants.questionsFilter)&site=stackoverflow&order=desc&sort=votes&page=%d&pagesize=%d")
     var loadQuestions: Request<LoadQuestions, PostsDTO<QuestionDTO>>
     
-    @GET(Constants.baseUrl, "/search/advanced?filter=\(Constants.questionsFilter)&site=stackoverflow&order=desc&sort=activity&q=%@&page=%d&pagesize=%d")
+    @GET(Constants.baseUrl, "/search/advanced?filter=\(Constants.questionsFilter)&site=stackoverflow&order=desc&sort=votes&q=%@&page=%d&pagesize=%d")
     var searchQuestions: Request<SearchQuestions, PostsDTO<QuestionDTO>>
     
     @GET(Constants.baseUrl, "/questions/%d?filter=\(Constants.questionFilter)&site=stackoverflow")

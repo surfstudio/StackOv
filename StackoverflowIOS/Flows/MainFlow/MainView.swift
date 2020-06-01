@@ -13,6 +13,8 @@ struct MainView: View {
     @EnvironmentObject var stackoverflowStore: StackoverflowStore
     @EnvironmentObject var transitionStore: TransitionStore
     
+    @State private var selectedQuestion: QuestionId?
+    
     init() {
         UITableViewCell.appearance().selectionStyle = .none
         UITableView.appearance().allowsSelection = false
@@ -38,12 +40,18 @@ struct MainView: View {
                 
                 NavigationBarView(.searchBar)
                     .edgesIgnoringSafeArea([.leading, .trailing])
-                    .environmentObject(self.stackoverflowStore)
+                    .environmentObject(stackoverflowStore)
+                    .environmentObject(transitionStore)
                     .disabled(stackoverflowStore.state.isUnknown)
             }
             .navigationBarTitle("")
             .navigationBarHidden(true)
+            
+            if !UIDevice.current.userInterfaceIdiom.isPhone {
+                questionDetails
+            }
         }
+        .modifier(NavigationViewModifier())
         .onAppear {
             self.stackoverflowStore.loadQuestions()
         }
@@ -68,11 +76,12 @@ struct MainView: View {
     
     var contentList: some View {
         GeometryReader { geometry in
-            List {
-                ForEach(self.stackoverflowStore.state.content) { item in
-                    self.navigationLink(forItem: item, geometry: geometry)
+            VStack(spacing: 16) {
+                if UIDevice.current.userInterfaceIdiom.isPhone {
+                    self.phoneList(geometry: geometry)
+                } else {
+                    self.tabletList(geometry: geometry)
                 }
-                .listRowBackground(Color.background)
                 
                 if self.stackoverflowStore.nextLoading {
                     HStack(spacing: .zero) {
@@ -83,10 +92,29 @@ struct MainView: View {
                     }
                     .listRowInsets(EdgeInsets.zero)
                     .listRowBackground(Color.background)
+                    .padding(.bottom)
                 }
             }
         }
-        .modifier(ListEdgesModifier(orientation: transitionStore.deviceOrientation))
+    }
+    
+    func phoneList(geometry: GeometryProxy) -> some View {
+        List {
+            ForEach(self.stackoverflowStore.state.content) { item in
+                self.navigationLink(forItem: item, geometry: geometry)
+            }
+            .listRowBackground(Color.background)
+        }
+        .modifier(ListEdgesModifier(orientation: self.transitionStore.deviceOrientation))
+    }
+
+    func tabletList(geometry: GeometryProxy) -> some View {
+        List {
+            ForEach(self.stackoverflowStore.state.content) { item in
+                self.navigationLink(forItem: item, geometry: geometry)
+            }
+            .listRowBackground(Color.background)
+        }
     }
     
     var emptyContent: some View {
@@ -105,13 +133,30 @@ struct MainView: View {
         return Text(stackoverflowStore.state.error?.localizedDescription ?? "")
     }
     
+    var questionDetails: some View {
+        QuestionDetailsView()
+            .environmentObject(stackoverflowStore.questionStore)
+    }
+    
     func navigationLink(forItem item: QuestionItemModel, geometry: GeometryProxy) -> some View {
         ZStack {
-            NavigationLink(destination: destinationFor(item: item)) {
+            NavigationLink(
+                destination: LazyView(self.questionDetails),
+                tag: item.id,
+                selection: Binding<QuestionId?>(
+                    get: { self.selectedQuestion },
+                    set: { id in
+                        self.stackoverflowStore.questionStore.reload(byId: id);
+                        DispatchQueue.main.async {
+                            self.selectedQuestion = id
+                        }
+                    }
+                )
+            ) {
                 EmptyView()
             }
             .hidden()
-            
+
             questionItem(item, geometry: geometry)
         }
         .listRowInsets(EdgeInsets.zero)
@@ -119,20 +164,23 @@ struct MainView: View {
     
     func questionItem(_ item: QuestionItemModel, geometry: GeometryProxy) -> some View {
         VStack(spacing: .zero) {
-            QuestionItemView(model: item, globalGeometry: geometry)
-                .environmentObject(self.stackoverflowStore)
-                .modifier(QuestionItemPaddingsModifier(
-                    orientation: self.transitionStore.deviceOrientation,
-                    safeAreaInsets: geometry.safeAreaInsets
-                ))
-            
+            if UIDevice.current.userInterfaceIdiom.isPhone {
+                QuestionItemView(model: item, globalGeometry: geometry.size)
+                    .environmentObject(self.stackoverflowStore)
+                    .modifier(PaddingsModifier(
+                        orientation: self.transitionStore.deviceOrientation,
+                        safeAreaInsets: geometry.safeAreaInsets
+                    ))
+            } else {
+                QuestionItemView(model: item, globalGeometry: geometry.size)
+                    .environmentObject(self.stackoverflowStore)
+                    .padding(.top, 8)
+                    .padding(.horizontal, 16)
+                    .background(Color.background)
+            }
             Divider()
+                .edgesIgnoringSafeArea([.leading, .trailing])
         }
-    }
-    
-    func destinationFor(item: QuestionItemModel) -> some View {
-        QuestionDetailsView(item: item)
-            .environmentObject(stackoverflowStore)
     }
 }
 
@@ -162,6 +210,32 @@ fileprivate extension UIColor {
 
 // MARK: - View Modifiers
 
+fileprivate struct LazyView<Content: View>: View {
+    let build: () -> Content
+    
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    
+    var body: Content {
+        build()
+    }
+}
+
+fileprivate struct NavigationViewModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        Group {
+            if UIDevice.current.userInterfaceIdiom.isPhone {
+                content
+                    .navigationViewStyle(StackNavigationViewStyle())
+            } else {
+                content
+                    .navigationViewStyle(DoubleColumnNavigationViewStyle())
+            }
+        }
+    }
+}
+
 fileprivate struct ListEdgesModifier: ViewModifier {
     var orientation: UIDeviceOrientation
     
@@ -178,20 +252,20 @@ fileprivate struct ListEdgesModifier: ViewModifier {
     }
 }
 
-fileprivate struct QuestionItemPaddingsModifier: ViewModifier {
+fileprivate struct PaddingsModifier: ViewModifier {
     var orientation: UIDeviceOrientation
     var safeAreaInsets: EdgeInsets
     
     func body(content: Content) -> some View {
-        content
+        return content
             .padding(.top, 8)
             .padding(
                 .leading,
-                orientation == .landscapeLeft ? safeAreaInsets.leading : 16
+                orientation == .landscapeLeft || orientation == .landscapeRight ? safeAreaInsets.leading + 16 : 16
             )
             .padding(
                 .trailing,
-                orientation == .landscapeRight ? safeAreaInsets.trailing : 16
+                orientation == .landscapeLeft || orientation == .landscapeRight ? safeAreaInsets.trailing + 16 : 16
             )
             .background(Color.background)
     }

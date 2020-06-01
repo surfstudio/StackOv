@@ -35,7 +35,6 @@ final class StackoverflowStore: ObservableObject {
     
     private(set) lazy var searchStore = SearchStore()
     private(set) lazy var questionStore = QuestionStore()
-    private(set) lazy var answersStore = AnswersStore()
     
     // MARK: - Parameters
     
@@ -43,7 +42,7 @@ final class StackoverflowStore: ObservableObject {
     @Published private(set) var hasMore: Bool = true
     @Published private(set) var nextLoading: Bool = false
     
-    lazy var service = StackoverflowService()
+    private lazy var service = StackoverflowService()
     
     private var loadingState: LoadingState = .loadQuestions(page: 1, pageSize: 30)
     private var currentQuery: String = ""
@@ -109,11 +108,13 @@ final class StackoverflowStore: ObservableObject {
         guard state.content.last?.id == id else {
             return
         }
-        switch loadingState {
-        case .loadQuestions:
-            loadQuestions(.next)
-        case .searchQuestion:
-            searchQuestions(.next)
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            switch self.loadingState {
+            case .loadQuestions:
+                self.loadQuestions(.next)
+            case .searchQuestion:
+                self.searchQuestions(.next)
+            }
         }
     }
     

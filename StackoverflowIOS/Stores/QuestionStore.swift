@@ -17,7 +17,7 @@ final class QuestionStore: ObservableObject {
         case unknown
         case emptyContent
         case content(QuestionModel)
-        case loading
+        case loading(QuestionId)
         case error(Error)
     }
     
@@ -31,16 +31,32 @@ final class QuestionStore: ObservableObject {
         case next
     }
     
+    // MARK: - Substores
+    
+    private(set) lazy var answersStore = AnswersStore()
+    
     // MARK: - Parameters
     
     @Published private(set) var state: State = .unknown
     
-    lazy var service = StackoverflowService()
+    private lazy var service = StackoverflowService()
 
     private var cancelBag: Set<AnyCancellable> = []
     private var loadingProcess: AnyCancellable?
     
     // MARK: - Initializing and deinitializing
+    
+    init() {
+        $state.receive(on: RunLoop.main).sink { [unowned self] state in
+            switch state {
+            case let .content(model):
+                self.answersStore.reload(byQuestion: model)
+            default:
+                self.answersStore.cancel()
+            }
+        }
+        .store(in: &cancelBag)
+    }
     
     deinit {
         cancelLoadingProcess()
@@ -49,7 +65,7 @@ final class QuestionStore: ObservableObject {
     
     // MARK: - Methods
     
-    func reload() {
+    func cancel() {
         print("[QuestionStore] Reload process")
         cancelLoadingProcess()
         state = .unknown
@@ -61,13 +77,32 @@ final class QuestionStore: ObservableObject {
         loadingProcess = nil
     }
     
+    func reload(byId questionId: QuestionId?) {
+        guard let id = questionId, id != state.currentId else {
+            return
+        }
+        cancel()
+        loadQuestion(id: id)
+    }
+    
+    func reload() {
+        guard let id = state.currentId else {
+            return
+        }
+        cancel()
+        loadQuestion(id: id)
+    }
+    
     func loadQuestion(id: QuestionId) {
+        guard loadingProcess == nil else {
+            return
+        }
         print("[QuestionStore] Process loadQuestion \(id)")
-        state = .loading
-        cancelLoadingProcess()
+        state = .loading(id)
         loadingProcess = service.loadQuestion(id: id)
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [unowned self] completion in
+                self.cancelLoadingProcess()
                 guard case let .failure(error) = completion else {
                     return
                 }
@@ -103,5 +138,16 @@ extension QuestionStore.State {
     var isReady: Bool {
         if case .content = self { return true }
         return false
+    }
+    
+    var currentId: QuestionId? {
+        switch self {
+        case let .content(model):
+            return model.id
+        case let .loading(id):
+            return id
+        default:
+            return nil
+        }
     }
 }

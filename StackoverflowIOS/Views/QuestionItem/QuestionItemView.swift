@@ -13,9 +13,9 @@ struct QuestionItemView: View {
     
     @State private var collectionHeight: CGFloat = .zero
     let model: QuestionItemModel
-    let geometry: GeometryProxy
+    let geometry: CGSize
     
-    init(model: QuestionItemModel, globalGeometry: GeometryProxy) {
+    init(model: QuestionItemModel, globalGeometry: CGSize) {
         self.model = model
         self.geometry = globalGeometry
     }
@@ -48,7 +48,7 @@ struct QuestionItemView: View {
             
             Spacer()
             
-            TagsCollectionView(model.tags, preferredWidth: geometry.size.width - 16*3 - 58) { tag in
+            TagsCollectionView(model.tags, preferredWidth: geometry.width - 16*3 - 58) { tag in
                 TagView(tag: tag.name) {
                     self.stackoverflowStore.searchStore.search(tag: tag)
                 }
@@ -67,11 +67,11 @@ struct QuestionItemView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             Group {
-                QuestionItemView(model: model, globalGeometry: geometry)
+                QuestionItemView(model: model, globalGeometry: geometry.size)
                     .environment(\.colorScheme, .light)
                     .environmentObject(StackoverflowStore())
                 
-                QuestionItemView(model: model, globalGeometry: geometry)
+                QuestionItemView(model: model, globalGeometry: geometry.size)
                     .environment(\.colorScheme, .dark)
                     .environmentObject(StackoverflowStore())
             }
@@ -88,7 +88,7 @@ fileprivate struct ScoreCounterView: View {
     
     var body: some View {
         VStack {
-            Text("\(value)")
+            Text(value.short)
                 .font(.system(size: 20))
                 .fontWeight(.medium)
                 .foregroundColor(Color.Votes.title)
@@ -119,7 +119,7 @@ fileprivate struct AnswersCounterView: View {
     
     var content: some View {
         VStack {
-            Text("\(value)")
+            Text(value.short)
                 .font(.system(size: 20))
                 .fontWeight(.medium)
             Text("answers")

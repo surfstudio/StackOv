@@ -15,7 +15,7 @@ struct SearchBarView: View {
     private var cancelBag: Set<AnyCancellable> = []
  
     var body: some View {
-        HStack(spacing: .zero) {
+        HStack(spacing: 16) {
             searchIcon
             textField
             if self.searchStore.isEditing {
@@ -26,14 +26,11 @@ struct SearchBarView: View {
     }
     
     var searchIcon: some View {
-        Group {
-            Image.magnifier
-                .resizable()
-                .frame(width: 21, height: 21)
-        }
-        .frame(width: 32)
-        .background(Color.clear)
-        .foregroundColor(Color.foreground)
+        Image.magnifier
+            .resizable()
+            .frame(width: 21, height: 21)
+            .padding(.leading, .zero)
+            .foregroundColor(Color.foreground)
     }
     
     var textField: some View {

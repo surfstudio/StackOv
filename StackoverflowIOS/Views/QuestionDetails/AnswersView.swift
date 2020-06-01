@@ -11,7 +11,6 @@ import HTMLEntities
 import Down
 
 struct AnswersView: View {
-    @EnvironmentObject var questionStore: QuestionStore
     @EnvironmentObject var answersStore: AnswersStore
     
     @State var isLoading: Bool = false
@@ -32,18 +31,6 @@ struct AnswersView: View {
                 return AnyView(error)
             }
         }
-        .onReceive(questionStore.$state) { state in
-            guard case let .content(model) = state, model.answerCount != .zero else {
-                self.answersStore.setNeedHasMore(false)
-                return
-            }
-            if let id = model.acceptedAnswerId {
-                self.answersStore.setNeedHasMore(model.answerCount > 1)
-                self.answersStore.loadAnswer(id: id)
-            } else {
-                self.answersStore.loadAnswers(questionId: model.id, .reload)
-            }
-        }
     }
 
     var loading: some View {
@@ -53,7 +40,7 @@ struct AnswersView: View {
     }
     
     var error: some View {
-        Text(questionStore.state.error?.localizedDescription ?? "")
+        Text(answersStore.state.error?.localizedDescription ?? "")
     }
     
     var sectionHeader: some View {
@@ -88,10 +75,7 @@ struct AnswersView: View {
             
             if self.answersStore.hasMore {
                 LoadMoreButton(isLoading: $isLoading) {
-                    guard let id = self.questionStore.state.content?.id else {
-                        return
-                    }
-                    self.answersStore.loadAnswers(questionId: id, .next)
+                    self.answersStore.loadAnswers(.next)
                     self.isLoading = true
                 }
                 .padding(.horizontal, 16)
