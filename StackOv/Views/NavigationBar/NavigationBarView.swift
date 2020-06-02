@@ -28,9 +28,11 @@ struct NavigationBarView: View {
     }
     
     let style: Style
+    let safeAreaInsets: EdgeInsets
     
-    init(_ style: Style = .simpleBar) {
+    init(_ style: Style = .simpleBar, safeAreaInsets: EdgeInsets) {
         self.style = style
+        self.safeAreaInsets = safeAreaInsets
     }
     
     var body: some View {
@@ -51,12 +53,10 @@ struct NavigationBarView: View {
                 HStack { content.padding(.horizontal, 16) }
             } else {
                 HStack {
-                    GeometryReader { geometry in
-                        self.content.modifier(PaddingsModifier(
-                            orientation: self.transitionStore.deviceOrientation,
-                            safeAreaInsets: geometry.safeAreaInsets
-                        ))
-                    }
+                    self.content.modifier(PaddingsModifier(
+                        orientation: self.transitionStore.deviceOrientation,
+                        safeAreaInsets: safeAreaInsets
+                    ))
                 }
             }
         }
@@ -90,20 +90,22 @@ struct NavigationBarView: View {
 #if DEBUG
 struct NavigationBarView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            NavigationBarView(.searchBar)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Color.background)
-                .environment(\.colorScheme, .light)
-                .environmentObject(StackoverflowStore())
-            
-            NavigationBarView(.searchBar)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Color.background)
-                .environment(\.colorScheme, .dark)
-                .environmentObject(StackoverflowStore())
+        GeometryReader { geometry in
+            Group {
+                NavigationBarView(.searchBar, safeAreaInsets: geometry.safeAreaInsets)
+                    .padding()
+                    .previewLayout(.sizeThatFits)
+                    .background(Color.background)
+                    .environment(\.colorScheme, .light)
+                    .environmentObject(StackoverflowStore())
+                
+                NavigationBarView(.searchBar, safeAreaInsets: geometry.safeAreaInsets)
+                    .padding()
+                    .previewLayout(.sizeThatFits)
+                    .background(Color.background)
+                    .environment(\.colorScheme, .dark)
+                    .environmentObject(StackoverflowStore())
+            }
         }
     }
 }

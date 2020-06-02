@@ -13,11 +13,14 @@ struct QuestionItemView: View {
     
     @State private var collectionHeight: CGFloat = .zero
     let model: QuestionItemModel
-    let geometry: CGSize
+    let preferredWidth: CGFloat = {
+        UIDevice.current.userInterfaceIdiom.isPhone
+            ? UIWindow.main!.frame.width - 106 // 16*3 + 58
+            : 214 // 320 - (16*3 + 58)
+    }()
     
-    init(model: QuestionItemModel, globalGeometry: CGSize) {
+    init(model: QuestionItemModel) {
         self.model = model
-        self.geometry = globalGeometry
     }
     
     var body: some View {
@@ -48,7 +51,7 @@ struct QuestionItemView: View {
             
             Spacer()
             
-            TagsCollectionView(model.tags, preferredWidth: geometry.width - 16*3 - 58) { tag in
+            TagsCollectionView(model.tags, preferredWidth: preferredWidth) { tag in
                 TagView(tag: tag.name) {
                     self.stackoverflowStore.searchStore.search(tag: tag)
                 }
@@ -67,11 +70,11 @@ struct QuestionItemView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             Group {
-                QuestionItemView(model: model, globalGeometry: geometry.size)
+                QuestionItemView(model: model)
                     .environment(\.colorScheme, .light)
                     .environmentObject(StackoverflowStore())
                 
-                QuestionItemView(model: model, globalGeometry: geometry.size)
+                QuestionItemView(model: model)
                     .environment(\.colorScheme, .dark)
                     .environmentObject(StackoverflowStore())
             }

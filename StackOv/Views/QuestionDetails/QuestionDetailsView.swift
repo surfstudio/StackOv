@@ -44,11 +44,11 @@ struct QuestionDetailsView: View {
                     .frame(width: geometry.size.width)
                 }
                 .padding(.top, 0.3)
+                
+                NavigationBarView(safeAreaInsets: geometry.safeAreaInsets)
+                    .edgesIgnoringSafeArea([.leading, .trailing])
+                    .padding(.top, -NavigationBarView.Constants.height)
             }
-            
-            NavigationBarView()
-                .edgesIgnoringSafeArea([.leading, .trailing])
-                .padding(.top, -NavigationBarView.Constants.height)
         }
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarItems(trailing:
