@@ -31,24 +31,20 @@ struct MainView: View {
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture { UIApplication.shared.endEditing() }
                 
-                GeometryReader { _ in
-                    ZStack(alignment: .center) { // this is cheat to change the base aligment
-                        self.content
-                    }
-                }
-                .padding(.top, NavigationBarView.Constants.height)
+                self.content
+                    .padding(.top, NavigationBarView.Constants.height)
                 
-                NavigationBarView(.searchBar)
+                NavigationBarView(.searchBar, safeAreaInsets: UIWindow.main!.safeAreaInsets.toEdgeInsets)
                     .edgesIgnoringSafeArea([.leading, .trailing])
-                    .environmentObject(stackoverflowStore)
-                    .environmentObject(transitionStore)
-                    .disabled(stackoverflowStore.state.isUnknown)
+                    .environmentObject(self.stackoverflowStore)
+                    .environmentObject(self.transitionStore)
+                    .disabled(self.stackoverflowStore.state.isUnknown)
             }
             .navigationBarTitle("")
             .navigationBarHidden(true)
             
             if !UIDevice.current.userInterfaceIdiom.isPhone {
-                questionDetails
+                self.questionDetails
             }
         }
         .modifier(NavigationViewModifier())
@@ -75,43 +71,41 @@ struct MainView: View {
     }
     
     var contentList: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 16) {
-                if UIDevice.current.userInterfaceIdiom.isPhone {
-                    self.phoneList(geometry: geometry)
-                } else {
-                    self.tabletList(geometry: geometry)
+        VStack(spacing: 16) {
+            if UIDevice.current.userInterfaceIdiom.isPhone {
+                self.phoneList
+            } else {
+                self.tabletList
+            }
+            
+            if self.stackoverflowStore.nextLoading {
+                HStack(spacing: .zero) {
+                    Spacer()
+                    LoadingIndicatorView(.loadMoreForeground)
+                        .frame(width: 20, height: 20)
+                    Spacer()
                 }
-                
-                if self.stackoverflowStore.nextLoading {
-                    HStack(spacing: .zero) {
-                        Spacer()
-                        LoadingIndicatorView(.loadMoreForeground)
-                            .frame(width: 20, height: 20)
-                        Spacer()
-                    }
-                    .listRowInsets(EdgeInsets.zero)
-                    .listRowBackground(Color.background)
-                    .padding(.bottom)
-                }
+                .listRowInsets(EdgeInsets.zero)
+                .listRowBackground(Color.background)
+                .padding(.bottom)
             }
         }
     }
     
-    func phoneList(geometry: GeometryProxy) -> some View {
+    var phoneList: some View {
         List {
             ForEach(self.stackoverflowStore.state.content) { item in
-                self.navigationLink(forItem: item, geometry: geometry)
+                self.navigationLink(forItem: item)
             }
             .listRowBackground(Color.background)
         }
         .modifier(ListEdgesModifier(orientation: self.transitionStore.deviceOrientation))
     }
-
-    func tabletList(geometry: GeometryProxy) -> some View {
+    
+    var tabletList: some View {
         List {
             ForEach(self.stackoverflowStore.state.content) { item in
-                self.navigationLink(forItem: item, geometry: geometry)
+                self.navigationLink(forItem: item)
             }
             .listRowBackground(Color.background)
         }
@@ -119,18 +113,19 @@ struct MainView: View {
     
     var emptyContent: some View {
         UIApplication.shared.endEditing()
-        return EmptyContentView()
+        return EmptyContentView().padding(.top)
     }
     
     var loading: some View {
         UIApplication.shared.endEditing()
         return LoadingIndicatorView()
             .frame(width: 30, height: 30)
+            .padding(.top)
     }
     
     var error: some View {
         UIApplication.shared.endEditing()
-        return Text(stackoverflowStore.state.error?.localizedDescription ?? "")
+        return Text(stackoverflowStore.state.error?.localizedDescription ?? "").padding(.top)
     }
     
     var questionDetails: some View {
@@ -138,7 +133,7 @@ struct MainView: View {
             .environmentObject(stackoverflowStore.questionStore)
     }
     
-    func navigationLink(forItem item: QuestionItemModel, geometry: GeometryProxy) -> some View {
+    func navigationLink(forItem item: QuestionItemModel) -> some View {
         ZStack {
             NavigationLink(
                 destination: LazyView(self.questionDetails),
@@ -157,22 +152,22 @@ struct MainView: View {
             }
             .hidden()
 
-            questionItem(item, geometry: geometry)
+            questionItem(item)
         }
         .listRowInsets(EdgeInsets.zero)
     }
     
-    func questionItem(_ item: QuestionItemModel, geometry: GeometryProxy) -> some View {
+    func questionItem(_ item: QuestionItemModel) -> some View {
         VStack(spacing: .zero) {
             if UIDevice.current.userInterfaceIdiom.isPhone {
-                QuestionItemView(model: item, globalGeometry: geometry.size)
+                QuestionItemView(model: item)
                     .environmentObject(self.stackoverflowStore)
                     .modifier(PaddingsModifier(
                         orientation: self.transitionStore.deviceOrientation,
-                        safeAreaInsets: geometry.safeAreaInsets
+                        safeAreaInsets: UIWindow.main!.safeAreaInsets.toEdgeInsets
                     ))
             } else {
-                QuestionItemView(model: item, globalGeometry: geometry.size)
+                QuestionItemView(model: item)
                     .environmentObject(self.stackoverflowStore)
                     .padding(.top, 8)
                     .padding(.horizontal, 16)

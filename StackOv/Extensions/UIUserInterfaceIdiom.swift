@@ -14,6 +14,10 @@ extension UIUserInterfaceIdiom {
         self == .phone
     }
     
+    var isPad: Bool {
+        self == .pad
+    }
+    
     var isMac: Bool {
         #if targetEnvironment(macCatalyst)
         return true

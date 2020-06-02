@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F0447552486BB4100FA03CF /* UIEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0447542486BB4100FA03CF /* UIEdgeInsets.swift */; };
+		6F0447572486C02C00FA03CF /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0447562486C02C00FA03CF /* UIWindow.swift */; };
 		6F2A528024842E350040FB4B /* DoubleColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A527F24842E350040FB4B /* DoubleColumnView.swift */; };
 		6F2A5282248466F30040FB4B /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2A5281248466F30040FB4B /* Int.swift */; };
 		6F2E653F2468901000EBAE37 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2E653E2468901000EBAE37 /* NavigationBarView.swift */; };
@@ -80,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F0447542486BB4100FA03CF /* UIEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIEdgeInsets.swift; sourceTree = "<group>"; };
+		6F0447562486C02C00FA03CF /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
 		6F2A527F24842E350040FB4B /* DoubleColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleColumnView.swift; sourceTree = "<group>"; };
 		6F2A5281248466F30040FB4B /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		6F2E653E2468901000EBAE37 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				6F6C83712464236900138E59 /* UIDeviceOrientation.swift */,
 				6FE88B202469CEA2001A3D63 /* EdgeInsets.swift */,
 				6FAB3179247494B800CD7C03 /* NSAttributedString.swift */,
+				6F0447542486BB4100FA03CF /* UIEdgeInsets.swift */,
+				6F0447562486C02C00FA03CF /* UIWindow.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -532,11 +538,13 @@
 				6F6C83742464293A00138E59 /* HostingController.swift in Sources */,
 				6F9F2CF424704A1900C7866C /* QuestionModel.swift in Sources */,
 				6F9F2CF224703F4F00C7866C /* QuestionView.swift in Sources */,
+				6F0447552486BB4100FA03CF /* UIEdgeInsets.swift in Sources */,
 				6F3311912469F36F006B9C02 /* LoadingIndicatorView.swift in Sources */,
 				6F2A528024842E350040FB4B /* DoubleColumnView.swift in Sources */,
 				6FD4886D246222730010CFE0 /* String.swift in Sources */,
 				6F331D9F24686A65005C2A81 /* SearchBarView.swift in Sources */,
 				6FF68A1A245F5606007C1B84 /* AppDelegate.swift in Sources */,
+				6F0447572486C02C00FA03CF /* UIWindow.swift in Sources */,
 				6F6C83702464043800138E59 /* UIUserInterfaceIdiom.swift in Sources */,
 				6F2A5282248466F30040FB4B /* Int.swift in Sources */,
 				6FD488672461DFF90010CFE0 /* PostsDTO.swift in Sources */,
