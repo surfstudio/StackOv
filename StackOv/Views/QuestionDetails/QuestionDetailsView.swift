@@ -51,23 +51,32 @@ struct QuestionDetailsView: View {
             }
         }
         .navigationBarTitle("", displayMode: .inline)
-        .navigationBarItems(trailing:
-            HStack(alignment: .center, spacing: .zero) {
-                Button(action: {
-                    self.safariStatus = true
-                }) {
-                    Image.share
-                }
-                .frame(width: 44, height: 44)
-                
-                Button(action: { self.questionStore.reload() }) { //self.reload(withQuestion: true) }) {
-                    Image.reload
-                }
-                .frame(width: 44, height: 44)
-            }
-        )
+        .navigationBarItems(trailing:  barItems)
         .sheet(isPresented: $safariStatus) {
             SafariView(url: self.questionStore.state.content?.link)
+        }
+    }
+    
+    var barItems: some View {
+        HStack(alignment: .center, spacing: .zero) {
+            Button(action: {
+                guard let link = self.questionStore.state.content?.link else {
+                    return
+                }
+                if UIDevice.current.userInterfaceIdiom.isMac {
+                    UIApplication.shared.tryOpen(url: link)
+                } else {
+                    self.safariStatus = true
+                }
+            }) {
+                Image.share
+            }
+            .frame(width: 44, height: 44)
+            
+            Button(action: { self.questionStore.reload() }) {
+                Image.reload
+            }
+            .frame(width: 44, height: 44)
         }
     }
     

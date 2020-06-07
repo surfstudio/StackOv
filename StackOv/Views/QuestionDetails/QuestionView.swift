@@ -17,7 +17,7 @@ struct QuestionView: View {
         Group { () -> AnyView in
             switch questionStore.state {
             case .unknown:
-                return AnyView(EmptyView())
+                return AnyView(unknownContent)
             case .emptyContent:
                 return AnyView(emptyContent)
             case let .content(model):
@@ -28,6 +28,14 @@ struct QuestionView: View {
                 return AnyView(error)
             }
         }
+    }
+    
+    var unknownContent: some View {
+        Text("Choose a question")
+            .font(.system(size: 18))
+            .fontWeight(.bold)
+            .foregroundColor(Color.title)
+            .padding(.top)
     }
     
     var emptyContent: some View {
