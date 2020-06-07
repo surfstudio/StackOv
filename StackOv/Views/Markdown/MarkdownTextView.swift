@@ -101,8 +101,12 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
             guard UIApplication.shared.canOpenURL(URL), ["http", "https"].contains(URL.scheme ?? "") else {
                 return true
             }
-            DispatchQueue.main.async {
-                self.view.safariStatus = .enable(URL)
+            if UIDevice.current.userInterfaceIdiom.isMac {
+                UIApplication.shared.tryOpen(url: URL)
+            } else {
+                DispatchQueue.main.async {
+                    self.view.safariStatus = .enable(URL)
+                }
             }
             return false
         }
