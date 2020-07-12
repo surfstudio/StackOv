@@ -17,16 +17,13 @@ struct LoadingIndicatorView: View {
         GeometryReader { geometry in
             ForEach(0..<5) { index in
                 Group {
-                    Circle()
-                        .frame(width: geometry.size.width / 5, height: geometry.size.height / 5)
-                        .scaleEffect(!self.isAnimating ? 1 - CGFloat(index) / 5 : 0.2 + CGFloat(index) / 5)
-                        .offset(y: geometry.size.width / 10 - geometry.size.height / 2)
+                    point(by: index, with: geometry)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .rotationEffect(!self.isAnimating ? .degrees(0) : .degrees(360))
                 .animation(Animation
                 .timingCurve(0.5, 0.15 + Double(index) / 5, 0.25, 1, duration: 1.5)
-                 .repeatForever(autoreverses: false))
+                .repeatForever(autoreverses: false))
             }
         }
         .aspectRatio(1, contentMode: .fit)
@@ -40,6 +37,13 @@ struct LoadingIndicatorView: View {
     
     init(_ color: Color) {
         loaderColor = color
+    }
+    
+    func point(by index: Int, with geometry: GeometryProxy) -> some View {
+        Circle()
+            .frame(width: geometry.size.width / 5, height: geometry.size.height / 5)
+            .scaleEffect(!self.isAnimating ? 1 - CGFloat(index) / 5 : 0.2 + CGFloat(index) / 5)
+            .offset(y: geometry.size.width / 10 - geometry.size.height / 2)
     }
 }
 
