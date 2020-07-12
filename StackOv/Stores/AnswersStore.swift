@@ -126,7 +126,7 @@ final class AnswersStore: ObservableObject {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 self.cancelLoadingProcess()
-                guard case let .failure(_) = completion else {
+                guard case .failure = completion else {
                     return
                 }
 //                self.state = .error(error)
