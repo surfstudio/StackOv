@@ -19,7 +19,7 @@ DerivedData
 *.xcuserstate
 *.gcno
 *.xcscmblueprint
-/*.xcodeproj
+*.xcodeproj
 xcuserdata/
 
 # CocoaPods
@@ -30,8 +30,12 @@ xcuserdata/
 #
 Pods/
 
-# SPM
-/Packages
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+Packages/
+Package.pins
+Package.resolved
 
 # Exported environment variables for XcodeCoverage
 env.sh

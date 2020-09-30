@@ -350,7 +350,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SRCROOT}/Palette\n/usr/bin/xcrun --sdk macosx swift run --disable-automatic-resolution -c release swiftgen config run --config ./Scripts/swiftgen.yml\n";
+			shellScript = "cd ${SRCROOT}/Palette\n/usr/bin/xcrun --sdk macosx swift run swiftgen config run --config ./Scripts/swiftgen.yml\n";
 		};
 		6FD8C4012523BA20000DA1B8 /* Palette generation */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -368,7 +368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SRCROOT}/Palette\n/usr/bin/xcrun --sdk macosx swift run --disable-automatic-resolution -c release swiftgen config run --config ./Scripts/swiftgen.yml\n";
+			shellScript = "cd ${SRCROOT}/Palette\n/usr/bin/xcrun --sdk macosx swift run swiftgen config run --config ./Scripts/swiftgen.yml\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
