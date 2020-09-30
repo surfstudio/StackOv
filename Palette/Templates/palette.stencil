@@ -1,0 +1,67 @@
+// swiftlint:disable all
+// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+//
+// Created by Erik Basargin.
+//
+
+{% if catalogs and catalogs.count > 0 and resourceCount.color > 0 %}
+{% set colorCoreAlias %}{{param.colorCoreAliasName|default:"PaletteCore"}}{% endset %}
+{% set colorAlias %}{{param.colorAliasName|default:"Palette"}}{% endset %}
+{% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
+import SwiftUI
+
+// MARK: - {{colorCoreAlias}}
+
+#if os(macOS)
+{{accessModifier}} typealias {{colorCoreAlias}} = NSColor
+#elseif os(iOS) || os(tvOS) || os(watchOS)
+{{accessModifier}} typealias {{colorCoreAlias}} = UIColor
+#endif
+
+{{accessModifier}} extension {{colorCoreAlias}} {
+
+    {% for asset in catalogs.first.assets %}
+    {% if asset.type == "color" %}
+    static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: Self {
+        #if os(iOS) || os(tvOS) || os(macOS)
+        let bundle: Bundle = {{param.bundle|default:"BundleToken.bundle"}}
+        #endif
+        #if os(iOS) || os(tvOS)
+        return Self(named: "{{asset.name}}", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return Self(named: "{{asset.name}}", bundle: bundle)!
+        #elseif os(watchOS)
+        return Self(named: "{{asset.name}}")!
+        #endif
+    }
+    {% endif %}
+    {% endfor %}
+
+}
+
+// MARK: - {{colorAlias}}
+
+{{accessModifier}} typealias {{colorAlias}} = Color
+
+{{accessModifier}} extension {{colorAlias}} {
+
+    {% for asset in catalogs.first.assets %}
+    {% if asset.type == "color" %}
+    {% set colorName %}{{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}{% endset %}
+    static let {{colorName}} = { Self(.{{colorName}}) }()
+    {% endif %}
+    {% endfor %}
+
+}
+
+{% if not param.bundle %}
+
+// swiftlint:disable convenience_type
+private final class BundleToken {
+
+    static let bundle: Bundle = { Bundle(for: BundleToken.self) }()
+
+}
+// swiftlint:enable convenience_type
+{% endif %}
+{% endif %}

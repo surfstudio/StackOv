@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F2E48012524A8580080F778 /* Palette in Frameworks */ = {isa = PBXBuildFile; productRef = 6F2E48002524A8580080F778 /* Palette */; };
+		6F2E48032524A8610080F778 /* Palette in Frameworks */ = {isa = PBXBuildFile; productRef = 6F2E48022524A8610080F778 /* Palette */; };
 		6FCC9B3C25237C5500BDD827 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B3B25237C5500BDD827 /* Tests_iOS.swift */; };
 		6FCC9B4725237C5500BDD827 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B4625237C5500BDD827 /* Tests_macOS.swift */; };
 		6FCC9B4925237C5500BDD827 /* StackOv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1D25237C5300BDD827 /* StackOv.xcdatamodeld */; };
@@ -39,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6FCC9B1E25237C5300BDD827 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		6FCC9B1F25237C5300BDD827 /* StackOvApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackOvApp.swift; sourceTree = "<group>"; };
 		6FCC9B2025237C5300BDD827 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F2E48012524A8580080F778 /* Palette in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F2E48032524A8610080F778 /* Palette in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,9 +94,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F2E47F92524A7F50080F778 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				6F2E47FA2524A8460080F778 /* Palette */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
 		6FCC9B1725237C5300BDD827 = {
 			isa = PBXGroup;
 			children = (
+				6F2E47F92524A7F50080F778 /* Modules */,
 				6FCC9B1C25237C5300BDD827 /* Shared */,
 				6FCC9B2925237C5500BDD827 /* iOS */,
 				6FCC9B3025237C5500BDD827 /* macOS */,
@@ -166,6 +180,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6FCC9B5525237C5500BDD827 /* Build configuration list for PBXNativeTarget "StackOv (iOS)" */;
 			buildPhases = (
+				6F2E47E3252477300080F778 /* Palette generation */,
 				6FCC9B2325237C5500BDD827 /* Sources */,
 				6FCC9B2425237C5500BDD827 /* Frameworks */,
 				6FCC9B2525237C5500BDD827 /* Resources */,
@@ -175,6 +190,9 @@
 			dependencies = (
 			);
 			name = "StackOv (iOS)";
+			packageProductDependencies = (
+				6F2E48002524A8580080F778 /* Palette */,
+			);
 			productName = "StackOv (iOS)";
 			productReference = 6FCC9B2725237C5500BDD827 /* StackOv.app */;
 			productType = "com.apple.product-type.application";
@@ -183,6 +201,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6FCC9B5825237C5500BDD827 /* Build configuration list for PBXNativeTarget "StackOv (macOS)" */;
 			buildPhases = (
+				6FD8C4012523BA20000DA1B8 /* Palette generation */,
 				6FCC9B2B25237C5500BDD827 /* Sources */,
 				6FCC9B2C25237C5500BDD827 /* Frameworks */,
 				6FCC9B2D25237C5500BDD827 /* Resources */,
@@ -192,6 +211,9 @@
 			dependencies = (
 			);
 			name = "StackOv (macOS)";
+			packageProductDependencies = (
+				6F2E48022524A8610080F778 /* Palette */,
+			);
 			productName = "StackOv (macOS)";
 			productReference = 6FCC9B2F25237C5500BDD827 /* StackOv.app */;
 			productType = "com.apple.product-type.application";
@@ -311,6 +333,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6F2E47E3252477300080F778 /* Palette generation */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Palette generation";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${SRCROOT}/Palette\n/usr/bin/xcrun --sdk macosx swift run --disable-automatic-resolution -c release swiftgen config run --config ./Scripts/swiftgen.yml\n";
+		};
+		6FD8C4012523BA20000DA1B8 /* Palette generation */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Palette generation";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${SRCROOT}/Palette\n/usr/bin/xcrun --sdk macosx swift run --disable-automatic-resolution -c release swiftgen config run --config ./Scripts/swiftgen.yml\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6FCC9B2325237C5500BDD827 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -420,6 +481,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -472,6 +534,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -480,6 +543,7 @@
 		6FCC9B5625237C5500BDD827 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -496,6 +560,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
 				PRODUCT_NAME = StackOv;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -504,6 +569,7 @@
 		6FCC9B5725237C5500BDD827 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -520,6 +586,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
 				PRODUCT_NAME = StackOv;
 				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -716,6 +783,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6F2E48002524A8580080F778 /* Palette */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Palette;
+		};
+		6F2E48022524A8610080F778 /* Palette */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Palette;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		6FCC9B1D25237C5300BDD827 /* StackOv.xcdatamodeld */ = {

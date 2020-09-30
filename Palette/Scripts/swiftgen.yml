@@ -1,0 +1,9 @@
+xcassets:
+  inputs:
+    - ${SRCROOT}/Palette/Sources/Palette/Palette.xcassets
+  outputs:
+    - templatePath: ${SRCROOT}/Palette/Templates/palette.stencil
+      params:
+        bundle: .module
+        publicAccess: true
+      output: ${SRCROOT}/Palette/Sources/Palette/Palette.swift
