@@ -7,8 +7,10 @@
 
 import SwiftUI
 import CoreData
+import Common
 
 struct ContentView: View {
+    
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
@@ -17,20 +19,10 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
 
     var body: some View {
-        List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-            }
-            .onDelete(perform: deleteItems)
-        }
-        .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
-
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
-            }
+        if UIDevice.current.userInterfaceIdiom.isPhone {
+            PhoneContentView()
+        } else {
+            PadContentView()
         }
     }
 
@@ -74,6 +66,7 @@ private let itemFormatter: DateFormatter = {
 }()
 
 struct ContentView_Previews: PreviewProvider {
+    
     static var previews: some View {
         ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }

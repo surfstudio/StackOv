@@ -12,9 +12,9 @@ import SwiftUI
 
 // MARK: - {{colorCoreAlias}}
 
-#if os(macOS)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 {{accessModifier}} typealias {{colorCoreAlias}} = NSColor
-#elseif os(iOS) || os(tvOS) || os(watchOS)
+#else
 {{accessModifier}} typealias {{colorCoreAlias}} = UIColor
 #endif
 
@@ -23,7 +23,7 @@ import SwiftUI
     {% for asset in catalogs.first.assets %}
     {% if asset.type == "color" %}
     static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: Self {
-        #if os(iOS) || os(tvOS) || os(macOS)
+        #if !os(watchOS)
         let bundle: Bundle = {{param.bundle|default:"BundleToken.bundle"}}
         #endif
         #if os(iOS) || os(tvOS)

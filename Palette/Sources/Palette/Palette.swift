@@ -8,16 +8,16 @@ import SwiftUI
 
 // MARK: - PaletteCore
 
-#if os(macOS)
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
 public typealias PaletteCore = NSColor
-#elseif os(iOS) || os(tvOS) || os(watchOS)
+#else
 public typealias PaletteCore = UIColor
 #endif
 
 public extension PaletteCore {
 
     static var bluishblack: Self {
-        #if os(iOS) || os(tvOS) || os(macOS)
+        #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
@@ -29,7 +29,7 @@ public extension PaletteCore {
         #endif
     }
     static var dullGray: Self {
-        #if os(iOS) || os(tvOS) || os(macOS)
+        #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
@@ -41,7 +41,7 @@ public extension PaletteCore {
         #endif
     }
     static var gainsboro: Self {
-        #if os(iOS) || os(tvOS) || os(macOS)
+        #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
@@ -53,7 +53,7 @@ public extension PaletteCore {
         #endif
     }
     static var grayblue: Self {
-        #if os(iOS) || os(tvOS) || os(macOS)
+        #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
@@ -65,7 +65,7 @@ public extension PaletteCore {
         #endif
     }
     static var main: Self {
-        #if os(iOS) || os(tvOS) || os(macOS)
+        #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
@@ -77,7 +77,7 @@ public extension PaletteCore {
         #endif
     }
     static var telegrey: Self {
-        #if os(iOS) || os(tvOS) || os(macOS)
+        #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
