@@ -135,6 +135,8 @@ struct MainView: View {
     
     func navigationLink(forItem item: QuestionItemModel) -> some View {
         ZStack {
+            questionItem(item)
+            
             NavigationLink(
                 destination: LazyView(self.questionDetails),
                 tag: item.id,
@@ -150,9 +152,8 @@ struct MainView: View {
             ) {
                 EmptyView()
             }
-            .hidden()
-
-            questionItem(item)
+            .buttonStyle(PlainButtonStyle())
+            .opacity(.zero)
         }
         .listRowInsets(EdgeInsets.zero)
     }
