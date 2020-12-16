@@ -1,18 +1,20 @@
 //
 //  StackOvApp.swift
-//  Shared
-//
-//  Created by Erik Basargin on 29/09/2020.
+//  This source file is part of the StackOv open source project
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct StackOvApp: App {
+    
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
-        WindowGroup {
+        FirebaseApp.configure()
+        
+        return WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }

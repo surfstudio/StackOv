@@ -1,8 +1,6 @@
 //
 //  HTTPWrappers.swift
-//  
-//
-//  Created by Erik Basargin on 10/10/2020.
+//  This source file is part of the StackOv open source project
 //
 
 import Foundation

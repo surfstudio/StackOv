@@ -1,8 +1,6 @@
 //
-//  File.swift
-//  
-//
-//  Created by Erik Basargin on 11/10/2020.
+//  String+Extensions.swift
+//  This source file is part of the StackOv open source project
 //
 
 import Foundation

@@ -25,4 +25,12 @@ public extension EdgeInsets {
     static func trailing(_ value: CGFloat) -> EdgeInsets {
         EdgeInsets(top: .zero, leading: .zero, bottom: .zero, trailing: value)
     }
+    
+    static func horizontal(_ value: CGFloat) -> EdgeInsets {
+        EdgeInsets(top: .zero, leading: value, bottom: .zero, trailing: value)
+    }
+    
+    static func vertical(_ value: CGFloat) -> EdgeInsets {
+        EdgeInsets(top: value, leading: .zero, bottom: value, trailing: .zero)
+    }
 }

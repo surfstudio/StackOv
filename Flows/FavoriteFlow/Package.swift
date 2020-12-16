@@ -11,9 +11,10 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Common"),
-        .package(path: "../Palette")
+        .package(path: "../Palette"),
+        .package(path: "../Components")
     ],
     targets: [
-        .target(name: "FavoriteFlow", dependencies: ["Common", "Palette"])
+        .target(name: "FavoriteFlow", dependencies: ["Common", "Palette", "Components"])
     ]
 )

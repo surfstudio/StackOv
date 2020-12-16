@@ -1,8 +1,6 @@
 //
 //  UIColor+Extensions.swift
-//  
-//
-//  Created by Erik Basargin on 05/10/2020.
+//  This source file is part of the StackOv open source project
 //
 
 #if canImport(UIKit)

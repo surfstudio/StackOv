@@ -1,8 +1,6 @@
 //
 //  Tests_iOS.swift
-//  Tests iOS
-//
-//  Created by Erik Basargin on 29/09/2020.
+//  This source file is part of the StackOv open source project
 //
 
 import XCTest

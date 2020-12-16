@@ -1,8 +1,6 @@
 //
 //  SearchQuestionsRequests.swift
-//  
-//
-//  Created by Erik Basargin on 11/10/2020.
+//  This source file is part of the StackOv open source project
 //
 
 import Network

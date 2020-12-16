@@ -5,14 +5,21 @@ import PackageDescription
 
 let package = Package(
     name: "Common",
-    platforms: [.iOS(.v14), .macOS(.v10_15)],
+    platforms: [.iOS(.v14)],
     products: [
         .library(name: "Common", targets: ["Common"]),
     ],
     dependencies: [
-        .package(name: "Introspect", url: "https://github.com/Puasonych/SwiftUI-Introspect.git", .branch("develop"))
+        .package(name: "Introspect", url: "https://github.com/Puasonych/SwiftUI-Introspect.git", .branch("develop")),
+        .package(name: "Firebase", url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "7.3.0"))
     ],
     targets: [
-        .target(name: "Common", dependencies: ["Introspect"])
+        .target(
+            name: "Common",
+            dependencies: [
+                "Introspect",
+                .product(name: "FirebaseCrashlytics", package: "Firebase")
+            ]
+        )
     ]
 )
