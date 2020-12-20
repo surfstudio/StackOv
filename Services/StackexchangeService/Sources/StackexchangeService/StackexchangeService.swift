@@ -6,7 +6,7 @@
 import Foundation
 import Network
 import Common
-import Logging
+import os
 
 public struct StackexchangeService {
     
@@ -31,13 +31,7 @@ public struct StackexchangeService {
     // MARK: - Logger
     
     static let logger: Logger = {
-        var logger = Logger(label: "Stackexchange service logger")
-        #if DEBUG
-        logger.logLevel = .debug
-        #else
-        logger.logLevel = .critical
-        #endif
-        return logger
+        Logger()
     }()
     
     // MARK: - Initializers

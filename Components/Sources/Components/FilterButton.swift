@@ -19,7 +19,7 @@ public struct FilterButton: View {
     public var body: some View {
         Button(action: action) {
             HStack(spacing: 5.38) {
-                Text("Filter")
+                Text("Filters")
                     .foregroundColor(Color.foreground)
                     .font(.system(size: 11, weight: .medium))
                 if activeFilters > 0 {

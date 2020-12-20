@@ -7,6 +7,18 @@ import SwiftUI
 import Palette
 import Components
 
+/// This is View to make pages version of the app
+///
+/// For example, the next code shows how we could use it:
+///
+///     TabView(selection: $currentPage) {
+///         ForEach(pages) { page in
+///             PageView().tabItem {
+///                 EmptyView()
+///             }.tag(page.id)
+///         }
+///     }
+///
 struct PagesView: View {
 
     let pages: [PageModel]

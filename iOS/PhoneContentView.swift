@@ -13,9 +13,6 @@ struct PhoneContentView: View {
             MainBar.tabs
         }
         .accentColor(Palette.white)
-        .introspectTabBarController {
-            $0.tabBar.barTintColor = PaletteCore.grayblue
-        }
     }
 }
 

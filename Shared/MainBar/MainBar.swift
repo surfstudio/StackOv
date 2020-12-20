@@ -95,7 +95,7 @@ extension MainBar.ItemType {
         case .tags:
             TagsFlow()
         case .users:
-            UserView()
+            UsersFlow()
         }
     }
 }

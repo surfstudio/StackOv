@@ -20,7 +20,6 @@ struct PadContentView: View {
 
             MainView(state: $state)
                 .navigationBarTitle("", displayMode: .inline)
-//                .navigationBarHidden(true)
                 .modifier(MainViewIntrospectModifier())
                 .toolbar {
                     ToolbarItem(placement: .principal) {

@@ -18,7 +18,7 @@ public struct PageDevMock: View {
                 .font(.largeTitle)
         }
         #else
-        fatalError("PageDevMock should not be in a release version of the app")
+        fatalError("PageDevMock must not be in a release version of the app")
         #endif
     }
 }
