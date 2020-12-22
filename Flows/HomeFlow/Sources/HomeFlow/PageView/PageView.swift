@@ -11,17 +11,37 @@ import Components
 
 struct PageView: View {
     
-    let data = Palette.linearGradientPalette.map { QuestionItemView.Model(colors: $0) }
+    // FIXIT: - Need to replace this to mock service
+    let data = Palette.linearGradientPalette.map {
+        QuestionItemModel(
+            id: UUID(),
+            title: "How to make TouchableOpacity wrap its content when nested inside parent that has flex = 1",
+            isApproved: false,
+            answersNumber: 3,
+            votesNumber: 15,
+            viewsNumber: 207,
+            lastUpdateType: .asked(Date(timeInterval: -90000, since: Date())),
+            backgroundColors: $0,
+            tags: ["123", "perfomance", "microsoft-ui-automation", "css", "c++",
+                   "123", "perfomance", "microsoft-ui-automation", "css", "c++"]
+        )
+    }
+    
+    // MARK: - States
+    
+    @State private var selectedItem: UUID?
+    
+    // MARK: - Properties
     
     let columns = [
         GridItem(.adaptive(minimum: 267), spacing: 24)
     ]
     
-    @State private var selectedItem: Int?
-    
     var defaultSpacing: CGFloat {
         UIDevice.current.userInterfaceIdiom.isPad ? 24 : 12
     }
+    
+    // MARK: - Views
     
     var body: some View {
         ScrollView {
@@ -44,7 +64,7 @@ struct PageView: View {
             .buttonStyle(PlainButtonStyle())
             
             Button(action: { selectedItem = item.id }) {
-                QuestionItemView(item)
+                QuestionItemView(model: item)
             }
             .buttonStyle(PlainButtonStyle())
         }

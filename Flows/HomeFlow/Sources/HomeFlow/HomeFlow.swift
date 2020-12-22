@@ -10,8 +10,12 @@ import Introspect
 import Components
 
 public struct HomeFlow: View {
+    
+    // MARK: - Initializing
 
     public init() {}
+    
+    // MARK: - View
     
     public var body: some View {
         if UIDevice.current.userInterfaceIdiom.isPad {
@@ -69,6 +73,7 @@ struct HomeFlow_Previews: PreviewProvider {
 // MARK: - View Modifiers
 
 fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
+    
     func body(content: Content) -> some View {
         content.introspectNavigationController {
             $0.view.backgroundColor = UIColor.background

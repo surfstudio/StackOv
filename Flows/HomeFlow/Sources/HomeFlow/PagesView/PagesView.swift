@@ -20,9 +20,16 @@ import Components
 ///     }
 ///
 struct PagesView: View {
+    
+    // MARK: - States
+    
+    @Binding var currentPage: UUID
+    
+    // MARK: - Properties
 
     let pages: [PageModel]
-    @Binding var currentPage: UUID
+    
+    // MARK: - View
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -44,7 +51,7 @@ struct PagesView_Previews: PreviewProvider {
     
     static var previews: some View {
         let id = UUID()
-        PagesView(pages: [PageModel(id: id, title: "Test Page")], currentPage: .constant(id))
+        PagesView(currentPage: .constant(id), pages: [PageModel(id: id, title: "Test Page")])
     }
 }
 
