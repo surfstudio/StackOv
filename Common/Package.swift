@@ -7,7 +7,7 @@ let package = Package(
     name: "Common",
     platforms: [.iOS(.v14)],
     products: [
-        .library(name: "Common", targets: ["Common"]),
+        .library(name: "Common", targets: ["Common"])
     ],
     dependencies: [
         .package(name: "Introspect", url: "https://github.com/Puasonych/SwiftUI-Introspect.git", .branch("develop")),
@@ -19,7 +19,7 @@ let package = Package(
             dependencies: [
                 "Introspect",
                 .product(name: "FirebaseCrashlytics", package: "Firebase")
-            ]
-        )
+            ]),
+        .testTarget(name: "CommonTests", dependencies: ["Common"])
     ]
 )

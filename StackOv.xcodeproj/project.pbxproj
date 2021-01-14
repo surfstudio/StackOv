@@ -43,7 +43,7 @@
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
 		6F96F26625854E54009E7DED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6FAA7290253357A80068F85F /* HomeStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HomeStore; sourceTree = "<group>"; };
+		6FB8E3FC25B01E7C00E25240 /* PageStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PageStore; sourceTree = "<group>"; };
 		6FC0280A252CB0E7002150F5 /* Common */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Common; sourceTree = "<group>"; };
 		6FC0281F252CC0A4002150F5 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		6FC02829252CD524002150F5 /* SidebarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarButton.swift; sourceTree = "<group>"; };
@@ -55,6 +55,7 @@
 		6FC0288A252F0765002150F5 /* MessagesFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessagesFlow; sourceTree = "<group>"; };
 		6FC02899252F08C1002150F5 /* TagsFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TagsFlow; sourceTree = "<group>"; };
 		6FC028A4252F0962002150F5 /* UsersFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = UsersFlow; sourceTree = "<group>"; };
+		6FC21BAC25929B93003387CE /* AppScript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppScript; sourceTree = "<group>"; };
 		6FCC9B1E25237C5300BDD827 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		6FCC9B1F25237C5300BDD827 /* StackOvApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackOvApp.swift; sourceTree = "<group>"; };
 		6FCC9B2025237C5300BDD827 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,9 +67,10 @@
 		6FCC9B3B25237C5500BDD827 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
 		6FCC9B3D25237C5500BDD827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FE715C8258926E900D55B0C /* MainBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBar.swift; sourceTree = "<group>"; };
+		6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DataTransferObjects; sourceTree = "<group>"; };
+		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
 		6FF33D382530917E00C316D7 /* Components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Components; sourceTree = "<group>"; };
 		6FF362BE25324920009F9908 /* Network */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Network; sourceTree = "<group>"; };
-		6FF362C8253256C8009F9908 /* StackexchangeService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeService; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,8 @@
 		6F2E47F92524A7F50080F778 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */,
+				6FC21BAC25929B93003387CE /* AppScript */,
 				6FC0280A252CB0E7002150F5 /* Common */,
 				6FF362BE25324920009F9908 /* Network */,
 				6F2E47FA2524A8460080F778 /* Palette */,
@@ -117,7 +121,7 @@
 		6FAA728F253357740068F85F /* Stores */ = {
 			isa = PBXGroup;
 			children = (
-				6FAA7290253357A80068F85F /* HomeStore */,
+				6FB8E3FC25B01E7C00E25240 /* PageStore */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -230,7 +234,7 @@
 		6FF362C72532568D009F9908 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				6FF362C8253256C8009F9908 /* StackexchangeService */,
+				6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */,
 			);
 			path = Services;
 			sourceTree = "<group>";

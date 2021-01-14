@@ -15,7 +15,7 @@ struct QuestionItemInfoView: View {
     
     // MARK: - Properties
     
-    let model: QuestionItemModel
+    let model: QuestionItemViewModel
     
     // MARK: - View
     
@@ -24,7 +24,7 @@ struct QuestionItemInfoView: View {
             content
                 .background(Color.white.opacity(0.1))
                 .cornerRadius(Constants.cornerRadius)
-        } else if model.isApproved {
+        } else if model.hasAcceptedAnswer {
             content
                 .background(LinearGradient(
                     gradient: Gradient(colors: [Color.white, Color.white.opacity(0.24)]),

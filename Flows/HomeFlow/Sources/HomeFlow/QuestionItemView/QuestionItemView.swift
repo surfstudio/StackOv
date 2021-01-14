@@ -12,7 +12,7 @@ struct QuestionItemView: View {
     
     // MARK: - Nested types
     
-    typealias Model = QuestionItemModel
+    typealias Model = QuestionItemViewModel
 
     // MARK: - States
     
@@ -20,7 +20,7 @@ struct QuestionItemView: View {
     
     // MARK: - Properties
     
-    let model: QuestionItemModel
+    let model: QuestionItemViewModel
 
     // MARK: - View
     
@@ -57,7 +57,8 @@ struct QuestionItemView: View {
             menu
             
             Text(model.title)
-                .font(.system(size: 13, weight: .bold))
+                .font(.footnote)
+                .fontWeight(.bold)
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
             
@@ -117,10 +118,10 @@ struct QuestionItemView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        let model = QuestionItemModel(
-            id: UUID(),
+        let model = QuestionItemViewModel(
+            id: 0,
             title: "How to make TouchableOpacity wrap its content when nested inside parent that has flex = 1",
-            isApproved: true,
+            hasAcceptedAnswer: true,
             answersNumber: 5,
             votesNumber: 15,
             viewsNumber: 207,

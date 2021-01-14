@@ -1,7 +1,7 @@
 import XCTest
-@testable import Network
+@testable import AppScript
 
-final class NetworkTests: XCTestCase {
+final class AppScriptTests: XCTestCase {
     func testExample() {
         XCTFail("Need add tests")
     }

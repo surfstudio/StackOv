@@ -11,7 +11,7 @@ import Components
 
 public struct HomeFlow: View {
     
-    // MARK: - Initializing
+    // MARK: - Initialization
 
     public init() {}
     
@@ -28,7 +28,7 @@ public struct HomeFlow: View {
     var phoneContent: some View {
         NavigationView {
             PageView()
-                .navigationTitle("All Questions")
+                .navigationBarTitle("All Questions")
                 .modifier(NavigationViewIntrospectModifier())
         }
     }
@@ -80,7 +80,7 @@ fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
             $0.navigationBar.tintColor = UIColor.foreground
             
             // Hack for changing UIHostViewController with wight background
-            $0.children.first?.view.backgroundColor = .clear
+            $0.children.first?.view.backgroundColor = UIColor.background
         }
     }
 }
