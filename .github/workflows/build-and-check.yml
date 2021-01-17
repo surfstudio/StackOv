@@ -14,7 +14,8 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v2
       with:
-        name: https://github.com/thii/xcbeautify/releases/download/0.9.1/xcbeautify-0.9.1-x86_64-apple-macosx.zip
+        name: xcbeautify-0.9.1-x86_64-apple-macosx.zip
+        downloadPath: https://github.com/thii/xcbeautify/releases/download/0.9.1
 
     - name: Prepare xcbeautify
       uses: montudor/action-zip@v0.1.1
