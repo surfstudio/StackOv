@@ -5,10 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "StackOv",
-    dependencies: [
-        .package(url: "https://github.com/thii/xcbeautify.git", .upToNextMajor(from: "0.9.1"))
-    ],
     targets: [
-        .target(name: "StackOv", dependencies: [])
-    ]
+        .binaryTarget(
+            name: "XCBeautify",
+            url: "https://github.com/thii/xcbeautify/releases/download/0.9.1/xcbeautify-0.9.1-universal-apple-macosx.zip",
+            checksum: "c134c1f57fa7ca0efb35a159183176941f77e8e07c474c82be2da692ac9482fd"
+        )]
 )
