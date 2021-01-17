@@ -10,12 +10,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      
+
     - name: Build and test
       run: |
         set -o pipefail
         xcodebuild -workspace StackOv.xcworkspace \
           -scheme StackOv (iOS) -sdk iphonesimulator \
-          -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.3' \
+          -destination platform=iOS Simulator,name=iPhone 12,OS=14.3 \
           test \
           | swift run xcbeautify
