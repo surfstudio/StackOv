@@ -11,6 +11,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: xcbeautify-0.9.1-x86_64-apple-macosx.zip
+        path: https://github.com/thii/xcbeautify/releases/download/0.9.1
+
+    - name: Prepare xcbeautify
+      uses: montudor/action-zip@v0.1.1
+      with:
+        args: unzip -qq xcbeautify-0.9.1-x86_64-apple-macosx.zip
+
     - name: Build and test
       run: |
         set -o pipefail
@@ -19,4 +30,5 @@ jobs:
           -sdk iphonesimulator \
           -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
           test \
-          | swift run xcbeautify
+          | xcbeautify
+    
