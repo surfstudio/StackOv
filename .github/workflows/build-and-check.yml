@@ -14,7 +14,7 @@ jobs:
     - name: Build and test
       run: |
         set -o pipefail
-        xcodebuild -workspace StackOv.xcworkspace \
+        xcodebuild -project StackOv.xcodeproj \
           -scheme StackOv (iOS) -sdk iphonesimulator \
           -destination platform=iOS Simulator,name=iPhone 12,OS=14.3 \
           test \
