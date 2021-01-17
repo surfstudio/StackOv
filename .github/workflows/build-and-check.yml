@@ -3,13 +3,17 @@ name: Build and check
 on: [push, pull_request]
 
 jobs:
-  build:
+  test-project:
 
     runs-on: macos-latest
-
+  
     steps:
     - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+    - name: Build and test
+      run: xcodebuild \
+        -workspace StackOv.xcworkspace \
+        -schame StackOv (iOS) \
+        -sdk iphonesimulator \
+        -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.3' \
+        test \
+        | swift run xcbeautify
