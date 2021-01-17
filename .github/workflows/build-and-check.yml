@@ -11,16 +11,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Download artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: xcbeautify-0.9.1-x86_64-apple-macosx.zip
-        downloadPath: https://github.com/thii/xcbeautify/releases/download/0.9.1
-
-    - name: Prepare xcbeautify
-      uses: montudor/action-zip@v0.1.1
-      with:
-        args: unzip -qq xcbeautify-0.9.1-x86_64-apple-macosx.zip
+    - name: Download XCBeautify 0.9.1
+      run: |
+        curl -L -o xcbeautify-0.9.1.zip https://github.com/thii/xcbeautify/releases/download/0.9.1/xcbeautify-0.9.1-x86_64-apple-macosx.zip
+        unzip -qq ./xcbeautify-0.9.1.zip
 
     - name: Build and test
       run: |
