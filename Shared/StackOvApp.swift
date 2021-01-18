@@ -4,7 +4,7 @@
 //
 
 import SwiftUI
-#if canImport(Firebase)
+#if !FIREBASE_DISABLED
 import Firebase
 #endif
 
@@ -14,7 +14,7 @@ struct StackOvApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
-        #if canImport(Firebase)
+        #if !FIREBASE_DISABLED
         FirebaseApp.configure()
         #endif
         
