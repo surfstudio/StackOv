@@ -27,5 +27,5 @@ jobs:
           | ./xcbeautify
     
     - name: Upload coverage to Codecov
-      run: bash <(curl -s https://codecov.io/bash) -J 'StackOv'
+      run: bash <(curl -s https://codecov.io/bash)
     

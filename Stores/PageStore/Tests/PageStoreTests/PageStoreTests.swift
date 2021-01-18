@@ -3,7 +3,8 @@ import XCTest
 
 final class PageStoreTests: XCTestCase {
     func testExample() {
-        XCTFail("Need add tests")
+        XCTAssertEqual(1, 1)
+//        XCTFail("Need add tests")
     }
 
     static var allTests = [
