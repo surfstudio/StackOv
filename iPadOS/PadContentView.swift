@@ -47,6 +47,10 @@ fileprivate struct MainView: View {
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
         .introspectScrollView {
             $0.isScrollEnabled = false
+            // Hack to disable scrolling of current TabView
+            for subview in $0.subviews {
+                (subview as? UIScrollView)?.isScrollEnabled = false
+            }
         }
     }
 }
