@@ -1,4 +1,4 @@
-coverage_service: coverage
+coverage_service: cobertura_xml
 xcodeproj: ./StackOv.xcodeproj
 scheme: StackOv (iOS)
 output_directory: ./
