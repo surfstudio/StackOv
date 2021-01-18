@@ -1,4 +1,4 @@
-name: Build and check 
+name: Dev Pull request checker
 
 on: pull_request
 
@@ -25,4 +25,7 @@ jobs:
           -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
           test \
           | ./xcbeautify
+    
+    - name: Upload coverage to Codecov
+      run: bash <(curl -s https://codecov.io/bash) -J 'StackOv'
     
