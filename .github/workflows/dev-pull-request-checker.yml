@@ -21,11 +21,10 @@ jobs:
     - name: Download slather
       run: gem install slather
 
-    - name: Disable Firebase for this build
-      run: export FIREBASE_DISABLED=YES
-
     - name: Resolve dependencies
       run: xcodebuild -resolvePackageDependencies | ./xcbeautify
+      env:
+        FIREBASE_DISABLED: YES
 
     - name: Build and test
       run: |
