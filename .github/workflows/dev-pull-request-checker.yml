@@ -23,9 +23,10 @@ jobs:
           -scheme 'StackOv (iOS)' \
           -sdk iphonesimulator \
           -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
+          -derivedDataPath .build/derivedData \
           test \
           | ./xcbeautify
     
     - name: Upload coverage to Codecov
-      run: bash <(curl -s https://codecov.io/bash)
+      run: bash <(curl -s https://codecov.io/bash) -D .build/derivedData
     
