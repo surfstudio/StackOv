@@ -30,10 +30,10 @@ jobs:
           -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
           test \
           | ./xcbeautify
-          
+
     - name: Prepare .xccoverage file to Codecov
       run: slather
     
     - name: Upload coverage to Codecov
-      run: bash <(curl -s https://codecov.io/bash) -f ./cobertura.xml
+      run: bash <(curl -s https://codecov.io/bash) -f ./coverage.xml
     
