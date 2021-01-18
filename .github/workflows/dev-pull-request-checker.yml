@@ -1,4 +1,4 @@
-name: Dev Pull request checker
+name: Dev pull request checker
 
 on: pull_request
 
@@ -21,11 +21,6 @@ jobs:
     - name: Download slather
       run: gem install slather
 
-    - name: Resolve dependencies
-      run: xcodebuild -resolvePackageDependencies | ./xcbeautify
-      env:
-        FIREBASE_DISABLED: YES
-
     - name: Build and test
       run: |
         set -o pipefail
@@ -35,6 +30,8 @@ jobs:
           -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
           build test \
           | ./xcbeautify
+      env:
+        FIREBASE_DISABLED: YES
 
     - name: Prepare .xccoverage file to Codecov
       run: slather
