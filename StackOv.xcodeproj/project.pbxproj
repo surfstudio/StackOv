@@ -363,7 +363,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ ! -z FIREBASE_DISABLED ]]; then\n  \"${BUILD_DIR%Build/*}SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\nfi\n";
+			shellScript = "if [[ -z $FIREBASE_DISABLED ]]; then\n  \"${BUILD_DIR%Build/*}SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\nfi\n";
 		};
 		6F2E47E3252477300080F778 /* Palette generation */ = {
 			isa = PBXShellScriptBuildPhase;
