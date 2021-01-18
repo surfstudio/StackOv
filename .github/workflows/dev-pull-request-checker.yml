@@ -18,6 +18,9 @@ jobs:
         curl -L -o xcbeautify-0.9.1.zip https://github.com/thii/xcbeautify/releases/download/0.9.1/xcbeautify-0.9.1-x86_64-apple-macosx.zip
         unzip -qq ./xcbeautify-0.9.1.zip
 
+    - name: Download slather
+      run: gem install slather
+
     - name: Build and test
       run: |
         set -o pipefail
@@ -25,10 +28,12 @@ jobs:
           -scheme 'StackOv (iOS)' \
           -sdk iphonesimulator \
           -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
-          -derivedDataPath .build/derivedData \
           test \
           | ./xcbeautify
+          
+    - name: Prepare .xccoverage file to Codecov
+      run: slather
     
     - name: Upload coverage to Codecov
-      run: bash <(curl -s https://codecov.io/bash) -D .build/derivedData
+      run: bash <(curl -s https://codecov.io/bash) -f ./cobertura.xml
     
