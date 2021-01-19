@@ -12,15 +12,16 @@ struct PostItemView: View {
     
     // MARK: - Nested types
     
-    typealias Model = QuestionItemViewModel
+    typealias Model = PostItemViewModel
 
     // MARK: - States
     
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State private var hovered = false
     
     // MARK: - Properties
     
-    let model: QuestionItemViewModel
+    let model: PostItemViewModel
 
     // MARK: - View
     
@@ -47,7 +48,9 @@ struct PostItemView: View {
         VStack(alignment: .leading, spacing: 0) {
             topContent
             Spacer()
-            bottomContent
+            if !sizeCategory.isAccessibilityCategory {
+                bottomContent
+            }
         }
         .padding(EdgeInsets.all(16))
     }
@@ -57,14 +60,16 @@ struct PostItemView: View {
             menu
             
             Text(model.title)
-                .font(.footnote)
+                .font(.body)
                 .fontWeight(.bold)
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
             
-            TagsCollectionView(model.tags, preferredWidth: 235, alignment: .top) { tag in
-                TagButton(tag: tag) {
-                    // TODO: - Need to add a logic
+            if !sizeCategory.isAccessibilityCategory {
+                TagsCollectionView(model.tags, preferredWidth: 267, alignment: .top) { tag in
+                    TagButton(tag: tag) {
+                        // TODO: - Need to add a logic
+                    }
                 }
             }
         }
@@ -73,16 +78,19 @@ struct PostItemView: View {
     var menu: some View {
         HStack(alignment: .top) {
             HStack(spacing: 13) {
-                QuestionItemInfoView(model: model)
-                Text("\(model.votesNumber) votes")
-                    .font(.footnote)
+                PostItemInfoView(model: model)
+                if sizeCategory.isAccessibilityCategory {
+                    Text("\(model.votesNumber)\nvotes")
+                        .font(.subheadline)
+                        .lineLimit(2)
+                } else {
+                    Text("\(model.votesNumber) votes")
+                        .font(.subheadline)
+                        .lineLimit(1)
+                }
             }
             
             Spacer()
-            
-            EllipsisButton {
-                // TODO: - Need to add a logic
-            }
         }
     }
     
@@ -96,14 +104,14 @@ struct PostItemView: View {
                     .foregroundColor(Palette.white.opacity(0.5))
                 Text("\(model.viewsNumber)")
                     .foregroundColor(Palette.white.opacity(0.7))
-                    .font(.system(size: 10, weight: .regular))
+                    .font(.caption)
             }
             
             Spacer()
             
             Text(model.formattedLastUpdate)
                 .foregroundColor(Palette.white.opacity(0.7))
-                .font(.system(size: 10, weight: .regular))
+                .font(.caption)
         }
     }
 }
@@ -118,7 +126,7 @@ struct QuestionItemView_Previews: PreviewProvider {
     ]
     
     static var previews: some View {
-        let model = QuestionItemViewModel(
+        let model = PostItemViewModel(
             id: 0,
             title: "How to make TouchableOpacity wrap its content when nested inside parent that has flex = 1",
             hasAcceptedAnswer: true,
