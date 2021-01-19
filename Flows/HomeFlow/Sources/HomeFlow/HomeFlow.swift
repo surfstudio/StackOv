@@ -14,6 +14,10 @@ import Components
 
 public struct HomeFlow: View {
     
+    // MARK: - States
+    
+    @State private var isFilterViewPresented = false
+    
     // MARK: - Initialization
 
     public init() {}
@@ -55,7 +59,11 @@ public struct HomeFlow: View {
             
             Spacer()
             
-            FilterButton(activeFilters: .constant(3), action: { })
+            FilterButton(activeFilters: .constant(3)) {
+                isFilterViewPresented = true
+            }.sheet(isPresented: $isFilterViewPresented) {
+                FilterView()
+            }
         }
         .frame(height: 30)
         .listRowInsets(EdgeInsets.zero)
