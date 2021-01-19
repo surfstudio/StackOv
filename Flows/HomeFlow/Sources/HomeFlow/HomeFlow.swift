@@ -30,7 +30,7 @@ public struct HomeFlow: View {
             PageView()
                 .navigationBarTitle("All Questions")
                 .modifier(NavigationViewIntrospectModifier())
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 
     var padContent: some View {
