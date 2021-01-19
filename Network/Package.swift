@@ -10,11 +10,10 @@ let package = Package(
         .library(name: "Network", targets: ["Network"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.2.2")),
         .package(path: "../Common")
     ],
     targets: [
-        .target(name: "Network", dependencies: ["Alamofire", "Common"]),
+        .target(name: "Network", dependencies: ["Common"]),
         .testTarget(name: "NetworkTests", dependencies: ["Network"])
     ]
 )

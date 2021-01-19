@@ -4,89 +4,94 @@
 //
 
 import Foundation
-import Alamofire
-import Combine
 
 public protocol RequestProtocol {
 
     associatedtype Endpoint
     associatedtype Output
     
-    var httpMethod: HTTPMethod { get }
+    var httpMethod: String { get }
     var urlMask: String { get }
-    
-    init(httpMethod: HTTPMethod,
+    var cachePolicy: URLRequest.CachePolicy { get }
+    var timeoutInterval: TimeInterval { get }
+
+    init(httpMethod: String,
          urlMask: String,
-         headers: HTTPHeaders?,
-         interceptor: RequestInterceptor?,
-         requestModifier: Session.RequestModifier?)
+         cachePolicy: URLRequest.CachePolicy,
+         timeoutInterval: TimeInterval)
+    
+    func buildURL(arguments: [CVarArg]) throws -> URL
+    func buildURLRequest(byURL url: URL) throws -> URLRequest
+    func buildURLRequest(arguments: [CVarArg]) throws -> URLRequest
+    func buildURLRequest(parameters: [URLQueryItem], arguments: [CVarArg]) throws -> URLRequest
+    
 }
 
 public struct Request<Endpoint, Output>: RequestProtocol where Output: Decodable {
     
-    public typealias Response = AnyPublisher<Output, NetworkError>
+    // MARK: - Nested types
     
-    public let httpMethod: HTTPMethod
+    public enum Errors: Error {
+        case invalidURLString(urlString: String)
+        case invalidURLComponents(urlComponents: URLComponents)
+        case percentEncoding(urlString: String, allowedCharacters: CharacterSet)
+    }
+    
+    // MARK: - Public properties
+    
+    public let httpMethod: String
     public let urlMask: String
-    public let headers: HTTPHeaders?
-    public let interceptor: RequestInterceptor?
-    public let requestModifier: Session.RequestModifier?
+    public let cachePolicy: URLRequest.CachePolicy
+    public let timeoutInterval: TimeInterval
     
-    public init(httpMethod: HTTPMethod,
+    // MARK: - Initialization
+
+    public init(httpMethod: String,
                 urlMask: String,
-                headers: HTTPHeaders? = nil,
-                interceptor: RequestInterceptor? = nil,
-                requestModifier: Session.RequestModifier? = nil) {
+                cachePolicy: URLRequest.CachePolicy,
+                timeoutInterval: TimeInterval) {
         self.httpMethod = httpMethod
         self.urlMask = urlMask
-        self.headers = headers
-        self.interceptor = interceptor
-        self.requestModifier = requestModifier
+        self.cachePolicy = cachePolicy
+        self.timeoutInterval = timeoutInterval
     }
     
-    public func prepare(headers: HTTPHeaders? = nil,
-                        interceptor: RequestInterceptor? = nil,
-                        requestModifier: Session.RequestModifier? = nil) -> Self {
-        Self.init(
-            httpMethod: httpMethod,
-            urlMask: urlMask,
-            headers: headers,
-            interceptor: interceptor,
-            requestModifier: requestModifier
-        )
+    // MARK: - Public methods
+    
+    public func buildURL(arguments: [CVarArg]) throws -> URL {
+        (try buildURLComponents(arguments: arguments).url)!
     }
     
-    public func process(_ arguments: CVarArg...) -> Response {
-        guard let urlString = String(format: urlMask, arguments: arguments).urlQueryAllowed else {
-            return Fail(error: NetworkError.invalidURL(url: urlMask)).eraseToAnyPublisher()
+    public func buildURLRequest(byURL url: URL) throws -> URLRequest {
+        var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval)
+        request.httpMethod = httpMethod
+        return request
+    }
+
+    public func buildURLRequest(arguments: [CVarArg]) throws -> URLRequest {
+        try buildURLRequest(byURL: try buildURL(arguments: arguments))
+    }
+    
+    public func buildURLRequest(parameters: [URLQueryItem], arguments: [CVarArg]) throws -> URLRequest {
+        var urlComponents = try buildURLComponents(arguments: arguments)
+        urlComponents.queryItems = (urlComponents.queryItems ?? []) + parameters
+        guard let url = urlComponents.url else {
+            throw Errors.invalidURLComponents(urlComponents: urlComponents)
         }
-        return AF.request(
-            urlString,
-            method: httpMethod,
-            headers: headers,
-            interceptor: interceptor,
-            requestModifier: requestModifier
-        )
-        .publishDecodable(type: Output.self)
-        .value()
+        return try buildURLRequest(byURL: url)
+    }
+        
+    // MARK: - Internal methods
+    
+    func buildURLComponents(arguments: [CVarArg]) throws -> URLComponents {
+        let urlString = String(format: urlMask, arguments: arguments)
+        guard let preparedURL = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            throw Errors.percentEncoding(urlString: urlString, allowedCharacters: .urlQueryAllowed)
+        }
+        guard let urlComponents = URLComponents(string: preparedURL) else {
+            throw Errors.invalidURLString(urlString: preparedURL)
+        }
+        return urlComponents
     }
     
-    public func process<Parameters: Encodable>(parameters: Parameters?,
-                                               encoder: ParameterEncoder = URLEncodedFormParameterEncoder.default,
-                                               arguments: CVarArg...) -> Response {
-        guard let urlString = String(format: urlMask, arguments: arguments).urlQueryAllowed else {
-            return Fail(error: NetworkError.invalidURL(url: urlMask)).eraseToAnyPublisher()
-        }
-        return AF.request(
-            urlString,
-            method: httpMethod,
-            parameters: parameters,
-            encoder: encoder,
-            headers: headers,
-            interceptor: interceptor,
-            requestModifier: requestModifier
-        )
-        .publishDecodable(type: Output.self)
-        .value()
-    }
 }

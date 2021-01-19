@@ -4,20 +4,28 @@
 //
 
 import Network
+import Combine
+import Foundation
 import DataTransferObjects
 
 public extension Request where Endpoint == StackexchangeNetworkService.LoadAnswers, Output == PostsEntry<AnswerEntry> {
-    
-    func callAsFunction(questionId id: Int, page: Int, pageSize: Int) -> Response {
-        let systemParameters: [String: String] = [
-            "key": StackexchangeNetworkService.Constants.quotaKey,
-            "filter": StackexchangeNetworkService.Constants.answerFilter,
-            "site": "stackoverflow"
+
+    func callAsFunction(questionId id: Int, page: Int, pageSize: Int) -> AnyPublisher<Output, Error> {
+        let systemParameters: [URLQueryItem] = [
+            URLQueryItem(name: "key", value: StackexchangeNetworkService.Constants.quotaKey),
+            URLQueryItem(name: "filter", value: StackexchangeNetworkService.Constants.answerFilter),
+            URLQueryItem(name: "site", value: "stackoverflow")
         ]
-        return process(
-            parameters: systemParameters,
-            encoder: NetworkParameterEncoder(destination: .queryString),
-            arguments: id, page, pageSize
-        )
+        
+        do {
+            let request = try buildURLRequest(parameters: systemParameters, arguments: [id, page, pageSize])
+            return URLSession.shared.dataTaskPublisher(for: request)
+                .tryCatchHTTPError()
+                .map { $0.data }
+                .decode(type: Output.self, decoder: JSONDecoder())
+                .eraseToAnyPublisher()
+        } catch {
+            return Fail(error: error).eraseToAnyPublisher()
+        }
     }
 }
