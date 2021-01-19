@@ -68,7 +68,7 @@ struct PostItemView: View {
             if !sizeCategory.isAccessibilityCategory {
                 TagsCollectionView(model.tags, preferredWidth: 267, alignment: .top) { tag in
                     TagButton(tag: tag) {
-                        // TODO: - Need to add a logic
+                        // TODO: - Issue #38
                     }
                 }
             }
