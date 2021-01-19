@@ -1,16 +1,10 @@
 name: Change checker
 
 on: 
-  push:
-    banches:
-      - main
-      - develop
-      - 'release/**'
   pull_request:
     banches:
       - main
       - develop
-      - 'release/**'
 
 jobs:
   test-project:
@@ -25,6 +19,7 @@ jobs:
 
     - name: Resolve external dependencies
       run: |
+        brew update || brew update
         brew install swiftgen
         brew install xcbeautify
         gem install slather
