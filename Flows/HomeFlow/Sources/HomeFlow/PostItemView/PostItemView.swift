@@ -1,5 +1,5 @@
 //
-//  QuestionItemView.swift
+//  PostItemView.swift
 //  This source file is part of the StackOv open source project
 //
 
@@ -8,7 +8,7 @@ import Palette
 import Common
 import Components
 
-struct QuestionItemView: View {
+struct PostItemView: View {
     
     // MARK: - Nested types
     
@@ -130,7 +130,7 @@ struct QuestionItemView_Previews: PreviewProvider {
             tags: ["123", "perfomance", "microsoft-ui-automation", "css", "c++",
                    "123", "perfomance", "microsoft-ui-automation", "css", "c++"]
         )
-        QuestionItemView(model: model)
+        PostItemView(model: model)
             .padding()
             .background(Color.black)
             .previewLayout(.sizeThatFits)

@@ -1,5 +1,5 @@
 //
-//  QuestionItemViewModel.swift
+//  PostItemViewModel.swift
 //  This source file is part of the StackOv open source project
 //
 
@@ -7,7 +7,7 @@ import Foundation
 import struct SwiftUI.Color
 import struct PageStore.QuestionItemModel
 
-struct QuestionItemViewModel: Identifiable {
+struct PostItemViewModel: Identifiable {
     
     enum LastUpdateType {
         case asked(Date)
@@ -28,7 +28,7 @@ struct QuestionItemViewModel: Identifiable {
 
 // MARK: - Extensions
 
-extension QuestionItemViewModel {
+extension PostItemViewModel {
     
     var isEmpty: Bool {
         answersNumber == 0
@@ -66,7 +66,7 @@ extension QuestionItemViewModel {
     }
 }
 
-fileprivate extension QuestionItemViewModel.LastUpdateType {
+fileprivate extension PostItemViewModel.LastUpdateType {
     
     var date: Date {
         switch self {
@@ -80,11 +80,11 @@ fileprivate extension QuestionItemViewModel.LastUpdateType {
     }
 }
 
-extension QuestionItemViewModel {
+extension PostItemViewModel {
     
     static func from(model: QuestionItemModel,
-                     backgroundColors: (top: Color, bottom: Color)) -> QuestionItemViewModel {
-        return QuestionItemViewModel(
+                     backgroundColors: (top: Color, bottom: Color)) -> PostItemViewModel {
+        return PostItemViewModel(
             id: model.id,
             title: model.title,
             hasAcceptedAnswer: model.hasAcceptedAnswer,

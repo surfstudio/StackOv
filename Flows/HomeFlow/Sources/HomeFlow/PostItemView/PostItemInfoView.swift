@@ -1,11 +1,11 @@
 //
-//  QuestionItemInfoView.swift
+//  PostItemInfoView.swift
 //  This source file is part of the StackOv open source project
 //
 
 import SwiftUI
 
-struct QuestionItemInfoView: View {
+struct PostItemInfoView: View {
     
     // MARK: - Nested types
     
@@ -15,7 +15,7 @@ struct QuestionItemInfoView: View {
     
     // MARK: - Properties
     
-    let model: QuestionItemViewModel
+    let model: PostItemViewModel
     
     // MARK: - View
     
