@@ -9,9 +9,7 @@ let package = Package(
     products: [
         .library(name: "Palette", targets: ["Palette"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/SwiftGen/SwiftGen.git", from: "6.3.0")
-    ],
+    dependencies: [],
     targets: [
         .target(name: "Palette", dependencies: [])
     ]

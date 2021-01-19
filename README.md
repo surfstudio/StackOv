@@ -19,4 +19,7 @@
     <a href="https://github.com/surfstudio/StackOv/blob/main/LICENSE">
         <img src="https://img.shields.io/github/license/surfstudio/StackOv" alt="License">
     </a>
+    <a href="https://codecov.io/gh/surfstudio/StackOv">
+        <img src="https://codecov.io/gh/surfstudio/StackOv/branch/main/graph/badge.svg?token=1KAPQC9ICT"/>
+    </a>
 </p>

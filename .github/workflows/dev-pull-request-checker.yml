@@ -1,0 +1,39 @@
+name: Pull request checker
+
+on: pull_request
+
+jobs:
+  test-project:
+
+    runs-on: macos-latest
+  
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Resolve external dependencies
+      run: |
+        brew install swiftgen
+        brew install xcbeautify
+        gem install slather
+
+    - name: Build and test
+      run: |
+        set -o pipefail
+        xcodebuild -project 'StackOv.xcodeproj' \
+          -scheme 'StackOv (iOS)' \
+          -sdk iphonesimulator \
+          -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
+          build test \
+          | xcbeautify
+      env:
+        FIREBASE_DISABLED: YES
+
+    - name: Prepare .xccoverage file to Codecov
+      run: slather
+    
+    - name: Upload coverage to Codecov
+      run: bash <(curl -s https://codecov.io/bash) -f ./cobertura.xml
+    

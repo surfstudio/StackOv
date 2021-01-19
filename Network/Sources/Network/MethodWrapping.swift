@@ -4,50 +4,54 @@
 //
 
 import Foundation
-import Alamofire
 import Common
 
 public class MethodWrapping<Request, Endpoint, Output> where Request: RequestProtocol, Request.Output == Output, Request.Endpoint == Endpoint {
     
     @Lazy internal var request: Request!
     
-    internal lazy var method: HTTPMethod = {
+    internal lazy var method: String = {
         let typeName = "\(type(of: self))"
         guard let objectName = typeName.split(separator: "<").first else {
-            return HTTPMethod(rawValue: typeName)
+            return typeName
         }
-        return HTTPMethod(rawValue: String(objectName))
+        return String(objectName)
     }()
     
-    public init(_ urlMask: String) {
+    public init(_ urlMask: String,
+                cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
+                timeoutInterval: TimeInterval = 60.0) {
         request = Request(
             httpMethod: method,
             urlMask: urlMask,
-            headers: nil,
-            interceptor: nil,
-            requestModifier: nil
+            cachePolicy: cachePolicy,
+            timeoutInterval: timeoutInterval
         )
     }
     
-    public init(_ baseUrl: String, _ urlMask: String) {
+    public init(_ baseUrl: String,
+                _ urlMask: String,
+                cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
+                timeoutInterval: TimeInterval = 60.0) {
         let urlString = baseUrl.dropLastSlash() + "/" + urlMask.dropFirstSlash()
         request = Request(
             httpMethod: method,
             urlMask: urlString,
-            headers: nil,
-            interceptor: nil,
-            requestModifier: nil
+            cachePolicy: cachePolicy,
+            timeoutInterval: timeoutInterval
         )
     }
     
-    public init(_ baseUrl: URL, _ urlMask: String) {
+    public init(_ baseUrl: URL,
+                _ urlMask: String,
+                cachePolicy: URLRequest.CachePolicy = .useProtocolCachePolicy,
+                timeoutInterval: TimeInterval = 60.0) {
         let urlString = baseUrl.absoluteString.dropLastSlash() + "/" + urlMask.dropFirstSlash()
         request = Request(
             httpMethod: method,
             urlMask: urlString,
-            headers: nil,
-            interceptor: nil,
-            requestModifier: nil
+            cachePolicy: cachePolicy,
+            timeoutInterval: timeoutInterval
         )
     }
 }
