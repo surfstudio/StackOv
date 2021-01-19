@@ -12,23 +12,7 @@ import AppScript
 import struct PageStore.QuestionItemModel
 
 struct PageView: View {
-    
-    // FIXIT: - Need to replace this to mock service
-    let data = Palette.linearGradientPalette.enumerated().map {
-        QuestionItemViewModel(
-            id: $0,
-            title: "How to make TouchableOpacity wrap its content when nested inside parent that has flex = 1",
-            hasAcceptedAnswer: false,
-            answersNumber: 3,
-            votesNumber: 15,
-            viewsNumber: 207,
-            lastUpdateType: .asked(Date(timeInterval: -90000, since: Date())),
-            backgroundColors: $1,
-            tags: ["123", "perfomance", "microsoft-ui-automation", "css", "c++",
-                   "123", "perfomance", "microsoft-ui-automation", "css", "c++"]
-        )
-    }
-    
+
     // MARK: - States
 
     @Store var store: PageStore
@@ -36,12 +20,12 @@ struct PageView: View {
     
     // MARK: - Properties
     
-    let columns = [
-        GridItem(.adaptive(minimum: 267), spacing: 24)
-    ]
+    var columns: [GridItem] {
+        [GridItem(.adaptive(minimum: 267), spacing: defaultSpacing)]
+    }
     
     var defaultSpacing: CGFloat {
-        UIDevice.current.userInterfaceIdiom.isPad ? 24 : 12
+        UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
     }
     
     // MARK: - Views
@@ -66,17 +50,16 @@ struct PageView: View {
         }
     }
     
-    func content(_ models: [QuestionItemViewModel] = []) -> some View {
+    func content(_ models: [PostItemViewModel] = []) -> some View {
         LazyVGrid(columns: columns, spacing: defaultSpacing) {
             ForEach(models) { item in
                 itemView(item)
             }
         }
-        .padding(EdgeInsets.horizontal(defaultSpacing))
-        .padding(.bottom, defaultSpacing)
+        .padding(.all, defaultSpacing)
     }
 
-    func itemView(_ item: QuestionItemView.Model) -> some View {
+    func itemView(_ item: PostItemView.Model) -> some View {
         ZStack {
             NavigationLink(destination: EmptyView(), tag: item.id, selection: $selectedItem) {
                 EmptyView()
@@ -84,7 +67,7 @@ struct PageView: View {
             .buttonStyle(PlainButtonStyle())
             
             Button(action: { selectedItem = item.id }) {
-                QuestionItemView(model: item)
+                PostItemView(model: item)
             }
             .buttonStyle(PlainButtonStyle())
         }
@@ -119,14 +102,14 @@ fileprivate extension Color {
 
 fileprivate extension Array where Element == QuestionItemModel {
     
-    func toViewModel() -> [QuestionItemViewModel] {
+    func toViewModel() -> [PostItemViewModel] {
         let colors = Palette.linearGradientPalette
         var colorIndex: Int = (0..<colors.count).randomElement() ?? 0
         
-        var result: [QuestionItemViewModel] = []
+        var result: [PostItemViewModel] = []
         for item in self {
             if colorIndex > colors.count - 1 { colorIndex = 0 }
-            result.append(QuestionItemViewModel.from(model: item, backgroundColors: colors[colorIndex]))
+            result.append(PostItemViewModel.from(model: item, backgroundColors: colors[colorIndex]))
             colorIndex += 1
         }
         
