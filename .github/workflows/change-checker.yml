@@ -1,6 +1,16 @@
-name: Pull request checker
+name: Change checker
 
-on: pull_request
+on: 
+  push:
+    banches:
+      - main
+      - develop
+      - 'release/**'
+  pull_request:
+    banches:
+      - main
+      - develop
+      - 'release/**'
 
 jobs:
   test-project:
