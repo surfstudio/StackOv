@@ -19,12 +19,17 @@ public struct TagButton: View {
     public var body: some View {
         Button(action: action) {
             Text(tag)
+                .font(.subheadline)
+                .fontWeight(.medium)
         }
         .modifier(TagButtonStyle())
     }
     
     public static func size(for text: String) -> CGSize {
-        let tagSize = (text as NSString).size(withAttributes: [.font: UIFont.systemFont(ofSize: 10, weight: .regular)])
+        let trait = UITraitCollection(preferredContentSizeCategory: .medium)
+        let tagSize = (text as NSString).size(
+            withAttributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline, compatibleWith: trait)]
+        )
         return CGSize(width: ceil(20 + tagSize.width), height: ceil(6 + tagSize.height))
     }
 }
@@ -55,7 +60,6 @@ fileprivate struct TagButtonStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .buttonStyle(BorderlessButtonStyle())
-            .font(.system(size: 10, weight: .regular))
             .lineLimit(1)
             .foregroundColor(.foreground)
             .padding([.top, .bottom], 3)

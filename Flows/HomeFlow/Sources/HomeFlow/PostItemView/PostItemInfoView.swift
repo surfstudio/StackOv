@@ -1,11 +1,11 @@
 //
-//  QuestionItemInfoView.swift
+//  PostItemInfoView.swift
 //  This source file is part of the StackOv open source project
 //
 
 import SwiftUI
 
-struct QuestionItemInfoView: View {
+struct PostItemInfoView: View {
     
     // MARK: - Nested types
     
@@ -15,7 +15,7 @@ struct QuestionItemInfoView: View {
     
     // MARK: - Properties
     
-    let model: QuestionItemViewModel
+    let model: PostItemViewModel
     
     // MARK: - View
     
@@ -45,11 +45,13 @@ struct QuestionItemInfoView: View {
     var content: some View {
         VStack(alignment: .center) {
             Text("\(model.answersNumber)")
-                .font(.subheadline)
+                .font(.body)
                 .fontWeight(.bold)
+                .lineLimit(1)
                 .opacity(model.isEmpty ? 0.5 : 1)
             Text("answers")
-                .font(.footnote)
+                .font(.subheadline)
+                .lineLimit(1)
                 .opacity(model.isEmpty ? 0.5 : 1)
         }
         .padding(.horizontal, 6)
