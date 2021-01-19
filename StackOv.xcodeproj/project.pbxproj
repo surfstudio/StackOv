@@ -381,7 +381,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SRCROOT}/Palette\n/usr/bin/xcrun --sdk macosx swift run -c release swiftgen config run --config ./Scripts/swiftgen.yml\n";
+			shellScript = "if which swiftgen >/dev/null; then\n  cd ${SRCROOT}/Palette\n  swiftgen config run --config ./Scripts/swiftgen.yml\nelse\necho \"error: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nexit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

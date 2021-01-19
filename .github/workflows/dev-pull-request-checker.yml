@@ -1,4 +1,4 @@
-name: Dev pull request checker
+name: Pull request checker
 
 on: pull_request
 
@@ -13,13 +13,11 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Download XCBeautify 0.9.1
+    - name: Resolve external dependencies
       run: |
-        curl -L -o xcbeautify-0.9.1.zip https://github.com/thii/xcbeautify/releases/download/0.9.1/xcbeautify-0.9.1-x86_64-apple-macosx.zip
-        unzip -qq ./xcbeautify-0.9.1.zip
-
-    - name: Download slather
-      run: gem install slather
+        brew install swiftgen
+        brew install xcbeautify
+        gem install slather
 
     - name: Build and test
       run: |
@@ -29,7 +27,7 @@ jobs:
           -sdk iphonesimulator \
           -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
           build test \
-          | ./xcbeautify
+          | xcbeautify
       env:
         FIREBASE_DISABLED: YES
 
