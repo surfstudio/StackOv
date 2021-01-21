@@ -1,8 +1,6 @@
 //
 //  SortOption.swift
-//  
-//
-//  Created by User on 19.01.2021.
+//  This source file is part of the StackOv open source project
 //
 
 enum SortOption: String, CaseIterable {
@@ -10,4 +8,11 @@ enum SortOption: String, CaseIterable {
     case recentActivity = "Recent activity"
     case mostVotes = "Most votes"
     case bountyEditingSoon = "Bounty editing soon"
+}
+
+extension SortOption: Identifiable {
+    
+    var id: Int {
+        hashValue
+    }
 }

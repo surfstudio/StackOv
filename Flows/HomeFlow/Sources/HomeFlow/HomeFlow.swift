@@ -62,7 +62,11 @@ public struct HomeFlow: View {
             FilterButton(activeFilters: .constant(3)) {
                 isFilterViewPresented = true
             }.sheet(isPresented: $isFilterViewPresented) {
-                FilterView(isFilterViewPresented: $isFilterViewPresented)
+                FilterView {
+                    isFilterViewPresented = false
+                } onDone: {
+                    isFilterViewPresented = false
+                }
             }
         }
         .frame(height: 30)
