@@ -21,15 +21,26 @@ struct FilterOptionRow: View {
     
     var body: some View {
         Button(action: { statesOfFilters[filterOption]?.toggle() }) {
-            HStack(spacing: 17) {
-                checkmark
+            VStack(alignment: .leading, spacing: 0) {
+                Spacer()
                 
-                Text(filterOption.rawValue)
-                    .bold()
+                HStack(spacing: 17) {
+                    checkmark
+                    
+                    Text(filterOption.rawValue)
+                        .bold()
+                        .foregroundColor(Color.foreground)
+                }
+                
+                Spacer()
+                
+                Divider()
+                    .padding(.leading, filterOption.isLast ? -22 : 38)
             }
+            .padding(.leading, 22)
         }
-        .listRowInsets(EdgeInsets.leading(22))
         .frame(height: 48)
+        .background(Color.background)
     }
     
     var checkmark: some View {
@@ -48,4 +59,21 @@ struct FilterOptionRow_Previews: PreviewProvider {
     static var previews: some View {
         FilterOptionRow(statesOfFilters: .constant(.init()), filterOption: .hasBounty)
     }
+}
+
+// MARK: - Estensions
+
+fileprivate extension FilterOption {
+    
+    var isLast: Bool {
+        self == Self.allCases.last
+    }
+}
+
+// MARK: - Colors
+
+fileprivate extension Color {
+    
+    static let foreground = Palette.white
+    static let background = Palette.grayblue
 }

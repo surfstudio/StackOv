@@ -24,6 +24,8 @@ public struct CheckmarkView: View {
         if isSelected {
             ZStack {
                 circle
+                    .overlay(Circle().stroke(Color.foreground(isSelected: true), lineWidth: 1))
+                
                 Image(systemName: "checkmark")
                     .foregroundColor(Color.white)
             }

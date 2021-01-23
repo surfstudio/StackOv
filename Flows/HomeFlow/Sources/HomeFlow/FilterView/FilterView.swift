@@ -5,6 +5,7 @@
 
 import SwiftUI
 import Palette
+import Introspect
 
 struct FilterView: View {
     
@@ -53,21 +54,26 @@ struct FilterView: View {
                         }
                     }
                 }
-        }.accentColor(Color.main)
+                .modifier(NavigationViewIntrospectModifier())
+        }
     }
     
     var content: some View {
-        List {
-            CustomSection(header: sectionHeader(title: "Filter by")) {
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                sectionHeader(title: "Filter by")
+                
                 ForEach(FilterOption.allCases) {
                     FilterOptionRow(statesOfFilters: $statesOfFilters, filterOption: $0)
                 }
-            }
-            
-            CustomSection(header: sectionHeader(title: "Sorted by")) {
+                
+                sectionHeader(title: "Sorted by")
+                
                 ForEach(SortOption.allCases) {
                     SortOptionRow(statesOfSorts: $statesOfSorts, sortOption: $0)
                 }
+                
+                Spacer()
             }
         }
     }
@@ -75,10 +81,16 @@ struct FilterView: View {
     // MARK: - View methods
     
     func sectionHeader(title: String) -> some View {
-        Text(title)
-            .foregroundColor(Color.sectionForeground)
-            .padding(.top, 24)
-            .padding(.bottom, 10)
+        VStack {
+            HStack {
+                Text(title.uppercased())
+                    .foregroundColor(Color.sectionForeground)
+                    .padding(EdgeInsets(top: 24, leading: 20, bottom: 10, trailing: 0))
+                
+                Spacer()
+            }
+        }
+        .background(Color.sectionBackground)
     }
 }
 
@@ -91,34 +103,39 @@ struct FilterView_Previews: PreviewProvider {
     }
 }
 
+// MARK: - View modifiers
+
+fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content.introspectNavigationController {
+            $0.navigationBar.backgroundColor = UIColor.navigationBackground
+            $0.navigationBar.tintColor = UIColor.main
+            
+            // This is hack to make navigation bar clear
+            let image = UIImage()
+            $0.navigationBar.shadowImage = image
+            $0.navigationBar.setBackgroundImage(image, for: .default)
+        }
+    }
+}
+
 // MARK: - Colors
 
 fileprivate extension Color {
     
+    static let background = Palette.bluishblack
     static let sectionForeground = Palette.dullGray
+    static let sectionBackground = Palette.bluishblack
+    static let dividerBackground = Palette.grayblue
 }
 
-// MARK: - Custom section
-
-fileprivate struct CustomSection<Parent: View, Content: View>: View {
+fileprivate extension UIColor {
     
-    // MARK: - Properties
-    
-    let header: Parent
-    let content: () -> Content
-    
-    // MARK: - Initialization
-    
-    init(header: Parent, @ViewBuilder content: @escaping () -> Content) {
-        self.header = header
-        self.content = content
-    }
-    
-    // MARK: - View
-    
-    var body: some View {
-        Section(header: header, content: content)
-            .listRowInsets(EdgeInsets.leading(20))
-            .frame(height: 50)
-    }
+    static let foreground = PaletteCore.dullGray
+    static let background = PaletteCore.bluishblack
+    static let rowBackground = PaletteCore.grayblue
+        .withAlphaComponent(0.7).rgbaToRgb(by: .background)
+    static let navigationBackground = PaletteCore.grayblue
+        .withAlphaComponent(0.7).rgbaToRgb(by: .background)
 }

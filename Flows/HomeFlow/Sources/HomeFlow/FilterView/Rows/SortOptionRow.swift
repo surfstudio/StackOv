@@ -24,19 +24,31 @@ struct SortOptionRow: View {
             statesOfSorts = reset(states: statesOfSorts)
             statesOfSorts[sortOption]?.toggle()
         }) {
-            HStack(spacing: 17) {
-                Image(systemName: "checkmark")
-                    .foregroundColor(Color.checkmarkForegroundColor)
-                    .opacity((statesOfSorts[sortOption] ?? false) ? 1 : 0)
+            VStack(alignment: .leading, spacing: 0) {
+                Spacer()
                 
-                Text(sortOption.rawValue)
-                    .bold()
+                HStack(spacing: 17) {
+                    Image(systemName: "checkmark")
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(Color.checkmarkForeground)
+                        .opacity((statesOfSorts[sortOption] ?? false) ? 1 : 0)
+                    
+                    Text(sortOption.rawValue)
+                        .bold()
+                        .foregroundColor(Color.foreground)
+                }
+                
+                Spacer()
+                
+                Divider()
+                    .padding(.leading, sortOption.isLast ? -22 : 38)
             }
+            .padding(.leading, 22)
         }
-        .listRowInsets(EdgeInsets.leading(22))
         .frame(height: 48)
+        .background(Color.background)
     }
-    
+            
     // MARK: - Methods
     
     func reset(states: [SortOption: Bool]) -> [SortOption: Bool] {
@@ -53,9 +65,20 @@ struct SortOptionRow_Previews: PreviewProvider {
     }
 }
 
+// MARK: - Estensions
+
+fileprivate extension SortOption {
+    
+    var isLast: Bool {
+        self == Self.allCases.last
+    }
+}
+
 // MARK: - Colors
 
 fileprivate extension Color {
-        
-    static let checkmarkForegroundColor = Palette.main
+    
+    static let foreground = Palette.white
+    static let background = Palette.grayblue
+    static let checkmarkForeground = Palette.main
 }
