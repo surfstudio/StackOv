@@ -28,6 +28,20 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MarkdownTests"
+               BuildableName = "MarkdownTests"
+               BlueprintName = "MarkdownTests"
+               ReferencedContainer = "container:Markdown">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CommonTests"
                BuildableName = "CommonTests"
                BlueprintName = "CommonTests"
@@ -113,6 +127,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MarkdownTests"
+               BuildableName = "MarkdownTests"
+               BlueprintName = "MarkdownTests"
+               ReferencedContainer = "container:Markdown">
+            </BuildableReference>
+         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference

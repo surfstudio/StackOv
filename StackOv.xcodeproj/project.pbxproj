@@ -31,6 +31,7 @@
 /* Begin PBXFileReference section */
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
+		6F4AC2DE25BC3FF3002D0D86 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
 		6F96F26625854E54009E7DED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6FB8E3FC25B01E7C00E25240 /* PageStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PageStore; sourceTree = "<group>"; };
 		6FC0280A252CB0E7002150F5 /* Common */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Common; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 		6F2E47F92524A7F50080F778 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6F4AC2DE25BC3FF3002D0D86 /* Markdown */,
 				6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */,
 				6FC21BAC25929B93003387CE /* AppScript */,
 				6FC0280A252CB0E7002150F5 /* Common */,

@@ -64,7 +64,7 @@ struct PageView: View {
 
     func itemView(_ item: PostItemView.Model) -> some View {
         ZStack {
-            NavigationLink(destination: EmptyView(), tag: item.id, selection: $selectedItem) {
+            NavigationLink(destination: PostDetailsView(), tag: item.id, selection: $selectedItem) {
                 EmptyView()
             }
             .buttonStyle(PlainButtonStyle())
