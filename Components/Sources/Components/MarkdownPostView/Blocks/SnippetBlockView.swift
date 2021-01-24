@@ -8,11 +8,17 @@
 
 import SwiftUI
 import Markdown
+import Palette
 
 extension Markdown {
     
     struct SnippetBlockView: MarkdownUnitView {
+        
+        // MARK: - Properties
+        
         let unit: Unit
+        
+        // MARK: - View
         
         var body: some View {
             switch unit.type {
@@ -23,7 +29,9 @@ extension Markdown {
             }
         }
         
-        private func content(_ units: [Unit]) -> some View {
+        // MARK: - View methods
+        
+        func content(_ units: [Unit]) -> some View {
             VStack(spacing: 13) {
                 ForEach(units) { unit in
                     CodeBlockView(unit: unit)
@@ -40,6 +48,7 @@ extension Markdown {
 // MARK: - Previews
 
 struct SnippetBlockView_Previews: PreviewProvider {
+    
     static let unit = Markdown.Unit("""
     <!-- begin snippet: js hide: false console: true babel: false -->
     <!-- language: lang-html -->
@@ -55,18 +64,19 @@ struct SnippetBlockView_Previews: PreviewProvider {
     ```
     <!-- end snippet -->
     """)!.children.first!
+    
     static var previews: some View {
         Group {
             Markdown.SnippetBlockView(unit: unit)
                 .padding()
                 .previewLayout(.sizeThatFits)
-                .background(Color.mainBackground)
+                .background(Palette.bluishblack)
                 .environment(\.colorScheme, .light)
             
             Markdown.SnippetBlockView(unit: unit)
                 .padding()
                 .previewLayout(.sizeThatFits)
-                .background(Color.mainBackground)
+                .background(Palette.bluishblack)
                 .environment(\.colorScheme, .dark)
         }
     }
@@ -75,6 +85,6 @@ struct SnippetBlockView_Previews: PreviewProvider {
 // MARK: - Extensions
 
 fileprivate extension Color {
-    static let border = Color("snippetBlockBorder")
-    static let mainBackground = Color("mainBackground")
+    
+    static let border = Palette.white.opacity(0.08)
 }

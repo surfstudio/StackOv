@@ -11,10 +11,10 @@ import enum SwiftUI.ColorScheme
 
 public extension NSAttributedString {
     
-    typealias HTMLResult = (ColorScheme) throws -> NSAttributedString
+    typealias HTMLResult = (_ colorScheme: ColorScheme, _ stylesheet: String?) throws -> NSAttributedString
     
-    static func from(htmlString: String, stylesheet: String? = nil) -> HTMLResult {
-        return { colorScheme in
+    static func from(htmlString: String) -> HTMLResult {
+        return { colorScheme, stylesheet in
             let defaultStylesheet = """
             * { font-family: -apple-system; font-size: 15px; }
             code, pre { font-family: Menlo; font-weight: 400; background-color: \(colorScheme == .dark ? "#404345" : "#e4e6e8"); white-space: pre-wrap; }

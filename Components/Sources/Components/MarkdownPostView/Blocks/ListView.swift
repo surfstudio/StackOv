@@ -12,11 +12,16 @@ import Markdown
 extension Markdown {
     
     struct ListView: MarkdownUnitView {
+        
+        // MARK: - Properties
+        
         let unit: Unit
+        
+        // MARK: - View
         
         var body: some View {
             VStack(alignment: .leading, spacing: .zero) {
-                ForEach(unit.children, id: \.id) { child in
+                ForEach(unit.children) { child in
                     HStack(alignment: .top, spacing: 6) {
                         Text(child.listMark)
                             .padding(.top, 6)

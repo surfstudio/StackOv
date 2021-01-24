@@ -12,7 +12,12 @@ import Markdown
 extension Markdown {
     
     struct GlobalBlockView: MarkdownUnitView {
+        
+        // MARK: - Properties
+        
         let unit: Unit
+        
+        // MARK: - View
         
         var body: some View {
             VStack(alignment: .leading, spacing: .zero) {
@@ -30,8 +35,8 @@ extension Markdown {
                         Divider()
                             .padding([.top, .bottom], 4)
                     default:
-                        if case let .text(lazyText) = child.data {
-                            MarkdownTextView(attributedText: lazyText)
+                        if case let .text(lazyHtmlText) = child.data {
+                            MarkdownTextView(lazyHtmlText: lazyHtmlText)
                         } else {
                             fatalError("Unsupported type: \(child.type)")
                         }

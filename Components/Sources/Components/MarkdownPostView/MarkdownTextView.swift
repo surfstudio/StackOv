@@ -9,52 +9,91 @@
 import Foundation
 import SwiftUI
 import Markdown
+import Common
+import Palette
 
 struct MarkdownTextView: View {
+    
+    // MARK: - States
+    
     @State private var desiredHeight: CGFloat = .zero
     @State private var safariStatus: SafariStatus = .disable
     
-    let attributedText: NSAttributedString.HTMLResult
+    // MARK: - Properties
+    
+    let lazyHtmlText: NSAttributedString.HTMLResult
 
+    // MARK: - View
+    
     var body: some View {
-        _MarkdownTextView(
-            attributedText: self.attributedText,
-            desiredHeight: self.$desiredHeight,
-            safariStatus: self.$safariStatus
-        )
-        .frame(height: desiredHeight)
-        .sheet(isPresented: Binding<Bool>(get: { self.safariStatus.isEnable }, set: { _ in }), onDismiss: {
-            self.safariStatus = .disable
-        }) {
-//            SafariView(url: self.safariStatus.url)
-        }
+        _MarkdownTextView(desiredHeight: $desiredHeight, safariStatus: $safariStatus, lazyHtmlText: lazyHtmlText)
+            .frame(height: desiredHeight)
+            .sheet(isPresented: .init(get: { self.safariStatus.isEnable }, set: { _ in }), onDismiss: { safariStatus = .disable }) {
+                SafariView(url: safariStatus.url!)
+            }
     }
 }
 
+// MARK: - SafariStatus
+
 fileprivate enum SafariStatus {
+    
     case enable(URL)
     case disable
+}
+
+fileprivate extension SafariStatus {
     
     var isEnable: Bool {
-        guard case .enable = self else {
-            return false
-        }
+        guard case .enable = self else { return false }
         return true
     }
     
     var url: URL? {
-        guard case let .enable(url) = self else {
-            return nil
-        }
+        guard case let .enable(url) = self else { return nil }
         return url
     }
 }
 
+// MARK: - MarkdownTextView representation
+
 fileprivate struct _MarkdownTextView: UIViewRepresentable {
-    let attributedText: NSAttributedString.HTMLResult
+    
+    // MARK: - Nested types
+    
+    final class Coordinator: NSObject, UITextViewDelegate {
+        let view: _MarkdownTextView
+        
+        init(_ view: _MarkdownTextView) {
+            self.view = view
+        }
+        
+        func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+            guard UIApplication.shared.canOpenURL(URL), ["http", "https"].contains(URL.scheme ?? "") else {
+                return true
+            }
+            if UIDevice.current.userInterfaceIdiom.isMacCatalyst {
+                UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+            } else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.view.safariStatus = .enable(URL)
+                }
+            }
+            return false
+        }
+    }
+    
+    // MARK: - States
+    
+    @Environment(\.colorScheme) var colorScheme: ColorScheme
     @Binding var desiredHeight: CGFloat
     @Binding var safariStatus: SafariStatus
-    @Environment(\.colorScheme) var colorScheme: ColorScheme
+    
+    // MARK: - Properties
+    
+    let lazyHtmlText: NSAttributedString.HTMLResult
+
+    // MARK: - Methods
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -71,13 +110,12 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
         textView.backgroundColor = .clear
         textView.textContainer.lineFragmentPadding = .zero
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        
         return textView
     }
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         DispatchQueue.main.async {
-            let attributedText = (try? self.attributedText(self.colorScheme)) ?? NSAttributedString()
+            let attributedText = (try? lazyHtmlText(colorScheme, nil)) ?? NSAttributedString()
             let mAttributedText = NSMutableAttributedString(attributedString: attributedText)
             mAttributedText.addAttribute(
                 NSAttributedString.Key.foregroundColor,
@@ -87,36 +125,13 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
             uiView.attributedText = mAttributedText
             
             let newSize = uiView.sizeThatFits(CGSize(width: uiView.frame.size.width, height: CGFloat.greatestFiniteMagnitude))
-            self.desiredHeight = newSize.height
-        }
-    }
-    
-    final class Coordinator: NSObject, UITextViewDelegate {
-        let view: _MarkdownTextView
-        
-        init(_ view: _MarkdownTextView) {
-            self.view = view
-        }
-        
-        func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-            guard UIApplication.shared.canOpenURL(URL), ["http", "https"].contains(URL.scheme ?? "") else {
-                return true
-            }
-//            if UIDevice.current.userInterfaceIdiom.isMac {
-//                UIApplication.shared.tryOpen(url: URL)
-//            } else {
-//                DispatchQueue.main.async {
-//                    self.view.safariStatus = .enable(URL)
-//                }
-//            }
-            return false
+            desiredHeight = newSize.height
         }
     }
 }
 
 fileprivate extension UIColor {
     
-    static let foreground = UIColor(named: "questionTextForeground")
-    static let title = UIColor(named: "questionTitle")
-    static let background = UIColor(named: "mainBackground")
+    static let foreground = PaletteCore.white
+    static let background = PaletteCore.clear
 }

@@ -12,7 +12,12 @@ import Markdown
 extension Markdown {
     
     struct DocumentView: MarkdownUnitView {
+        
+        // MARK: - Properties
+        
         let unit: Unit
+        
+        // MARK: - View
         
         var body: some View {
             GlobalBlockView(unit: unit)

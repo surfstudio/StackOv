@@ -8,38 +8,30 @@
 
 import SwiftUI
 import Markdown
-//import Highlightr
+import Palette
 
 extension Markdown {
     
     struct CodeBlockView: MarkdownUnitView {
+        
+        // MARK: - Properties
+        
         let unit: Unit
+        
+        // MARK: - View
         
         var body: some View {
             switch unit.type {
             case let .codeBlock(_, code):
-                //            if let lang = codeType {
-                //                return AnyView(content(codeType: codeType, code: code))
-                //            } else {
                 content(code: code)
-//            }
             default:
                 EmptyView()
             }
         }
         
-//        private func content(codeType: String?, code: String) -> some View {
-//            ScrollView(.horizontal, showsIndicators: true) {
-//                CodeView(codeType: codeType, code: code)
-//                    .scaledToFit()
-//            }
-//            .padding([.leading, .top, .trailing], 12)
-//            .background(Color.background)
-//            .cornerRadius(6)
-//            .padding(.bottom, 3)
-//        }
+        // MARK: - View methods
         
-        private func content(code: String) -> some View {
+        func content(code: String) -> some View {
             ScrollView(.horizontal, showsIndicators: true) {
                 VStack(alignment: .center, spacing: .zero) {
                     Text(code)
@@ -54,53 +46,12 @@ extension Markdown {
             .padding(.bottom, 3)
         }
     }
-    
 }
-
-//fileprivate struct CodeView: UIViewRepresentable {
-//    let codeType: String?
-//    let code: String
-//
-//    init(codeType: String?, code: String) {
-//        self.codeType = codeType
-//        self.code = code
-//    }
-//
-//    private var textStorage = CodeAttributedString()
-//
-//    func makeUIView(context: Context) -> UITextView {
-//        textStorage.language = codeType?.lowercased()
-//        let layoutManager = NSLayoutManager()
-//        textStorage.addLayoutManager(layoutManager)
-//
-//        let textContainer = NSTextContainer(size: .zero)
-//        layoutManager.addTextContainer(textContainer)
-//
-//        let textView = UITextView(frame: .zero, textContainer: textContainer)
-//        textView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        textView.autocorrectionType = UITextAutocorrectionType.no
-//        textView.autocapitalizationType = UITextAutocapitalizationType.none
-//        textView.font = UIFont(name: "Menlo-Regular", size: 13)
-//        textView.textColor = UIColor(named: "codeBlockForeground")
-//        textView.isSelectable = true
-//        textView.isUserInteractionEnabled = true
-//        textView.isEditable = false
-//        textView.isScrollEnabled = false
-//        textView.dataDetectorTypes = .all
-//        textView.backgroundColor = .clear
-//        textView.textContainer.lineFragmentPadding = .zero
-//        textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-//        textView.text = code
-//
-//        return textView
-//    }
-//
-//    func updateUIView(_ uiView: UITextView, context: Context) {}
-//}
 
 // MARK: - Previews
 
 struct CodeBlockView_Previews: PreviewProvider {
+    
     static let unit = Markdown.Unit("""
     ```
     func convertHtml() -> NSAttributedString {
@@ -113,18 +64,19 @@ struct CodeBlockView_Previews: PreviewProvider {
     }
     ```
     """)!.children.first!
+    
     static var previews: some View {
         Group {
             Markdown.CodeBlockView(unit: unit)
                 .padding()
                 .previewLayout(.sizeThatFits)
-                .background(Color.mainBackground)
+                .background(Palette.bluishblack)
                 .environment(\.colorScheme, .light)
             
             Markdown.CodeBlockView(unit: unit)
                 .padding()
                 .previewLayout(.sizeThatFits)
-                .background(Color.mainBackground)
+                .background(Palette.bluishblack)
                 .environment(\.colorScheme, .dark)
         }
     }
@@ -133,7 +85,7 @@ struct CodeBlockView_Previews: PreviewProvider {
 // MARK: - Extensions
 
 fileprivate extension Color {
-    static let background = Color("codeBlockBackground")
-    static let foreground = Color("codeBlockForeground")
-    static let mainBackground = Color("mainBackground")
+    
+    static let background = Palette.white.opacity(0.04)
+    static let foreground = Palette.white
 }
