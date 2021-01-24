@@ -1,6 +1,9 @@
 //
 //  Wrappers.swift
-//  This source file is part of the StackOv open source project
+//  StackOv (AppScript module)
+//
+//  Created by Erik Basargin
+//  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import struct SwiftUI.ObservedObject

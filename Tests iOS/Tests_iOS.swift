@@ -1,8 +1,3 @@
-//
-//  Tests_iOS.swift
-//  This source file is part of the StackOv open source project
-//
-
 import XCTest
 
 class Tests_iOS: XCTestCase {

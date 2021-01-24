@@ -1,6 +1,9 @@
 //
-//  TagsCollection.swift
-//  This source file is part of the StackOv open source project
+//  TagCollection.swift
+//  StackOv (Components module)
+//
+//  Created by Erik Basargin
+//  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import SwiftUI
