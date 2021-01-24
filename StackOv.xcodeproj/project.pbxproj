@@ -20,7 +20,6 @@
 		6FC02894252F07D0002150F5 /* MessagesFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC02893252F07D0002150F5 /* MessagesFlow */; };
 		6FC0289F252F08FB002150F5 /* TagsFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC0289E252F08FB002150F5 /* TagsFlow */; };
 		6FC028AA252F099D002150F5 /* UsersFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC028A9252F099D002150F5 /* UsersFlow */; };
-		6FCC9B3C25237C5500BDD827 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B3B25237C5500BDD827 /* Tests_iOS.swift */; };
 		6FCC9B4925237C5500BDD827 /* StackOv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1D25237C5300BDD827 /* StackOv.xcdatamodeld */; };
 		6FCC9B4B25237C5500BDD827 /* StackOvApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1F25237C5300BDD827 /* StackOvApp.swift */; };
 		6FCC9B4D25237C5500BDD827 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B2025237C5300BDD827 /* ContentView.swift */; };
@@ -28,16 +27,6 @@
 		6FCC9B5125237C5500BDD827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FCC9B2225237C5500BDD827 /* Assets.xcassets */; };
 		6FE715C9258926E900D55B0C /* MainBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE715C8258926E900D55B0C /* MainBar.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		6FCC9B3825237C5500BDD827 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6FCC9B1825237C5300BDD827 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6FCC9B2625237C5500BDD827;
-			remoteInfo = "StackOv (iOS)";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
@@ -63,9 +52,6 @@
 		6FCC9B2225237C5500BDD827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6FCC9B2725237C5500BDD827 /* StackOv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StackOv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FCC9B2A25237C5500BDD827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6FCC9B3725237C5500BDD827 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6FCC9B3B25237C5500BDD827 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
-		6FCC9B3D25237C5500BDD827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FE715C8258926E900D55B0C /* MainBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBar.swift; sourceTree = "<group>"; };
 		6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DataTransferObjects; sourceTree = "<group>"; };
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
@@ -85,13 +71,6 @@
 				6FC0286E252EEDEE002150F5 /* HomeFlow in Frameworks */,
 				6FC028AA252F099D002150F5 /* UsersFlow in Frameworks */,
 				6FC02810252CB68F002150F5 /* Common in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6FCC9B3425237C5500BDD827 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +138,6 @@
 				6FCC9B1C25237C5300BDD827 /* Shared */,
 				6FCC9B2925237C5500BDD827 /* iOS */,
 				6FCC9B3025237C5500BDD827 /* iPadOS */,
-				6FCC9B3A25237C5500BDD827 /* Tests iOS */,
 				6FCC9B2825237C5500BDD827 /* Products */,
 				6F876D192525EF68008FC888 /* Frameworks */,
 			);
@@ -181,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				6FCC9B2725237C5500BDD827 /* StackOv.app */,
-				6FCC9B3725237C5500BDD827 /* Tests iOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -200,15 +177,6 @@
 				6FC0283C252DF90D002150F5 /* PadContentView.swift */,
 			);
 			path = iPadOS;
-			sourceTree = "<group>";
-		};
-		6FCC9B3A25237C5500BDD827 /* Tests iOS */ = {
-			isa = PBXGroup;
-			children = (
-				6FCC9B3B25237C5500BDD827 /* Tests_iOS.swift */,
-				6FCC9B3D25237C5500BDD827 /* Info.plist */,
-			);
-			path = "Tests iOS";
 			sourceTree = "<group>";
 		};
 		6FD295E0258990480012BFEE /* Application */ = {
@@ -270,24 +238,6 @@
 			productReference = 6FCC9B2725237C5500BDD827 /* StackOv.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6FCC9B3625237C5500BDD827 /* Tests iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6FCC9B5B25237C5500BDD827 /* Build configuration list for PBXNativeTarget "Tests iOS" */;
-			buildPhases = (
-				6FCC9B3325237C5500BDD827 /* Sources */,
-				6FCC9B3425237C5500BDD827 /* Frameworks */,
-				6FCC9B3525237C5500BDD827 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6FCC9B3925237C5500BDD827 /* PBXTargetDependency */,
-			);
-			name = "Tests iOS";
-			productName = "Tests iOS";
-			productReference = 6FCC9B3725237C5500BDD827 /* Tests iOS.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -299,10 +249,6 @@
 				TargetAttributes = {
 					6FCC9B2625237C5500BDD827 = {
 						CreatedOnToolsVersion = 12.2;
-					};
-					6FCC9B3625237C5500BDD827 = {
-						CreatedOnToolsVersion = 12.2;
-						TestTargetID = 6FCC9B2625237C5500BDD827;
 					};
 				};
 			};
@@ -322,7 +268,6 @@
 			projectRoot = "";
 			targets = (
 				6FCC9B2625237C5500BDD827 /* StackOv (iOS) */,
-				6FCC9B3625237C5500BDD827 /* Tests iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -334,13 +279,6 @@
 			files = (
 				6FCC9B5125237C5500BDD827 /* Assets.xcassets in Resources */,
 				6F96F26725854E54009E7DED /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6FCC9B3525237C5500BDD827 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,23 +341,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6FCC9B3325237C5500BDD827 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6FCC9B3C25237C5500BDD827 /* Tests_iOS.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		6FCC9B3925237C5500BDD827 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6FCC9B2625237C5500BDD827 /* StackOv (iOS) */;
-			targetProxy = 6FCC9B3825237C5500BDD827 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6FCC9B5325237C5500BDD827 /* Debug */ = {
@@ -473,10 +395,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "${SRCROOT}/Application/Info.plist";
+				INFOPLIST_PREFIX_HEADER = "";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				PRODUCT_NAME = StackOv;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -527,9 +452,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "${SRCROOT}/Application/Info.plist";
+				INFOPLIST_PREFIX_HEADER = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				PRODUCT_NAME = StackOv;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
@@ -541,12 +469,15 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Application/StackOv.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Application/StackOv.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = S8BXS2P4Z9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Application/Info.plist;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				INFOPLIST_FILE = "${SRCROOT}/Application/Info.plist";
+				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREPROCESS = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -571,12 +502,15 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Application/StackOv.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "${SRCROOT}/Application/StackOv.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = S8BXS2P4Z9;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Application/Info.plist;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				INFOPLIST_FILE = "${SRCROOT}/Application/Info.plist";
+				INFOPLIST_PREFIX_HEADER = "";
+				INFOPLIST_PREPROCESS = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -591,53 +525,6 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		6FCC9B5C25237C5500BDD827 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S8BXS2P4Z9;
-				INFOPLIST_FILE = "Tests iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.Tests-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "StackOv (iOS)";
-			};
-			name = Debug;
-		};
-		6FCC9B5D25237C5500BDD827 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = S8BXS2P4Z9;
-				INFOPLIST_FILE = "Tests iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.Tests-iOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "StackOv (iOS)";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -659,15 +546,6 @@
 			buildConfigurations = (
 				6FCC9B5625237C5500BDD827 /* Debug */,
 				6FCC9B5725237C5500BDD827 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6FCC9B5B25237C5500BDD827 /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6FCC9B5C25237C5500BDD827 /* Debug */,
-				6FCC9B5D25237C5500BDD827 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

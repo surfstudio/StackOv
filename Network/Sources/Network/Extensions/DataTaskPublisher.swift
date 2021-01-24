@@ -1,8 +1,10 @@
 //
 //  DataTaskPublisher.swift
-//  This source file is part of the StackOv open source project
+//  StackOv (Network module)
 //
-
+//  Created by Erik Basargin
+//  Copyright © 2021 Erik Basargin. All rights reserved.
+//
 
 import Foundation
 import Combine
