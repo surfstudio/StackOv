@@ -1,6 +1,9 @@
 //
 //  SortOption.swift
-//  This source file is part of the StackOv open source project
+//  StackOv (HomeFlow module)
+//
+//  Created by Evgeny Novgorodov
+//  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 enum SortOption: String, CaseIterable {

@@ -1,6 +1,9 @@
 //
 //  SortOptionRow.swift
-//  This source file is part of the StackOv open source project
+//  StackOv (HomeFlow module)
+//
+//  Created by Evgeny Novgorodov
+//  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import SwiftUI
@@ -45,7 +48,7 @@ struct SortOptionRow: View {
             }
             .padding(.leading, 22)
         }
-        .frame(height: 48)
+        .frame(minHeight: 48)
         .background(Color.background)
     }
             
