@@ -14,7 +14,6 @@ struct FilterOptionRow: View {
     
     // MARK: - States
     
-    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Binding var statesOfFilters: [FilterOption: Bool]
     
     // MARK: - Properties
@@ -29,30 +28,25 @@ struct FilterOptionRow: View {
                 Spacer()
                 
                 HStack(spacing: 17) {
-                    checkmark
+                    CheckmarkView(isSelected: statesOfFilters[filterOption] ?? false, isFilled: true)
                     
                     Text(filterOption.rawValue)
-                        .bold()
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
                         .foregroundColor(Color.foreground)
                 }
                 
                 Spacer()
                 
+                // FIXME: During accessibility leading inset is wrong
                 Divider()
                     .padding(.leading, filterOption.isLast ? -22 : 38)
             }
             .padding(.leading, 22)
         }
-        .frame(height: 48)
+        .frame(minHeight: 48)
         .background(Color.background)
-    }
-    
-    var checkmark: some View {
-        if statesOfFilters[filterOption] ?? false {
-            return CheckmarkView(isSelected: .constant(true))
-        } else {
-            return CheckmarkView(isSelected: .constant(false))
-        }
     }
 }
 

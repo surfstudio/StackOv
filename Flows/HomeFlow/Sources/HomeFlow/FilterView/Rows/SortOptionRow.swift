@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Palette
+import Components
 
 struct SortOptionRow: View {
     
@@ -31,18 +32,18 @@ struct SortOptionRow: View {
                 Spacer()
                 
                 HStack(spacing: 17) {
-                    Image(systemName: "checkmark")
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(Color.checkmarkForeground)
-                        .opacity((statesOfSorts[sortOption] ?? false) ? 1 : 0)
+                    CheckmarkView(isSelected: statesOfSorts[sortOption] ?? false, isFilled: false)
                     
                     Text(sortOption.rawValue)
-                        .bold()
+                        .font(.headline)
+                        .fontWeight(.medium)
+                        .lineLimit(1)
                         .foregroundColor(Color.foreground)
                 }
                 
                 Spacer()
                 
+                // FIXME: During accessibility leading inset is wrong
                 Divider()
                     .padding(.leading, sortOption.isLast ? -22 : 38)
             }

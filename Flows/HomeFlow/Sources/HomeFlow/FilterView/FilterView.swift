@@ -87,6 +87,7 @@ struct FilterView: View {
         VStack {
             HStack {
                 Text(title.uppercased())
+                    .font(.body)
                     .foregroundColor(Color.sectionForeground)
                     .padding(EdgeInsets(top: 24, leading: 20, bottom: 10, trailing: 0))
                 
