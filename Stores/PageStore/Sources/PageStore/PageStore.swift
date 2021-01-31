@@ -30,6 +30,7 @@ public final class PageStore: ObservableObject {
     // MARK: - Substores & Services
 
     let dataManager: PageDataManagerProtocol
+//    let filterStore: 
     
     // MARK: - Public properties
     

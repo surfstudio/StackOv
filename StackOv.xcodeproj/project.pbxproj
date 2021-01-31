@@ -60,6 +60,7 @@
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
 		6FF33D382530917E00C316D7 /* Components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Components; sourceTree = "<group>"; };
 		6FF362BE25324920009F9908 /* Network */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Network; sourceTree = "<group>"; };
+		CE9E15A325C722FA003D8E93 /* FilterStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FilterStore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +106,7 @@
 		6FAA728F253357740068F85F /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				CE9E15A325C722FA003D8E93 /* FilterStore */,
 				6FD7B2F525D946F8007E03F2 /* PostStore */,
 				6FB8E3FC25B01E7C00E25240 /* PageStore */,
 			);
