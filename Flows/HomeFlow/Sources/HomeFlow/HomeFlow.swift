@@ -36,8 +36,10 @@ public struct HomeFlow: View {
         NavigationView {
             PageView()
                 .navigationBarTitle("All Questions")
-                .modifier(NavigationViewIntrospectModifier())
-        }.navigationViewStyle(StackNavigationViewStyle())
+                .modifier(PhoneNavigationViewIntrospectModifier())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .accentColor(Color.navigationBarForeground)
     }
 
     var padContent: some View {
@@ -87,12 +89,11 @@ struct HomeFlow_Previews: PreviewProvider {
 
 // MARK: - View Modifiers
 
-fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
+fileprivate struct PhoneNavigationViewIntrospectModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content.introspectNavigationController {
             $0.view.backgroundColor = UIColor.background
-            $0.navigationBar.tintColor = UIColor.foreground
             
             // Hack for changing UIHostViewController with wight background
             $0.children.first?.view.backgroundColor = UIColor.background
@@ -102,9 +103,13 @@ fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
 
 // MARK: - Colors
 
+fileprivate extension Color {
+    
+    static let navigationBarForeground = Palette.dullGray
+}
+
 fileprivate extension UIColor {
     
-    static let foreground = PaletteCore.dullGray
     static let background = PaletteCore.bluishblack
     static let navigationBackground = PaletteCore.grayblue.withAlphaComponent(0.5).rgbaToRgb(by: .background)
 }

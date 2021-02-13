@@ -12,7 +12,17 @@ import Introspect
 
 struct PadContentView: View {
     
+    // MARK: - States
+    
     @State private var state: MainBar.ItemType = .home
+    
+    // MARK: - Initialization
+    
+    init() {
+        configureGlobalNavigationBar()
+    }
+    
+    // MARK: - View
     
     var body: some View {
         NavigationView {
@@ -36,6 +46,20 @@ struct PadContentView: View {
                 }
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
+    }
+    
+    // MARK: - Methods
+    
+    func configureGlobalNavigationBar() {
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithTransparentBackground()
+        coloredAppearance.backgroundColor = UIColor.MainView.navigationBarBackground
+        coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.MainView.foreground]
+        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.MainView.foreground]
+        
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().compactAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
     }
 }
 
@@ -73,6 +97,7 @@ fileprivate struct SidebarViewIntrospectModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content.introspectNavigationController {
+            // Hack to hide NavBar in the Sidebar
             $0.setNavigationBarHidden(true, animated: false)
             
             // Hack for changing UIHostViewController with wight background
@@ -94,7 +119,7 @@ fileprivate struct MainViewIntrospectModifier: ViewModifier {
     func body(content: Content) -> some View {
         content.introspectNavigationController {
             // Hack for changing UIHostViewController with wight background
-            $0.children.first?.view.backgroundColor = UIColor.MainView.globalBackground
+            $0.children.first?.view.backgroundColor = UIColor.MainView.background
         }
     }
 }
@@ -109,7 +134,8 @@ fileprivate extension UIColor {
     }
     
     enum MainView {
+        static let foreground = PaletteCore.dullGray
         static let background = PaletteCore.bluishblack
-        static let globalBackground = PaletteCore.grayblue.withAlphaComponent(0.5).rgbaToRgb(by: Self.background)
+        static let navigationBarBackground = PaletteCore.grayblue.withAlphaComponent(0.5).rgbaToRgb(by: Self.background)
     }
 }
