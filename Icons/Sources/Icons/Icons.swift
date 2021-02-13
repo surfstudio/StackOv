@@ -185,3 +185,15 @@ public extension Label where Title == Text, Icon == Image {
         self = Label(title: { Text(title) }, icon: { icon.image })
     }
 }
+
+public extension Button where Label == Image {
+
+    /// Creates a button that displays an icon from Icons package.
+    ///
+    /// - Parameters:
+    ///   - action: The action to perform when the user triggers the button.
+    ///   - icon: An icon that describes the purpose of the button's `action`.
+    init(action: @escaping () -> Void, icon: Icons) {
+        self = Button(action: action, label: { icon.image })
+    }
+}
