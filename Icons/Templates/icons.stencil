@@ -1,0 +1,157 @@
+// swiftlint:disable all
+// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+
+{% if catalogs %}
+{% set enumName %}{{param.enumName|default:"Asset"}}{% endset %}
+{% set imageType %}{{param.imageTypeName|default:"ImageAsset"}}{% endset %}
+{% set forceNamespaces %}{{param.forceProvidesNamespaces|default:"false"}}{% endset %}
+{% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
+import Foundation
+import SwiftUI
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+import class AppKit.NSImage
+#else
+import class UIKit.UIImage
+#endif
+
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+public typealias ImageCore = NSImage
+#else
+public typealias ImageCore = UIImage
+#endif
+
+// swiftlint:disable superfluous_disable_command file_length implicit_return
+
+// MARK: - Icons Catalogs
+
+{% macro iconsCoreBlock assets %}
+    {% for asset in assets %}
+    {% if asset.type == "image" %}
+    {{accessModifier}} static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: ImageCore { {{imageType}}(name: "{{asset.value}}").image }
+    {% endif %}
+    {% endfor %}
+{% endmacro %}
+{% macro iconsBlock assets %}
+    {% for asset in assets %}
+    {% if asset.type == "image" %}
+    {% set propertyName %}{{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}{% endset %}
+    case {{propertyName}}
+    {% endif %}
+    {% endfor %}
+
+    var image: Image {
+        switch self {
+            {% for asset in assets %}
+            {% if asset.type == "image" %}
+            {% set propertyName %}{{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}{% endset %}
+            case .{{propertyName}}: return .init(icon: IconsCore.{{propertyName}})
+            {% endif %}
+            {% endfor %}
+        }
+    }
+{% endmacro %}
+// swiftlint:disable identifier_name line_length nesting type_body_length type_name
+{{accessModifier}} enum IconsCore {
+
+    {% call iconsCoreBlock catalogs.first.assets %}
+}
+
+{{accessModifier}} enum Icons: String, CaseIterable {
+
+    {% call iconsBlock catalogs.first.assets %}
+}
+// swiftlint:enable identifier_name line_length nesting type_body_length type_name
+
+// MARK: - Implementation Details
+{% if resourceCount.image > 0 %}
+
+struct {{imageType}} {
+
+    fileprivate(set) var name: String
+
+    var image: ImageCore {
+        let bundle: Bundle = {{param.bundle|default:"BundleToken.bundle"}}
+        #if os(iOS) || os(tvOS)
+        let image = ImageCore(named: name, in: bundle, compatibleWith: nil)
+        #elseif os(macOS)
+        let name = NSImage.Name(self.name)
+        let image = (bundle == .main) ? NSImage(named: name) : bundle.image(forResource: name)
+        #elseif os(watchOS)
+        let image = ImageCore(named: name)
+        #endif
+        guard let result = image else {
+            fatalError("Unable to load image asset named \(name).")
+        }
+        return result
+    }
+}
+{% endif %}
+
+// MARK: - Fileprivate extensions
+
+fileprivate extension Image {
+
+    init(icon: ImageCore) {
+        #if canImport(AppKit) && !targetEnvironment(macCatalyst)
+        self = Image(nsImage: icon)
+        #else
+        self = Image(uiImage: icon)
+        #endif
+    }
+}
+
+// MARK: - Extensions
+
+{{accessModifier}} extension Image {
+
+    /// Creates an icon image.
+    ///
+    /// This initializer creates an image using Icon package. To
+    /// create an image, use `init(_:)` instead.
+    ///
+    /// - Parameters:
+    ///   - icon: The icon image.
+    init(_ icon: Icons) {
+        self = icon.image
+    }
+}
+
+{{accessModifier}} extension Label where Title == Text, Icon == Image {
+
+    /// Creates a label with an icon image and a title generated from a
+    /// localized string.
+    ///
+    /// - Parameters:
+    ///    - titleKey: A title generated from a localized string.
+    ///    - image: The name of the image resource to lookup.
+    init(_ titleKey: LocalizedStringKey, icon: Icons) {
+        self = Label(title: { Text(titleKey) }, icon: { icon.image })
+    }
+
+    /// Creates a label with an icon image and a title generated from a string.
+    ///
+    /// - Parameters:
+    ///    - title: A string to used as the label's title.
+    ///    - icon: The icon resource to lookup.
+    init<S: StringProtocol>(_ title: S, icon: Icons) {
+        self = Label(title: { Text(title) }, icon: { icon.image })
+    }
+}
+{% if not param.bundle %}
+
+// swiftlint:disable convenience_type
+private final class BundleToken {
+
+    static let bundle: Bundle = {
+        #if SWIFT_PACKAGE
+        return Bundle.module
+        #else
+        return Bundle(for: BundleToken.self)
+        #endif
+    }()
+}
+// swiftlint:enable convenience_type
+{% endif %}
+{% else %}
+// No assets found
+{% endif %}

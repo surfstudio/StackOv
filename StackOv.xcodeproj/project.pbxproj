@@ -32,6 +32,7 @@
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
 		6F4AC2DE25BC3FF3002D0D86 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
+		6F61730025D7F76F0011AB44 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
 		6F96F26625854E54009E7DED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6FB8E3FC25B01E7C00E25240 /* PageStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PageStore; sourceTree = "<group>"; };
 		6FC0280A252CB0E7002150F5 /* Common */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Common; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		6F2E47F92524A7F50080F778 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6F61730025D7F76F0011AB44 /* Icons */,
 				6F4AC2DE25BC3FF3002D0D86 /* Markdown */,
 				6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */,
 				6FC21BAC25929B93003387CE /* AppScript */,
@@ -216,7 +218,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6FCC9B5525237C5500BDD827 /* Build configuration list for PBXNativeTarget "StackOv (iOS)" */;
 			buildPhases = (
-				6F2E47E3252477300080F778 /* Palette generation */,
 				6FCC9B2325237C5500BDD827 /* Sources */,
 				6FCC9B2425237C5500BDD827 /* Frameworks */,
 				6FCC9B2525237C5500BDD827 /* Resources */,
@@ -304,24 +305,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [[ -z $FIREBASE_DISABLED ]]; then\n  \"${BUILD_DIR%Build/*}SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\nfi\n";
-		};
-		6F2E47E3252477300080F778 /* Palette generation */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Palette generation";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftgen >/dev/null; then\n  cd ${SRCROOT}/Palette\n  swiftgen config run --config ./Scripts/swiftgen.yml\nelse\necho \"error: SwiftGen not installed, download it from https://github.com/SwiftGen/SwiftGen\"\nexit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
