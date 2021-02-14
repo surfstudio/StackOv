@@ -10,7 +10,7 @@ import Foundation
 
 public protocol PageDataManagerProtocol: class {
     
-    typealias CollectedData = [QuestionItemModel]
+    typealias CollectedData = [QuestionModel]
     typealias FetchComplitionHandler = (Result<CollectedData, Error>) -> Void
     
     var data: CollectedData? { get }

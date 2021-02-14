@@ -9,6 +9,8 @@
 import Foundation
 import Combine
 import StackexchangeNetworkService
+import Palette
+import struct SwiftUI.Color
 
 final public class PageDataManager: PageDataManagerProtocol {
     
@@ -42,10 +44,16 @@ final public class PageDataManager: PageDataManagerProtocol {
     var currentData: CollectedData?
     var loadingProcess: AnyCancellable?
     
+    // MARK: - Private properties
+    
+    private let colors = Palette.postBackgroundGradients
+    private var colorIndex: Int = 0
+    
     // MARK: - Initialization and deinitialization
     
     public init(service: StackexchangeNetworkService) {
         self.service = service
+        resetColorStartIndex()
     }
     
     deinit {
@@ -57,6 +65,17 @@ final public class PageDataManager: PageDataManagerProtocol {
     func cancelLoadingProcess() {
         loadingProcess?.cancel()
         loadingProcess = nil
+    }
+    
+    // MARK: - Private methods
+    
+    private func nextBunchOfColors(step: Int) -> (top: Color, bottom: Color) {
+        colorIndex += step
+        return colors[colorIndex % colors.count]
+    }
+    
+    private func resetColorStartIndex() {
+        colorIndex = (0..<colors.count).randomElement() ?? .zero
     }
 }
 
@@ -75,7 +94,10 @@ public extension PageDataManager {
                 }
                 complitionHandler(.failure(error))
             }) { [unowned self] data in
-                let newData = data.items.map { QuestionItemModel.from(entry: $0) }
+                let newData: [QuestionModel] = data.items.enumerated().map { index, item in
+                    let colors = self.nextBunchOfColors(step: index)
+                    return QuestionModel.from(entry: item, withGradientColors: colors)
+                }
                 hasMoreData = data.hasMore
                 currentData = (currentData ?? []) + newData
                 complitionHandler(.success(currentData ?? []))
@@ -83,6 +105,7 @@ public extension PageDataManager {
     }
     
     func reset() {
+        resetColorStartIndex()
         cancelLoadingProcess()
         hasMoreData = true
     }

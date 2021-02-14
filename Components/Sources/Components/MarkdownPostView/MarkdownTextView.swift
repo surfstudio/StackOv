@@ -110,6 +110,7 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
         textView.backgroundColor = .clear
         textView.textContainer.lineFragmentPadding = .zero
         textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        textView.contentInset = .zero
         return textView
     }
 
@@ -129,6 +130,8 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
         }
     }
 }
+
+// MARK: - Colors
 
 fileprivate extension UIColor {
     

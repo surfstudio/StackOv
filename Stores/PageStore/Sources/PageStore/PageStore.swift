@@ -17,7 +17,7 @@ public final class PageStore: ObservableObject {
     public enum State {
         case unknown
         case emptyContent
-        case content([QuestionItemModel])
+        case content([QuestionModel])
         case loading
         case error(Error)
     }

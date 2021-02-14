@@ -10,10 +10,11 @@ let package = Package(
         .library(name: "PageStore", targets: ["PageStore"]),
     ],
     dependencies: [
-        .package(path: "../Services/StackexchangeNetworkService")
+        .package(path: "../Services/StackexchangeNetworkService"),
+        .package(path: "../Palette"),
     ],
     targets: [
-        .target(name: "PageStore", dependencies: ["StackexchangeNetworkService"]),
+        .target(name: "PageStore", dependencies: ["StackexchangeNetworkService", "Palette"]),
         .testTarget(name: "PageStoreTests", dependencies: ["PageStore"])
     ]
 )

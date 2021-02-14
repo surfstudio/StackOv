@@ -6,9 +6,13 @@
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
-#if canImport(UIKit)
-
+#if canImport(AppKit) && !targetEnvironment(macCatalyst)
+import AppKit.NSColor
+#else
 import UIKit.UIColor
+#endif
+
+#if canImport(UIKit)
 
 public extension UIColor {
     
@@ -46,7 +50,6 @@ public extension UIColor {
             alpha: 1
         )
     }
-    
 }
 
 #endif

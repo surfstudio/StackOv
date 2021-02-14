@@ -17,7 +17,7 @@ public extension NSAttributedString {
         return { colorScheme, stylesheet in
             let defaultStylesheet = """
             * { font-family: -apple-system; font-size: 15px; }
-            code, pre { font-family: Menlo; font-weight: 400; background-color: \(colorScheme == .dark ? "#404345" : "#e4e6e8"); white-space: pre-wrap; }
+            code, pre { font-family: Menlo; font-weight: 400; background-color: \(colorScheme == .light ? "#e4e6e8" : "#404345"); white-space: pre-wrap; }
             """
             let string = "<style>" + (stylesheet ?? defaultStylesheet) + "</style>" + htmlString
             return try NSAttributedString(

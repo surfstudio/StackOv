@@ -10,7 +10,7 @@ import struct SwiftUI.Color
 
 public extension Palette {
     
-    static var linearGradientPalette: ContiguousArray<(Color, Color)> {
+    static var postBackgroundGradients: ContiguousArray<(Color, Color)> {
         [(Color(red: 0.471, green: 0.238, blue: 0.704),
           Color(red: 0.276, green: 0.122, blue: 0.438)),
          (Color(red: 0.348, green: 0.222, blue: 0.762),

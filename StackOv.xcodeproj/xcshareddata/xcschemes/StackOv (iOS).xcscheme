@@ -136,6 +136,20 @@
                ReferencedContainer = "container:Stores/PageStore">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PostStoreTests"
+               BuildableName = "PostStoreTests"
+               BlueprintName = "PostStoreTests"
+               ReferencedContainer = "container:Stores/PostStore">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -213,6 +227,16 @@
                BuildableName = "PageStoreTests"
                BlueprintName = "PageStoreTests"
                ReferencedContainer = "container:Stores/PageStore">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "PostStoreTests"
+               BuildableName = "PostStoreTests"
+               BlueprintName = "PostStoreTests"
+               ReferencedContainer = "container:Stores/PostStore">
             </BuildableReference>
          </TestableReference>
       </Testables>

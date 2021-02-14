@@ -104,3 +104,31 @@ public extension Palette {
 
 }
 
+// MARK: - Extensions
+
+public extension PaletteCore {
+
+    /// Easily define two colors for both light and dark mode
+    /// Link: https://www.avanderlee.com/swift/dark-mode-support-ios/
+    ///
+    /// - Parameters:
+    ///   - lightColor: The color to use in light mode
+    ///   - darkColor: The color to use in dark mode
+    /// - Returns: A dynamic color that uses both given colors respectively for the given user interface style
+    static func | (lightColor: PaletteCore, darkColor: PaletteCore) -> PaletteCore {
+        PaletteCore { $0.userInterfaceStyle == .light ? lightColor : darkColor }
+    }
+}
+
+public extension Palette {
+
+    /// Easily define two colors for both light and dark mode
+    ///
+    /// - Parameters:
+    ///   - lightColor: The color to use in light mode
+    ///   - darkColor: The color to use in dark mode
+    /// - Returns: A dynamic color that uses both given colors respectively for the given user interface style
+    static func | (lightColor: Palette, darkColor: Palette) -> Palette {
+        Palette(PaletteCore(lightColor) | PaletteCore(darkColor))
+    }
+}
