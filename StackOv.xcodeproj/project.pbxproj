@@ -54,6 +54,7 @@
 		6FCC9B2225237C5500BDD827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6FCC9B2725237C5500BDD827 /* StackOv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StackOv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FCC9B2A25237C5500BDD827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6FD7B2F525D946F8007E03F2 /* PostStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PostStore; sourceTree = "<group>"; };
 		6FE715C8258926E900D55B0C /* MainBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBar.swift; sourceTree = "<group>"; };
 		6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DataTransferObjects; sourceTree = "<group>"; };
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		6FAA728F253357740068F85F /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				6FD7B2F525D946F8007E03F2 /* PostStore */,
 				6FB8E3FC25B01E7C00E25240 /* PageStore */,
 			);
 			path = Stores;
