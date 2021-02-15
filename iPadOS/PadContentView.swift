@@ -35,6 +35,7 @@ struct PadContentView: View {
                 .navigationBarTitle("", displayMode: .inline)
                 .modifier(MainViewIntrospectModifier())
                 .toolbar {
+                    #if DEBUG
                     ToolbarItem(placement: .principal) {
                         TextField("Search", text: .constant(""))
                             .padding(.horizontal)
@@ -43,6 +44,7 @@ struct PadContentView: View {
                             .background(Palette.white.opacity(0.08))
                             .cornerRadius(5.0)
                     }
+                    #endif
                 }
         }
         .navigationViewStyle(DoubleColumnNavigationViewStyle())
