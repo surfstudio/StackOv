@@ -27,12 +27,14 @@ struct QuestionView: View {
                 .font(.title2)
                 .fontWeight(.bold)
             
+            #if DEBUG
             HStack(spacing: 24) {
                 Text("Asked 9 years, 6 months ago")
                 Text("Active today")
                 Text("Viewed 817k times")
             }
             .font(.caption)
+            #endif
             
             Divider()
             
