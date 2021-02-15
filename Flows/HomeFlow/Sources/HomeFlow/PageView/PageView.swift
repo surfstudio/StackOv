@@ -12,13 +12,13 @@ import Common
 import Introspect
 import Components
 import AppScript
-import struct PageStore.QuestionItemModel
+import struct PageStore.QuestionModel
 
 struct PageView: View {
 
     // MARK: - States
 
-    @Store var store: PageStore
+    @Store private var store: PageStore
     @State private var selectedItem: Int?
     
     // MARK: - Properties
@@ -44,7 +44,7 @@ struct PageView: View {
             case .emptyContent:
                 Text("empty")
             case let .content(model):
-                content(model.toViewModel())
+                content(model)
             case .loading:
                 Text("Loading")
             case .error:
@@ -53,7 +53,7 @@ struct PageView: View {
         }
     }
     
-    func content(_ models: [PostItemViewModel] = []) -> some View {
+    func content(_ models: [QuestionModel] = []) -> some View {
         LazyVGrid(columns: columns, spacing: defaultSpacing) {
             ForEach(models) { item in
                 itemView(item)
@@ -62,9 +62,9 @@ struct PageView: View {
         .padding(.all, defaultSpacing)
     }
 
-    func itemView(_ item: PostItemView.Model) -> some View {
+    func itemView(_ item: QuestionModel) -> some View {
         ZStack {
-            NavigationLink(destination: EmptyView(), tag: item.id, selection: $selectedItem) {
+            NavigationLink(destination: destinationView(item), tag: item.id, selection: $selectedItem) {
                 EmptyView()
             }
             .buttonStyle(PlainButtonStyle())
@@ -74,6 +74,11 @@ struct PageView: View {
             }
             .buttonStyle(PlainButtonStyle())
         }
+    }
+    
+    func destinationView(_ item: QuestionModel) -> some View {
+        PostView()
+            .environmentObject(StoresAssembler.shared.resolve(PostStore.self, argument: item)!)
     }
 }
 
@@ -99,23 +104,4 @@ fileprivate extension Color {
     
     static let background = Palette.bluishblack
     static let navigation = Color(.navigationBackground)
-}
-
-// MARK: - Extensions
-
-fileprivate extension Array where Element == QuestionItemModel {
-    
-    func toViewModel() -> [PostItemViewModel] {
-        let colors = Palette.linearGradientPalette
-        var colorIndex: Int = (0..<colors.count).randomElement() ?? 0
-        
-        var result: [PostItemViewModel] = []
-        for item in self {
-            if colorIndex > colors.count - 1 { colorIndex = 0 }
-            result.append(PostItemViewModel.from(model: item, backgroundColors: colors[colorIndex]))
-            colorIndex += 1
-        }
-        
-        return result
-    }
 }

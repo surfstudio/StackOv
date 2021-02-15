@@ -10,12 +10,13 @@ import SwiftUI
 import Palette
 
 struct PhoneContentView: View {
+    
+    // MARK: - View
 
     var body: some View {
         TabView {
             MainBar.tabs
-        }
-        .accentColor(Palette.white)
+        }.accentColor(Color.accentColor)
     }
 }
 
@@ -26,4 +27,11 @@ struct PhoneContentView_Previews: PreviewProvider {
     static var previews: some View {
         PhoneContentView()
     }
+}
+
+// MARK: - Colors
+
+fileprivate extension Color {
+    
+    static let accentColor = Palette.white
 }

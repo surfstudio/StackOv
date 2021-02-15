@@ -10,12 +10,9 @@ import SwiftUI
 import Palette
 import Common
 import Components
+import struct PageStore.QuestionModel
 
 struct PostItemView: View {
-    
-    // MARK: - Nested types
-    
-    typealias Model = PostItemViewModel
 
     // MARK: - States
     
@@ -24,7 +21,7 @@ struct PostItemView: View {
     
     // MARK: - Properties
     
-    let model: PostItemViewModel
+    let model: QuestionModel
 
     // MARK: - View
     
@@ -33,14 +30,14 @@ struct PostItemView: View {
             .frame(minWidth: 267, minHeight: 217)
             .background(
                 LinearGradient(
-                    gradient: Gradient(colors: model.backgroundColorsList),
+                    gradient: Gradient(colors: [model.gradientColors.top, model.gradientColors.bottom]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
             )
             .cornerRadius(20)
-            .shadow(color: model.backgroundColors.top.opacity(hovered ? 0.2 : 0), radius: 5, x: 5, y: 5)
-            .shadow(color: model.backgroundColors.bottom.opacity(hovered ? 0.7: 0), radius: 5, x: -2.5, y: -2.5)
+            .shadow(color: model.gradientColors.top.opacity(hovered ? 0.2 : 0), radius: 5, x: 5, y: 5)
+            .shadow(color: model.gradientColors.bottom.opacity(hovered ? 0.7: 0), radius: 5, x: -2.5, y: -2.5)
             .animation(.default)
             .onHover { isHovered in
                 self.hovered = isHovered
@@ -112,7 +109,7 @@ struct PostItemView: View {
             
             Spacer()
             
-            Text(model.formattedLastUpdate)
+            Text(model.formattedLastActivity)
                 .foregroundColor(Palette.white.opacity(0.7))
                 .font(.caption)
         }
@@ -123,25 +120,8 @@ struct PostItemView: View {
 
 struct QuestionItemView_Previews: PreviewProvider {
     
-    static let colors: [Color] = [
-        Color(red: 0.471, green: 0.238, blue: 0.704),
-        Color(red: 0.276, green: 0.122, blue: 0.438)
-    ]
-    
     static var previews: some View {
-        let model = PostItemViewModel(
-            id: 0,
-            title: "How to make TouchableOpacity wrap its content when nested inside parent that has flex = 1",
-            hasAcceptedAnswer: true,
-            answersNumber: 5,
-            votesNumber: 15,
-            viewsNumber: 207,
-            lastUpdateType: .asked(Date()),
-            backgroundColors: (top: colors.first!, bottom: colors.last!),
-            tags: ["123", "perfomance", "microsoft-ui-automation", "css", "c++",
-                   "123", "perfomance", "microsoft-ui-automation", "css", "c++"]
-        )
-        PostItemView(model: model)
+        PostItemView(model: QuestionModel.mock())
             .padding()
             .background(Color.black)
             .previewLayout(.sizeThatFits)

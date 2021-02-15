@@ -10,6 +10,7 @@ import Swinject
 import StackexchangeNetworkService
 
 @_exported import PageStore
+@_exported import PostStore
 
 // MARK: - Stores Assembly
 
@@ -18,7 +19,11 @@ final class StoresAssembly: Assembly {
     func assemble(container: Container) {
         container.register(PageStore.self) { resolver in
             PageStore(dataManager: resolver.resolve(PageDataManager.self)!)
-        }.inObjectScope(.weak)
+        }.inObjectScope(.transient)
+        
+        container.register(PostStore.self) { resolver, model in
+            PostStore(model: model)
+        }.inObjectScope(.transient)
     }
 }
 

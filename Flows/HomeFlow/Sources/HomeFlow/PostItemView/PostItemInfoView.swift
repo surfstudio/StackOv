@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import struct PageStore.QuestionModel
 
 struct PostItemInfoView: View {
     
@@ -18,7 +19,7 @@ struct PostItemInfoView: View {
     
     // MARK: - Properties
     
-    let model: PostItemViewModel
+    let model: QuestionModel
     
     // MARK: - View
     

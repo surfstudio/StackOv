@@ -1,0 +1,11 @@
+xcassets:
+  inputs:
+    - ${SRCROOT}/Icons/Sources/Icons/Icons.xcassets
+  outputs:
+    - templatePath: ${SRCROOT}/Icons/Templates/icons.stencil
+      params:
+        enumName: Icons
+        bundle: .module
+        publicAccess: true
+      output: ${SRCROOT}/Icons/Sources/Icons/Icons.swift
+
