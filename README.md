@@ -23,3 +23,19 @@
         <img src="https://codecov.io/gh/surfstudio/StackOv/branch/main/graph/badge.svg?token=1KAPQC9ICT"/>
     </a>
 </p>
+
+We are currently in the developing process of the next version of StackOv app.
+
+The demo version of StackOv is available in the [AppStore](https://apps.apple.com/gb/app/stackov/id1511838391) as just a small StackOverflow reader.
+
+## **Building**
+
+- [SwiftGen](https://github.com/SwiftGen/SwiftGen) is the necessary dependency of this project. If you have `homebrew` installed then just call `brew install swiftgen`.
+- Open the project and build the `StackOv (iOS)` target. 🙃
+
+## **Contributing**
+
+We have two types of issue templates. Use the `feature request`, if you are ready to clarify your idea or task; use the `bug report`, if you want to provide a bug.
+
+Don't hesitate to discuss with us your ideas and to ask questions, we have [the discussion room](https://github.com/surfstudio/StackOv/discussions/categories/ideas) for this. 😌
+If you are ready to start work on some issue then go ahead, please just find the [DEVPROCESS.md](https://github.com/surfstudio/StackOv/blob/develop/DEVPROCESS.md) for your consideration.
