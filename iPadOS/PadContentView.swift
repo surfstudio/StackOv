@@ -30,10 +30,12 @@ struct PadContentView: View {
                 .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
                 .navigationBarTitle("", displayMode: .inline)
                 .modifier(SidebarViewIntrospectModifier())
+                .navigationBarHidden(true)
+                .background(Color.Sidebar.backgound)
 
             MainView(state: $state)
                 .navigationBarTitle("", displayMode: .inline)
-                .modifier(MainViewIntrospectModifier())
+                .background(Color.MainView.background)
                 .toolbar {
                     #if DEBUG
                     ToolbarItem(placement: .principal) {
@@ -99,34 +101,33 @@ fileprivate struct SidebarViewIntrospectModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content.introspectNavigationController {
-            // Hack to hide NavBar in the Sidebar
-            $0.setNavigationBarHidden(true, animated: false)
-            
-            // Hack for changing UIHostViewController with wight background
+            // Hack for changing UIStatusBar background
             $0.children.first?.view.backgroundColor = UIColor.Sidebar.backgound
-        }
-        .introspectSplitViewController {
+        }.introspectSplitViewController {
+            $0.preferredPrimaryColumnWidth = 210
             $0.minimumPrimaryColumnWidth = 210
             $0.maximumPrimaryColumnWidth = 210
             $0.preferredSplitBehavior = .tile
             
             // Hack for changing tint color of the displayModeButtonItem
+            // because UINavigationBar.appearance().tintColor = PaletteCore.dullGray works not correct with displayModeButtonItem
             $0.view.tintColor = UIColor.Sidebar.foreground
         }
     }
 }
 
-fileprivate struct MainViewIntrospectModifier: ViewModifier {
+// MARK: - Colors
+
+fileprivate extension Color {
     
-    func body(content: Content) -> some View {
-        content.introspectNavigationController {
-            // Hack for changing UIHostViewController with wight background
-            $0.children.first?.view.backgroundColor = UIColor.MainView.background
-        }
+    enum Sidebar {
+        static let backgound = Palette.grayblue
+    }
+    
+    enum MainView {
+        static let background = Palette.bluishblack
     }
 }
-
-// MARK: - Colors
 
 fileprivate extension UIColor {
     
