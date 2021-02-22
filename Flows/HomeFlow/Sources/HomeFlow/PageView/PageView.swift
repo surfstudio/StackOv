@@ -20,6 +20,7 @@ struct PageView: View {
 
     @Store private var store: PageStore
     @State private var selectedItem: Int?
+    @State private var isFilterViewPresented = false
     
     // MARK: - Properties
     
@@ -53,13 +54,41 @@ struct PageView: View {
         }
     }
     
-    func content(_ models: [QuestionModel] = []) -> some View {
-        LazyVGrid(columns: columns, spacing: defaultSpacing) {
-            ForEach(models) { item in
-                itemView(item)
+    var sectionHeader: some View {
+        HStack {
+            Text("All Questions")
+                .textCase(.none)
+                .font(.system(size: 22, weight: .bold))
+            
+            Spacer()
+            
+            FilterButton(activeFilters: .constant(3)) {
+                isFilterViewPresented = true
+            }.sheet(isPresented: $isFilterViewPresented) {
+                FilterView(isOpened: $isFilterViewPresented)
+                    .environmentObject(store.filterStore)
             }
         }
         .padding(.all, defaultSpacing)
+        .frame(height: 30)
+        .listRowInsets(EdgeInsets.zero)
+        .padding(EdgeInsets.all(24))
+        .background(Color.background)
+    }
+    
+    // MARK: - View methods
+    
+    func content(_ models: [QuestionModel] = []) -> some View {
+        VStack(spacing: .zero) {
+            sectionHeader
+            
+            LazyVGrid(columns: columns, spacing: defaultSpacing) {
+                ForEach(models) { item in
+                    itemView(item)
+                }
+            }
+            .padding(.all, defaultSpacing)
+        }
     }
 
     func itemView(_ item: QuestionModel) -> some View {
@@ -93,15 +122,7 @@ struct PageView_Previews: PreviewProvider {
 
 // MARK: - Colors
 
-fileprivate extension UIColor {
-    
-    static let foreground = PaletteCore.dullGray
-    static let background = PaletteCore.bluishblack
-    static let navigationBackground = PaletteCore.grayblue.withAlphaComponent(0.5).rgbaToRgb(by: .background)
-}
-
 fileprivate extension Color {
     
     static let background = Palette.bluishblack
-    static let navigation = Color(.navigationBackground)
 }

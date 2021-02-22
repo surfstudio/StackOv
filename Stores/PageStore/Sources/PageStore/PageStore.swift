@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import StackexchangeNetworkService
+import FilterStore
 
 public final class PageStore: ObservableObject {
     
@@ -30,7 +31,7 @@ public final class PageStore: ObservableObject {
     // MARK: - Substores & Services
 
     let dataManager: PageDataManagerProtocol
-//    let filterStore: 
+    public let filterStore: FilterStore
     
     // MARK: - Public properties
     
@@ -38,8 +39,9 @@ public final class PageStore: ObservableObject {
 
     // MARK: - Initialization and deinitialization
     
-    public init(dataManager: PageDataManagerProtocol) {
+    public init(dataManager: PageDataManagerProtocol, filterStore: FilterStore) {
         self.dataManager = dataManager
+        self.filterStore = filterStore
     }
 }
 

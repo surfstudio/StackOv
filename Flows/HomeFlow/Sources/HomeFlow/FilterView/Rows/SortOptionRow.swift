@@ -9,32 +9,36 @@
 import SwiftUI
 import Palette
 import Components
+import FilterStore
 
 struct SortOptionRow: View {
     
     // MARK: - States
     
-    @Binding var statesOfSorts: [SortOption: Bool]
+    @Binding var selectedOption: FilterStore.SortOption
     
     // MARK: - Properties
     
-    let sortOption: SortOption
+    let option: FilterStore.SortOption
+    
+    // MARK: - Initialization
+    
+    init(option: FilterStore.SortOption, selected selectedOption: Binding<FilterStore.SortOption>) {
+        self.option = option
+        self._selectedOption = selectedOption
+    }
     
     // MARK: - View
     
     var body: some View {
-        Button(action: {
-            // TODO: Issue #28; This logic should be the store
-            statesOfSorts = reset(states: statesOfSorts)
-            statesOfSorts[sortOption]?.toggle()
-        }) {
+        Button(action: { selectedOption = option }) {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
                 
                 HStack(spacing: 17) {
-                    CheckmarkView(isSelected: statesOfSorts[sortOption] ?? false, isFilled: false)
+                    CheckmarkView(isSelected: option == selectedOption, isFilled: false)
                     
-                    Text(sortOption.rawValue)
+                    Text(option.title)
                         .font(.headline)
                         .fontWeight(.medium)
                         .lineLimit(1)
@@ -45,18 +49,12 @@ struct SortOptionRow: View {
                 
                 // FIXME: During accessibility leading inset is wrong
                 Divider()
-                    .padding(.leading, sortOption.isLast ? -22 : 38)
+                    .padding(.leading, option.isLast ? -22 : 38)
             }
             .padding(.leading, 22)
         }
         .frame(minHeight: 48)
         .background(Color.background)
-    }
-            
-    // MARK: - Methods
-    
-    func reset(states: [SortOption: Bool]) -> [SortOption: Bool] {
-        states.mapValues { _ in false }
     }
 }
 
@@ -65,16 +63,29 @@ struct SortOptionRow: View {
 struct SortOptionRow_Previews: PreviewProvider {
     
     static var previews: some View {
-        SortOptionRow(statesOfSorts: .constant(.init()), sortOption: .newest)
+        SortOptionRow(option: .newest, selected: .constant(.newest))
     }
 }
 
 // MARK: - Estensions
 
-fileprivate extension SortOption {
+fileprivate extension FilterStore.SortOption {
     
     var isLast: Bool {
         self == Self.allCases.last
+    }
+    
+    var title: String {
+        switch self {
+        case .newest:
+            return "Newest"
+        case .recentActivity:
+            return "Recent activity"
+        case .mostVotes:
+            return "Most votes"
+        case .bountyEditingSoon:
+            return "Bounty editing soon"
+        }
     }
 }
 
@@ -84,5 +95,4 @@ fileprivate extension Color {
     
     static let foreground = Palette.white
     static let background = Palette.grayblue
-    static let checkmarkForeground = Palette.main
 }
