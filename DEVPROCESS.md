@@ -35,8 +35,8 @@ Our repo has the next structure of branches:
 
 - `main`
 - `develop`
-- `feature/\d.+`
-- `bug/\d.+`
+- `feature/\d+-.+`
+- `bug/\d+-.+`
 - `hotfix/.+`
 
 <b>Note 1</b>: `feature`, `bug` braches must have the number of some issue.
