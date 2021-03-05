@@ -83,16 +83,20 @@ struct PageView: View {
     
     // MARK: - View methods
     
-    func content(_ models: [QuestionModel] = []) -> some View {
+    func content(_ models: [QuestionModel]) -> some View {
         VStack(spacing: .zero) {
             if UIDevice.current.userInterfaceIdiom.isPad {
                 sectionHeader
             }
             
-            LazyVGrid(columns: columns, spacing: defaultSpacing) {
-                ForEach(models) { item in
-                    itemView(item)
-                }
+        LazyVGrid(columns: columns, spacing: defaultSpacing) {
+            ForEach(models) { item in
+                itemView(item)
+                    .onAppear {
+                        if models.last?.id == item.id {
+                            store.loadNextQuestions()
+                        }
+                    }
             }
             .padding(.all, defaultSpacing)
         }
