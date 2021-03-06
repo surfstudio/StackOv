@@ -1,5 +1,5 @@
 <!--
-Please, do not forget to provide the next reviewers: Puasonych, erorrov, somenkovnikita.
+Please, do not forget to provide the next reviewers: Puasonych, erorrov, somenkovnikita, Blissfulman, and Stampoo.
 
 Please, do not forget to mark this pull request with the labels of type of changes:
 - feature|documentation
