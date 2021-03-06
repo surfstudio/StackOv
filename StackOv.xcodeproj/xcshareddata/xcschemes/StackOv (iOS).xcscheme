@@ -144,6 +144,20 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FilterStoreTests"
+               BuildableName = "FilterStoreTests"
+               BlueprintName = "FilterStoreTests"
+               ReferencedContainer = "container:Stores/FilterStore">
+            </BuildableReference>
+         </BuildActionEntry>
+		 <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "PostStoreTests"
                BuildableName = "PostStoreTests"
                BlueprintName = "PostStoreTests"
@@ -230,6 +244,16 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "FilterStoreTests"
+               BuildableName = "FilterStoreTests"
+               BlueprintName = "FilterStoreTests"
+               ReferencedContainer = "container:Stores/FilterStore">
+            </BuildableReference>
+         </TestableReference>
+		 <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"

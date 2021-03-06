@@ -9,69 +9,98 @@
 import SwiftUI
 import Palette
 import Components
+import FilterStore
 
 struct FilterOptionRow: View {
-    
+
     // MARK: - States
     
-    @Binding var statesOfFilters: [FilterOption: Bool]
+    @Binding var filterState: FilterStore.FilterState
     
     // MARK: - Properties
     
-    let filterOption: FilterOption
+    let option: FilterStore.FilterOption
     
+    // MARK: - Initialization
+    
+    init(option: FilterStore.FilterOption, filterState: Binding<FilterStore.FilterState>) {
+        self.option = option
+        self._filterState = filterState
+    }
+
     // MARK: - View
-    
+
     var body: some View {
-        Button(action: { statesOfFilters[filterOption]?.toggle() }) {
+        Button(action: action) {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
-                
+
                 HStack(spacing: 17) {
-                    CheckmarkView(isSelected: statesOfFilters[filterOption] ?? false, isFilled: true)
+                    CheckmarkView(isSelected: filterState.contains(option), isFilled: true)
                     
-                    Text(filterOption.rawValue)
+                    Text(option.title)
                         .font(.headline)
                         .fontWeight(.medium)
                         .lineLimit(1)
                         .foregroundColor(Color.foreground)
                 }
-                
+
                 Spacer()
-                
+
                 // FIXME: During accessibility leading inset is wrong
                 Divider()
-                    .padding(.leading, filterOption.isLast ? -22 : 38)
+                    .padding(.leading, option.isLast ? -22 : 38)
             }
             .padding(.leading, 22)
         }
         .frame(minHeight: 48)
         .background(Color.background)
     }
+    
+    // MARK: - View methods
+
+    func action() {
+        if filterState.contains(option) {
+            filterState.remove(option)
+        } else {
+            filterState.insert(option)
+        }
+    }
 }
 
 // MARK: - Previews
 
 struct FilterOptionRow_Previews: PreviewProvider {
-    
+
     static var previews: some View {
-        FilterOptionRow(statesOfFilters: .constant(.init()), filterOption: .hasBounty)
+        FilterOptionRow(option: .noAnswers, filterState: .constant([]))
     }
 }
 
 // MARK: - Estensions
 
-fileprivate extension FilterOption {
-    
+fileprivate extension FilterStore.FilterOption {
+
     var isLast: Bool {
         self == Self.allCases.last
+    }
+    
+    var title: String {
+        switch self {
+        case .noAnswers:
+            return "No answers"
+        case .noAcceptedAnswer:
+            return "No accepted answer"
+        case .hasBounty:
+            return "Has bounty"
+        }
     }
 }
 
 // MARK: - Colors
 
 fileprivate extension Color {
-    
+
     static let foreground = Palette.white
     static let background = Palette.grayblue
 }

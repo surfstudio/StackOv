@@ -9,35 +9,16 @@
 import SwiftUI
 import Palette
 import Introspect
+import Combine
+import AppScript
+import Common
 
 struct FilterView: View {
     
     // MARK: - States
     
-    // TODO: Issue #28; This is mock logic
-    @State var statesOfFilters: [FilterOption: Bool] = {
-        var states = [FilterOption: Bool]()
-        FilterOption.allCases.forEach { states[$0] = Bool.random() }
-        return states
-    }()
-    
-    @State var statesOfSorts: [SortOption: Bool] = {
-        var states = [SortOption: Bool]()
-        SortOption.allCases.forEach { states[$0] = false }
-        return states
-    }()
-    
-    // MARK: - Properties
-    
-    let onCancel: () -> Void
-    let onDone: () -> Void
-    
-    // MARK: - Initialization
-    
-    init(onCancel: @escaping () -> Void, onDone: @escaping () -> Void) {
-        self.onCancel = onCancel
-        self.onDone = onDone
-    }
+    @EnvironmentObject var store: FilterStore
+    @Binding var isOpened: Bool
     
     // MARK: - View
     
@@ -47,12 +28,12 @@ struct FilterView: View {
                 .navigationBarTitle("Filter", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: onCancel) {
+                        Button(action: { isOpened = false }) {
                             Text("Cancel")
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: onDone) {
+                        Button(action: { isOpened = false }) {
                             Text("Done")
                         }
                     }
@@ -63,17 +44,23 @@ struct FilterView: View {
     
     var content: some View {
         ScrollView {
-            LazyVStack(spacing: 0) {
+            VStack(spacing: 0) {
                 sectionHeader(title: "Filter by")
                 
-                ForEach(FilterOption.allCases) {
-                    FilterOptionRow(statesOfFilters: $statesOfFilters, filterOption: $0)
+                ForEach(FilterStore.FilterOption.allCases) {
+                    FilterOptionRow(
+                        option: $0,
+                        filterState: .init(get: { store.filterState }, set: { store.setFilterState(to: $0) } )
+                    )
                 }
                 
                 sectionHeader(title: "Sorted by")
                 
-                ForEach(SortOption.allCases) {
-                    SortOptionRow(statesOfSorts: $statesOfSorts, sortOption: $0)
+                ForEach(FilterStore.SortOption.allCases) {
+                    SortOptionRow(
+                        option: $0,
+                        selected: .init(get: { store.sortState }, set: { store.setSortState(to: $0) })
+                    )
                 }
                 
                 Spacer()
@@ -103,7 +90,7 @@ struct FilterView: View {
 struct FilterView_Previews: PreviewProvider {
     
     static var previews: some View {
-        FilterView(onCancel: {}, onDone: {})
+        FilterView(isOpened: .constant(true))
     }
 }
 
@@ -128,18 +115,14 @@ fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
 
 fileprivate extension Color {
     
-    static let background = Palette.bluishblack
     static let sectionForeground = Palette.dullGray
     static let sectionBackground = Palette.bluishblack
-    static let dividerBackground = Palette.grayblue
 }
 
 fileprivate extension UIColor {
     
-    static let foreground = PaletteCore.dullGray
+    static let main = PaletteCore.main
     static let background = PaletteCore.bluishblack
-    static let rowBackground = PaletteCore.grayblue
-        .withAlphaComponent(0.7).rgbaToRgb(by: .background)
     static let navigationBackground = PaletteCore.grayblue
         .withAlphaComponent(0.7).rgbaToRgb(by: .background)
 }

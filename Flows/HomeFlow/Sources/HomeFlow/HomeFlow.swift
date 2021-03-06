@@ -14,10 +14,6 @@ import Components
 
 public struct HomeFlow: View {
     
-    // MARK: - States
-    
-    @State private var isFilterViewPresented = false
-    
     // MARK: - Initialization
 
     public init() {}
@@ -46,35 +42,9 @@ public struct HomeFlow: View {
         VStack(spacing: .zero) {
             Divider()
                 .background(Color.white.opacity(0.08))
-
-            sectionHeader
             
             PageView()
         }
-    }
-    
-    var sectionHeader: some View {
-        HStack {
-            Text("All Questions")
-                .textCase(.none)
-                .font(.system(size: 22, weight: .bold))
-            
-            Spacer()
-            
-            FilterButton(activeFilters: .constant(3)) {
-                isFilterViewPresented = true
-            }.sheet(isPresented: $isFilterViewPresented) {
-                FilterView {
-                    isFilterViewPresented = false
-                } onDone: {
-                    isFilterViewPresented = false
-                }
-            }
-        }
-        .frame(height: 30)
-        .listRowInsets(EdgeInsets.zero)
-        .padding(EdgeInsets.all(24))
-        .background(Palette.bluishblack)
     }
 }
 
@@ -111,5 +81,4 @@ fileprivate extension Color {
 fileprivate extension UIColor {
     
     static let background = PaletteCore.bluishblack
-    static let navigationBackground = PaletteCore.grayblue.withAlphaComponent(0.5).rgbaToRgb(by: .background)
 }

@@ -12,9 +12,10 @@ let package = Package(
     dependencies: [
         .package(path: "../Services/StackexchangeNetworkService"),
         .package(path: "../Palette"),
+        .package(path: "../Stores/FilterStore")
     ],
     targets: [
-        .target(name: "PageStore", dependencies: ["StackexchangeNetworkService", "Palette"]),
+        .target(name: "PageStore", dependencies: ["StackexchangeNetworkService", "Palette", "FilterStore"]),
         .testTarget(name: "PageStoreTests", dependencies: ["PageStore"])
     ]
 )
