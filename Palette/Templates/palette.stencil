@@ -3,8 +3,7 @@
 //
 
 {% if catalogs and catalogs.count > 0 and resourceCount.color > 0 %}
-{% set colorCoreAlias %}{{param.colorCoreAliasName|default:"PaletteCore"}}{% endset %}
-{% set colorAlias %}{{param.colorAliasName|default:"Palette"}}{% endset %}
+{% set colorCoreAlias %}{{param.colorCoreAliasName|default:"CoreColor"}}{% endset %}
 {% set accessModifier %}{% if param.publicAccess %}public{% else %}internal{% endif %}{% endset %}
 import SwiftUI
 
@@ -16,20 +15,20 @@ import SwiftUI
 {{accessModifier}} typealias {{colorCoreAlias}} = UIColor
 #endif
 
-{{accessModifier}} extension {{colorCoreAlias}} {
+{{accessModifier}} enum PaletteCore {
 
     {% for asset in catalogs.first.assets %}
     {% if asset.type == "color" %}
-    static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: Self {
+    {{accessModifier}} static var {{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}: {{colorCoreAlias}} {
         #if !os(watchOS)
         let bundle: Bundle = {{param.bundle|default:"BundleToken.bundle"}}
         #endif
         #if os(iOS) || os(tvOS)
-        return Self(named: "{{asset.name}}", in: bundle, compatibleWith: nil)!
+        return {{colorCoreAlias}}(named: "{{asset.name}}", in: bundle, compatibleWith: nil)!
         #elseif os(macOS)
-        return Self(named: "{{asset.name}}", bundle: bundle)!
+        return {{colorCoreAlias}}(named: "{{asset.name}}", bundle: bundle)!
         #elseif os(watchOS)
-        return Self(named: "{{asset.name}}")!
+        return {{colorCoreAlias}}(named: "{{asset.name}}")!
         #endif
     }
     {% endif %}
@@ -37,16 +36,14 @@ import SwiftUI
 
 }
 
-// MARK: - {{colorAlias}}
+// MARK: - Palette
 
-{{accessModifier}} typealias {{colorAlias}} = Color
-
-{{accessModifier}} extension {{colorAlias}} {
+{{accessModifier}} enum Palette {
 
     {% for asset in catalogs.first.assets %}
     {% if asset.type == "color" %}
     {% set colorName %}{{asset.name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords}}{% endset %}
-    static let {{colorName}} = { Self(.{{colorName}}) }()
+    {{accessModifier}} static var {{colorName}}: Color { .init(PaletteCore.{{colorName}}) }
     {% endif %}
     {% endfor %}
 
@@ -68,7 +65,7 @@ import SwiftUI
     }
 }
 
-{{accessModifier}} extension {{colorAlias}} {
+{{accessModifier}} extension Color {
 
     /// Easily define two colors for both light and dark mode
     ///
@@ -76,8 +73,8 @@ import SwiftUI
     ///   - lightColor: The color to use in light mode
     ///   - darkColor: The color to use in dark mode
     /// - Returns: A dynamic color that uses both given colors respectively for the given user interface style
-    static func | (lightColor: {{colorAlias}}, darkColor: {{colorAlias}}) -> {{colorAlias}} {
-        {{colorAlias}}({{colorCoreAlias}}(lightColor) | {{colorCoreAlias}}(darkColor))
+    static func | (lightColor: Color, darkColor: Color) -> Color {
+        Color({{colorCoreAlias}}(lightColor) | {{colorCoreAlias}}(darkColor))
     }
 }
 {% if not param.bundle %}

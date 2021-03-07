@@ -55,6 +55,6 @@ struct BadgeView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let foreground = Palette.white
+    static let foreground = Color.white
     static let background = Palette.main
 }

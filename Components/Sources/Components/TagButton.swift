@@ -76,6 +76,6 @@ fileprivate struct TagButtonStyle: ViewModifier {
 
 fileprivate extension Color {
     
-    static let foreground = Palette.white
-    static let background = Palette.white.opacity(0.1)
+    static let foreground = Color.white
+    static let background = Color.white.opacity(0.1)
 }

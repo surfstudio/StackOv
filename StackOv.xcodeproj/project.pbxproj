@@ -7,25 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6F41039F252701E900FB4D99 /* Palette in Frameworks */ = {isa = PBXBuildFile; productRef = 6F41039E252701E900FB4D99 /* Palette */; };
+		6F7542DB25F50EA00099A297 /* MainFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6F7542DA25F50EA00099A297 /* MainFlow */; };
 		6F96F26725854E54009E7DED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F96F26625854E54009E7DED /* GoogleService-Info.plist */; };
-		6FC02810252CB68F002150F5 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC0280F252CB68F002150F5 /* Common */; };
-		6FC02820252CC0A4002150F5 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC0281F252CC0A4002150F5 /* SidebarView.swift */; };
-		6FC0282A252CD524002150F5 /* SidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC02829252CD524002150F5 /* SidebarButton.swift */; };
-		6FC02830252CE28C002150F5 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC0282F252CE28C002150F5 /* UserView.swift */; };
-		6FC0283D252DF90D002150F5 /* PadContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC0283C252DF90D002150F5 /* PadContentView.swift */; };
-		6FC02843252DFC95002150F5 /* PhoneContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC02842252DFC95002150F5 /* PhoneContentView.swift */; };
-		6FC0286E252EEDEE002150F5 /* HomeFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC0286D252EEDEE002150F5 /* HomeFlow */; };
-		6FC02885252F068C002150F5 /* FavoriteFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC02884252F068C002150F5 /* FavoriteFlow */; };
-		6FC02894252F07D0002150F5 /* MessagesFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC02893252F07D0002150F5 /* MessagesFlow */; };
-		6FC0289F252F08FB002150F5 /* TagsFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC0289E252F08FB002150F5 /* TagsFlow */; };
-		6FC028AA252F099D002150F5 /* UsersFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6FC028A9252F099D002150F5 /* UsersFlow */; };
 		6FCC9B4925237C5500BDD827 /* StackOv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1D25237C5300BDD827 /* StackOv.xcdatamodeld */; };
 		6FCC9B4B25237C5500BDD827 /* StackOvApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1F25237C5300BDD827 /* StackOvApp.swift */; };
-		6FCC9B4D25237C5500BDD827 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B2025237C5300BDD827 /* ContentView.swift */; };
-		6FCC9B4F25237C5500BDD827 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B2125237C5300BDD827 /* Persistence.swift */; };
 		6FCC9B5125237C5500BDD827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FCC9B2225237C5500BDD827 /* Assets.xcassets */; };
-		6FE715C9258926E900D55B0C /* MainBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE715C8258926E900D55B0C /* MainBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,14 +19,10 @@
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
 		6F4AC2DE25BC3FF3002D0D86 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
 		6F61730025D7F76F0011AB44 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
+		6F7542D625F509250099A297 /* MainFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainFlow; sourceTree = "<group>"; };
 		6F96F26625854E54009E7DED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6FB8E3FC25B01E7C00E25240 /* PageStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PageStore; sourceTree = "<group>"; };
 		6FC0280A252CB0E7002150F5 /* Common */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Common; sourceTree = "<group>"; };
-		6FC0281F252CC0A4002150F5 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		6FC02829252CD524002150F5 /* SidebarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarButton.swift; sourceTree = "<group>"; };
-		6FC0282F252CE28C002150F5 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
-		6FC0283C252DF90D002150F5 /* PadContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadContentView.swift; sourceTree = "<group>"; };
-		6FC02842252DFC95002150F5 /* PhoneContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneContentView.swift; sourceTree = "<group>"; };
 		6FC02868252EE9E9002150F5 /* HomeFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HomeFlow; sourceTree = "<group>"; };
 		6FC0287B252F0630002150F5 /* FavoriteFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FavoriteFlow; sourceTree = "<group>"; };
 		6FC0288A252F0765002150F5 /* MessagesFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessagesFlow; sourceTree = "<group>"; };
@@ -49,13 +31,10 @@
 		6FC21BAC25929B93003387CE /* AppScript */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppScript; sourceTree = "<group>"; };
 		6FCC9B1E25237C5300BDD827 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		6FCC9B1F25237C5300BDD827 /* StackOvApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackOvApp.swift; sourceTree = "<group>"; };
-		6FCC9B2025237C5300BDD827 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		6FCC9B2125237C5300BDD827 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6FCC9B2225237C5500BDD827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6FCC9B2725237C5500BDD827 /* StackOv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StackOv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FCC9B2A25237C5500BDD827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FD7B2F525D946F8007E03F2 /* PostStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PostStore; sourceTree = "<group>"; };
-		6FE715C8258926E900D55B0C /* MainBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBar.swift; sourceTree = "<group>"; };
 		6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DataTransferObjects; sourceTree = "<group>"; };
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
 		6FF33D382530917E00C316D7 /* Components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Components; sourceTree = "<group>"; };
@@ -68,13 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FC02894252F07D0002150F5 /* MessagesFlow in Frameworks */,
-				6FC0289F252F08FB002150F5 /* TagsFlow in Frameworks */,
-				6FC02885252F068C002150F5 /* FavoriteFlow in Frameworks */,
-				6F41039F252701E900FB4D99 /* Palette in Frameworks */,
-				6FC0286E252EEDEE002150F5 /* HomeFlow in Frameworks */,
-				6FC028AA252F099D002150F5 /* UsersFlow in Frameworks */,
-				6FC02810252CB68F002150F5 /* Common in Frameworks */,
+				6F7542DB25F50EA00099A297 /* MainFlow in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +89,7 @@
 		6FC027D4252C395A002150F5 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				6F7542D625F509250099A297 /* MainFlow */,
 				6FC02868252EE9E9002150F5 /* HomeFlow */,
 				6FC0287B252F0630002150F5 /* FavoriteFlow */,
 				6FC0288A252F0765002150F5 /* MessagesFlow */,
@@ -123,16 +97,6 @@
 				6FC028A4252F0962002150F5 /* UsersFlow */,
 			);
 			path = Flows;
-			sourceTree = "<group>";
-		};
-		6FC02835252DB9D7002150F5 /* SidebarView */ = {
-			isa = PBXGroup;
-			children = (
-				6FC0282F252CE28C002150F5 /* UserView.swift */,
-				6FC02829252CD524002150F5 /* SidebarButton.swift */,
-				6FC0281F252CC0A4002150F5 /* SidebarView.swift */,
-			);
-			path = SidebarView;
 			sourceTree = "<group>";
 		};
 		6FCC9B1725237C5300BDD827 = {
@@ -144,8 +108,6 @@
 				6FAA728F253357740068F85F /* Stores */,
 				6FC027D4252C395A002150F5 /* Flows */,
 				6FCC9B1C25237C5300BDD827 /* Shared */,
-				6FCC9B2925237C5500BDD827 /* iOS */,
-				6FCC9B3025237C5500BDD827 /* iPadOS */,
 				6FCC9B2825237C5500BDD827 /* Products */,
 				6F876D192525EF68008FC888 /* Frameworks */,
 			);
@@ -154,11 +116,7 @@
 		6FCC9B1C25237C5300BDD827 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				6FE715C72589261000D55B0C /* MainBar */,
-				6FC02835252DB9D7002150F5 /* SidebarView */,
 				6FCC9B1F25237C5300BDD827 /* StackOvApp.swift */,
-				6FCC9B2025237C5300BDD827 /* ContentView.swift */,
-				6FCC9B2125237C5300BDD827 /* Persistence.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -171,22 +129,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6FCC9B2925237C5500BDD827 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				6FC02842252DFC95002150F5 /* PhoneContentView.swift */,
-			);
-			path = iOS;
-			sourceTree = "<group>";
-		};
-		6FCC9B3025237C5500BDD827 /* iPadOS */ = {
-			isa = PBXGroup;
-			children = (
-				6FC0283C252DF90D002150F5 /* PadContentView.swift */,
-			);
-			path = iPadOS;
-			sourceTree = "<group>";
-		};
 		6FD295E0258990480012BFEE /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,14 +139,6 @@
 				6F96F26625854E54009E7DED /* GoogleService-Info.plist */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		6FE715C72589261000D55B0C /* MainBar */ = {
-			isa = PBXGroup;
-			children = (
-				6FE715C8258926E900D55B0C /* MainBar.swift */,
-			);
-			path = MainBar;
 			sourceTree = "<group>";
 		};
 		6FF362C72532568D009F9908 /* Services */ = {
@@ -233,13 +167,7 @@
 			);
 			name = "StackOv (iOS)";
 			packageProductDependencies = (
-				6F41039E252701E900FB4D99 /* Palette */,
-				6FC0280F252CB68F002150F5 /* Common */,
-				6FC0286D252EEDEE002150F5 /* HomeFlow */,
-				6FC02884252F068C002150F5 /* FavoriteFlow */,
-				6FC02893252F07D0002150F5 /* MessagesFlow */,
-				6FC0289E252F08FB002150F5 /* TagsFlow */,
-				6FC028A9252F099D002150F5 /* UsersFlow */,
+				6F7542DA25F50EA00099A297 /* MainFlow */,
 			);
 			productName = "StackOv (iOS)";
 			productReference = 6FCC9B2725237C5500BDD827 /* StackOv.app */;
@@ -317,16 +245,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FC02830252CE28C002150F5 /* UserView.swift in Sources */,
-				6FE715C9258926E900D55B0C /* MainBar.swift in Sources */,
-				6FC02843252DFC95002150F5 /* PhoneContentView.swift in Sources */,
 				6FCC9B4925237C5500BDD827 /* StackOv.xcdatamodeld in Sources */,
-				6FC0282A252CD524002150F5 /* SidebarButton.swift in Sources */,
-				6FCC9B4F25237C5500BDD827 /* Persistence.swift in Sources */,
-				6FC0283D252DF90D002150F5 /* PadContentView.swift in Sources */,
-				6FC02820252CC0A4002150F5 /* SidebarView.swift in Sources */,
 				6FCC9B4B25237C5500BDD827 /* StackOvApp.swift in Sources */,
-				6FCC9B4D25237C5500BDD827 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,33 +462,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6F41039E252701E900FB4D99 /* Palette */ = {
+		6F7542DA25F50EA00099A297 /* MainFlow */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Palette;
-		};
-		6FC0280F252CB68F002150F5 /* Common */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Common;
-		};
-		6FC0286D252EEDEE002150F5 /* HomeFlow */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HomeFlow;
-		};
-		6FC02884252F068C002150F5 /* FavoriteFlow */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FavoriteFlow;
-		};
-		6FC02893252F07D0002150F5 /* MessagesFlow */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MessagesFlow;
-		};
-		6FC0289E252F08FB002150F5 /* TagsFlow */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TagsFlow;
-		};
-		6FC028A9252F099D002150F5 /* UsersFlow */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = UsersFlow;
+			productName = MainFlow;
 		};
 /* End XCSwiftPackageProductDependency section */
 

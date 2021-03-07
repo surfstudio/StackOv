@@ -1,6 +1,6 @@
 //
 //  SidebarButton.swift
-//  StackOv
+//  StackOv (MainFlow module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -22,12 +22,12 @@ struct SidebarButton: View {
     }
     
     var body: some View {
-        Button(action: {
-            globalState = type
-        }) {
+        Button(action: { globalState = type }) {
             HStack(alignment: .center, spacing: 13) {
-                Image(systemName: type.image)
-                    .frame(width: 20, height: 20)
+                type.image
+                    .resizable()
+                    .frame(maxWidth: 20, maxHeight: 20)
+                    .aspectRatio(contentMode: .fit)
                 
                 Text(type.title)
                     .font(.system(size: 13, weight: .medium))
@@ -39,6 +39,7 @@ struct SidebarButton: View {
         .padding(EdgeInsets(top: 9, leading: 13, bottom: 9, trailing: 13))
         .background(Color.background(by: type == globalState))
         .cornerRadius(4)
+        .frame(height: 38)
         .disabled(type == globalState)
         .scaleEffect(hovered ? 1.05 : 1.0)
         .animation(.default)
@@ -64,8 +65,8 @@ struct SidebarButton_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let foreground = Palette.white
+    static let foreground = Color.white
     static func background(by pressed: Bool) -> Self {
-        pressed ? Palette.white.opacity(0.05) : .clear
+        pressed ? Color.white.opacity(0.05) : .clear
     }
 }

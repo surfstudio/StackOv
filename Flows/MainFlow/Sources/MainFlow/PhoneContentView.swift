@@ -1,6 +1,6 @@
 //
 //  PhoneContentView.swift
-//  StackOv
+//  StackOv (MainFlow module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -33,5 +33,5 @@ struct PhoneContentView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let accentColor = Palette.white
+    static let accentColor = Color.white
 }

@@ -51,6 +51,15 @@ struct PageView: View {
             case .error:
                 Text("error")
             }
+        }.phoneToolbar {
+            ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
+                filterButton(style: .short)
+                #if DEBUG
+                Button(action: {}) {
+                    Image(systemName: "person.crop.circle.fill")
+                }
+                #endif
+            }
         }
     }
     
@@ -62,17 +71,13 @@ struct PageView: View {
             
             Spacer()
             
-            FilterButton(activeFilters: .constant(3)) {
-                isFilterViewPresented = true
-            }.sheet(isPresented: $isFilterViewPresented) {
-                FilterView(isOpened: $isFilterViewPresented)
-                    .environmentObject(store.filterStore)
-            }
+            filterButton(style: .default)
         }
         .padding(.all, defaultSpacing)
         .frame(height: 30)
         .listRowInsets(EdgeInsets.zero)
-        .padding(EdgeInsets.all(24))
+        .padding(.top, 24)
+        .padding(.bottom, 6)
         .background(Color.background)
     }
     
@@ -80,7 +85,9 @@ struct PageView: View {
     
     func content(_ models: [QuestionModel] = []) -> some View {
         VStack(spacing: .zero) {
-            sectionHeader
+            if UIDevice.current.userInterfaceIdiom.isPad {
+                sectionHeader
+            }
             
             LazyVGrid(columns: columns, spacing: defaultSpacing) {
                 ForEach(models) { item in
@@ -108,6 +115,16 @@ struct PageView: View {
     func destinationView(_ item: QuestionModel) -> some View {
         PostView()
             .environmentObject(StoresAssembler.shared.resolve(PostStore.self, argument: item)!)
+    }
+    
+    func filterButton(style: FilterButton.Style) -> some View {
+        FilterButton(activeFilters: .constant(3), style: style) {
+            isFilterViewPresented = true
+        }
+        .sheet(isPresented: $isFilterViewPresented) {
+            FilterView(isOpened: $isFilterViewPresented)
+                .environmentObject(store.filterStore)
+        }
     }
 }
 

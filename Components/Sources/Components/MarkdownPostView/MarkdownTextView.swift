@@ -135,6 +135,6 @@ fileprivate struct _MarkdownTextView: UIViewRepresentable {
 
 fileprivate extension UIColor {
     
-    static let foreground = PaletteCore.white
-    static let background = PaletteCore.clear
+    static let foreground = UIColor.white
+    static let background = UIColor.clear
 }

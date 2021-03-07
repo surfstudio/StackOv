@@ -91,11 +91,11 @@ struct CheckmarkView_Previews: PreviewProvider {
 fileprivate extension Color {
     
     static func foreground(isFilled: Bool) -> Color {
-        isFilled ? Palette.white : Palette.main
+        isFilled ? .white : Palette.main
     }
     
     static func backround(isSelected: Bool) -> Color {
-        isSelected ? Palette.main : Palette.clear
+        isSelected ? Palette.main : .clear
     }
     
     static func border(isSelected: Bool) -> Color {
