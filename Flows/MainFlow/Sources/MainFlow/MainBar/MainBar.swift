@@ -1,11 +1,13 @@
 //
 //  MainBar.swift
-//  StackOv (iOS)
+//  StackOv (MainFlow module)
 //
-//  Created by Erik Basargin on 15/12/2020.
+//  Created by Erik Basargin
+//  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import SwiftUI
+import Icons
 
 import HomeFlow
 import FavoriteFlow
@@ -53,18 +55,18 @@ extension MainBar.ItemType {
         }
     }
     
-    var image: String {
+    var image: Image {
         switch self {
         case .home:
-            return "globe"
+            return Icons.planet.image
         case .favorite:
-            return "star.fill"
+            return Icons.starFill.image
         case .messages:
-            return "tray.fill"
+            return Icons.trayFill.image
         case .tags:
-            return "tag.fill"
+            return Icons.tagFill.image
         case .users:
-            return "person.2.fill"
+            return Icons.person2Fill.image
         }
     }
     
@@ -108,7 +110,7 @@ fileprivate struct TabModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content.tabItem {
-            Image(systemName: item.image)
+            item.image
             Text(item.title)
         }.tag(item)
     }

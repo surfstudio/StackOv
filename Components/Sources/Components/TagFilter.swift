@@ -68,9 +68,9 @@ fileprivate struct TagFilterStyle: ViewModifier {
 
 fileprivate extension Color {
     
-    static let foreground = Palette.white
-    static let background = Palette.white.opacity(0.1)
+    static let foreground = Color.white
+    static let background = Color.white.opacity(0.1)
     static func background(by selected: Bool) -> Color {
-        selected ? .main : .background
+        selected ? Palette.main : .background
     }
 }

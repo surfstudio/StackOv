@@ -39,12 +39,23 @@ public struct HomeFlow: View {
     }
 
     var padContent: some View {
-        VStack(spacing: .zero) {
-            Divider()
-                .background(Color.white.opacity(0.08))
+        NavigationView {
+            Color.background
+                .ignoresSafeArea(.container, edges: .top)
+                .navigationBarHidden(true)
             
-            PageView()
+            VStack(spacing: .zero) {
+                Divider()
+                    .background(Color.white.opacity(0.08))
+
+                PageView()
+                    .background(Color.background)
+                    .navigationBarTitle("", displayMode: .inline)
+            }
+            .modifier(PadNavigationViewIntrospectModifier())
         }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        .accentColor(Color.navigationBarForeground)
     }
 }
 
@@ -71,11 +82,26 @@ fileprivate struct PhoneNavigationViewIntrospectModifier: ViewModifier {
     }
 }
 
+fileprivate struct PadNavigationViewIntrospectModifier: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content.introspectSplitViewController {
+            $0.preferredPrimaryColumnWidth = 1
+            $0.minimumPrimaryColumnWidth = 1
+            $0.maximumPrimaryColumnWidth = 1
+            $0.preferredSplitBehavior = .tile
+            $0.preferredDisplayMode = .twoBesideSecondary
+            $0.setValue(0, forKey: "gutterWidth") // hide devider between columns
+        }
+    }
+}
+
 // MARK: - Colors
 
 fileprivate extension Color {
     
     static let navigationBarForeground = Palette.dullGray
+    static let background = Palette.bluishblack
 }
 
 fileprivate extension UIColor {

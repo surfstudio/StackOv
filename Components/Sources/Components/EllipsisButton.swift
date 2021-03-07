@@ -58,8 +58,8 @@ struct EllipsisButtonStyle: ButtonStyle {
 
 fileprivate extension Color {
     
-    static let foreground = Palette.white
+    static let foreground = Color.white
     static func background(by pressed: Bool) -> Color {
-        Palette.white.opacity(pressed ? 0.2 : 0.1)
+        Color.white.opacity(pressed ? 0.2 : 0.1)
     }
 }

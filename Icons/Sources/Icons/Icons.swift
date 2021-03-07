@@ -79,7 +79,7 @@ public enum Icons: String, CaseIterable {
     case xmark
     case xmarkRoundedBold
 
-    var image: Image {
+    public var image: Image {
         switch self {
             case .arrowLeft: return .init(icon: IconsCore.arrowLeft)
             case .bellFill: return .init(icon: IconsCore.bellFill)

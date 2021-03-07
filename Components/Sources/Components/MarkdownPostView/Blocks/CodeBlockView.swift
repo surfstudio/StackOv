@@ -86,6 +86,6 @@ struct CodeBlockView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let background = Palette.white.opacity(0.04)
-    static let foreground = Palette.white
+    static let background = Color.white.opacity(0.04)
+    static let foreground = Color.white
 }

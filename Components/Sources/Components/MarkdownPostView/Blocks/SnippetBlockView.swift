@@ -86,5 +86,5 @@ struct SnippetBlockView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let border = Palette.white.opacity(0.08)
+    static let border = Color.white.opacity(0.08)
 }

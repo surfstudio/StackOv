@@ -11,15 +11,31 @@ import Palette
 
 public struct FilterButton: View {
     
+    public enum Style {
+        case `default`
+        case short
+    }
+
     @Binding var activeFilters: Int
+    private let style: Style
     private let action: () -> Void
     
-    public init(activeFilters: Binding<Int>, action: @escaping () -> Void) {
+    public init(activeFilters: Binding<Int>, style: Style = .default, action: @escaping () -> Void) {
         self._activeFilters = activeFilters
+        self.style = style
         self.action = action
     }
     
     public var body: some View {
+        switch style {
+        case .default:
+            defaultButton
+        case .short:
+            shortButton
+        }
+    }
+    
+    var defaultButton: some View {
         Button(action: action) {
             HStack(spacing: 5.38) {
                 Text("Filters")
@@ -37,6 +53,16 @@ public struct FilterButton: View {
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.border, lineWidth: 0.5)
         )
+    }
+    
+    var shortButton: some View {
+        Button(action: action) {
+            Image(systemName: "f.circle")
+        }
+    }
+    
+    public func style(_ style: Style) -> some View {
+        Self(activeFilters: $activeFilters, style: style, action: action)
     }
 }
 
@@ -69,7 +95,7 @@ fileprivate extension Color {
     
     static let foreground = Palette.gainsboro
     static func background(by pressed: Bool) -> Color {
-        pressed ? Palette.white.opacity(0.1) : .clear
+        pressed ? Color.white.opacity(0.1) : .clear
     }
     static let border = Palette.telegrey
 }

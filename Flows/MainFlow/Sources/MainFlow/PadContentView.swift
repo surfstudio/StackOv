@@ -1,6 +1,6 @@
 //
 //  PadContentView.swift
-//  StackOv
+//  StackOv (MainFlow module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -25,31 +25,31 @@ struct PadContentView: View {
     // MARK: - View
     
     var body: some View {
-        NavigationView {
+        HStack(spacing: .zero) {
             SidebarView(state: $state)
                 .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-                .navigationBarTitle("", displayMode: .inline)
-                .modifier(SidebarViewIntrospectModifier())
-                .navigationBarHidden(true)
                 .background(Color.Sidebar.backgound)
+                .frame(maxWidth: 210)
+                .ignoresSafeArea(.container, edges: .top)
 
-            MainView(state: $state)
-                .navigationBarTitle("", displayMode: .inline)
-                .background(Color.MainView.background)
-                .toolbar {
-                    #if DEBUG
-                    ToolbarItem(placement: .principal) {
-                        TextField("Search", text: .constant(""))
-                            .padding(.horizontal)
-                            .padding(.vertical, 4)
-                            .frame(width: 413)
-                            .background(Palette.white.opacity(0.08))
-                            .cornerRadius(5.0)
-                    }
-                    #endif
+            ZStack {
+                HStack(spacing: 0) {
+                    Color.Sidebar.devider.frame(width: 1)
+                    Color.MainView.background
                 }
+                .ignoresSafeArea(.container, edges: .top)
+                .frame(
+                    minWidth: 0,
+                    maxWidth: .infinity,
+                    minHeight: 0,
+                    maxHeight: .infinity,
+                    alignment: .topLeading
+                )
+                
+                MainView(state: $state)
+            }
         }
-        .navigationViewStyle(DoubleColumnNavigationViewStyle())
+        .background(Color.MainView.background)
     }
     
     // MARK: - Methods
@@ -95,37 +95,17 @@ struct PadContentView_Previews: PreviewProvider {
     }
 }
 
-// MARK: - View Modifiers
-
-fileprivate struct SidebarViewIntrospectModifier: ViewModifier {
-    
-    func body(content: Content) -> some View {
-        content.introspectNavigationController {
-            // Hack for changing UIStatusBar background
-            $0.children.first?.view.backgroundColor = UIColor.Sidebar.backgound
-        }.introspectSplitViewController {
-            $0.preferredPrimaryColumnWidth = 210
-            $0.minimumPrimaryColumnWidth = 210
-            $0.maximumPrimaryColumnWidth = 210
-            $0.preferredSplitBehavior = .tile
-            
-            // Hack for changing tint color of the displayModeButtonItem
-            // because UINavigationBar.appearance().tintColor = PaletteCore.dullGray works not correct with displayModeButtonItem
-            $0.view.tintColor = UIColor.Sidebar.foreground
-        }
-    }
-}
-
 // MARK: - Colors
 
 fileprivate extension Color {
     
     enum Sidebar {
+        static let devider = Palette.bluishblack
         static let backgound = Palette.grayblue
     }
     
     enum MainView {
-        static let background = Palette.bluishblack
+        static let background = Color(UIColor.MainView.navigationBarBackground)
     }
 }
 

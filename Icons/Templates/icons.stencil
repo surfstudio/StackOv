@@ -39,7 +39,7 @@ public typealias ImageCore = UIImage
     {% endif %}
     {% endfor %}
 
-    var image: Image {
+    {{accessModifier}} var image: Image {
         switch self {
             {% for asset in assets %}
             {% if asset.type == "image" %}

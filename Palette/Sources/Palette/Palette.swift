@@ -4,86 +4,86 @@
 
 import SwiftUI
 
-// MARK: - PaletteCore
+// MARK: - CoreColor
 
 #if canImport(AppKit) && !targetEnvironment(macCatalyst)
-public typealias PaletteCore = NSColor
+public typealias CoreColor = NSColor
 #else
-public typealias PaletteCore = UIColor
+public typealias CoreColor = UIColor
 #endif
 
-public extension PaletteCore {
+public enum PaletteCore {
 
-    static var bluishblack: Self {
+    public static var bluishblack: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
-        return Self(named: "Bluishblack", in: bundle, compatibleWith: nil)!
+        return CoreColor(named: "Bluishblack", in: bundle, compatibleWith: nil)!
         #elseif os(macOS)
-        return Self(named: "Bluishblack", bundle: bundle)!
+        return CoreColor(named: "Bluishblack", bundle: bundle)!
         #elseif os(watchOS)
-        return Self(named: "Bluishblack")!
+        return CoreColor(named: "Bluishblack")!
         #endif
     }
-    static var dullGray: Self {
+    public static var dullGray: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
-        return Self(named: "DullGray", in: bundle, compatibleWith: nil)!
+        return CoreColor(named: "DullGray", in: bundle, compatibleWith: nil)!
         #elseif os(macOS)
-        return Self(named: "DullGray", bundle: bundle)!
+        return CoreColor(named: "DullGray", bundle: bundle)!
         #elseif os(watchOS)
-        return Self(named: "DullGray")!
+        return CoreColor(named: "DullGray")!
         #endif
     }
-    static var gainsboro: Self {
+    public static var gainsboro: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
-        return Self(named: "Gainsboro", in: bundle, compatibleWith: nil)!
+        return CoreColor(named: "Gainsboro", in: bundle, compatibleWith: nil)!
         #elseif os(macOS)
-        return Self(named: "Gainsboro", bundle: bundle)!
+        return CoreColor(named: "Gainsboro", bundle: bundle)!
         #elseif os(watchOS)
-        return Self(named: "Gainsboro")!
+        return CoreColor(named: "Gainsboro")!
         #endif
     }
-    static var grayblue: Self {
+    public static var grayblue: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
-        return Self(named: "Grayblue", in: bundle, compatibleWith: nil)!
+        return CoreColor(named: "Grayblue", in: bundle, compatibleWith: nil)!
         #elseif os(macOS)
-        return Self(named: "Grayblue", bundle: bundle)!
+        return CoreColor(named: "Grayblue", bundle: bundle)!
         #elseif os(watchOS)
-        return Self(named: "Grayblue")!
+        return CoreColor(named: "Grayblue")!
         #endif
     }
-    static var main: Self {
+    public static var main: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
-        return Self(named: "Main", in: bundle, compatibleWith: nil)!
+        return CoreColor(named: "Main", in: bundle, compatibleWith: nil)!
         #elseif os(macOS)
-        return Self(named: "Main", bundle: bundle)!
+        return CoreColor(named: "Main", bundle: bundle)!
         #elseif os(watchOS)
-        return Self(named: "Main")!
+        return CoreColor(named: "Main")!
         #endif
     }
-    static var telegrey: Self {
+    public static var telegrey: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
         #endif
         #if os(iOS) || os(tvOS)
-        return Self(named: "Telegrey", in: bundle, compatibleWith: nil)!
+        return CoreColor(named: "Telegrey", in: bundle, compatibleWith: nil)!
         #elseif os(macOS)
-        return Self(named: "Telegrey", bundle: bundle)!
+        return CoreColor(named: "Telegrey", bundle: bundle)!
         #elseif os(watchOS)
-        return Self(named: "Telegrey")!
+        return CoreColor(named: "Telegrey")!
         #endif
     }
 
@@ -91,22 +91,20 @@ public extension PaletteCore {
 
 // MARK: - Palette
 
-public typealias Palette = Color
+public enum Palette {
 
-public extension Palette {
-
-    static let bluishblack = { Self(.bluishblack) }()
-    static let dullGray = { Self(.dullGray) }()
-    static let gainsboro = { Self(.gainsboro) }()
-    static let grayblue = { Self(.grayblue) }()
-    static let main = { Self(.main) }()
-    static let telegrey = { Self(.telegrey) }()
+    public static var bluishblack: Color { .init(PaletteCore.bluishblack) }
+    public static var dullGray: Color { .init(PaletteCore.dullGray) }
+    public static var gainsboro: Color { .init(PaletteCore.gainsboro) }
+    public static var grayblue: Color { .init(PaletteCore.grayblue) }
+    public static var main: Color { .init(PaletteCore.main) }
+    public static var telegrey: Color { .init(PaletteCore.telegrey) }
 
 }
 
 // MARK: - Extensions
 
-public extension PaletteCore {
+public extension CoreColor {
 
     /// Easily define two colors for both light and dark mode
     /// Link: https://www.avanderlee.com/swift/dark-mode-support-ios/
@@ -115,12 +113,12 @@ public extension PaletteCore {
     ///   - lightColor: The color to use in light mode
     ///   - darkColor: The color to use in dark mode
     /// - Returns: A dynamic color that uses both given colors respectively for the given user interface style
-    static func | (lightColor: PaletteCore, darkColor: PaletteCore) -> PaletteCore {
-        PaletteCore { $0.userInterfaceStyle == .light ? lightColor : darkColor }
+    static func | (lightColor: CoreColor, darkColor: CoreColor) -> CoreColor {
+        CoreColor { $0.userInterfaceStyle == .light ? lightColor : darkColor }
     }
 }
 
-public extension Palette {
+public extension Color {
 
     /// Easily define two colors for both light and dark mode
     ///
@@ -128,7 +126,7 @@ public extension Palette {
     ///   - lightColor: The color to use in light mode
     ///   - darkColor: The color to use in dark mode
     /// - Returns: A dynamic color that uses both given colors respectively for the given user interface style
-    static func | (lightColor: Palette, darkColor: Palette) -> Palette {
-        Palette(PaletteCore(lightColor) | PaletteCore(darkColor))
+    static func | (lightColor: Color, darkColor: Color) -> Color {
+        Color(CoreColor(lightColor) | CoreColor(darkColor))
     }
 }

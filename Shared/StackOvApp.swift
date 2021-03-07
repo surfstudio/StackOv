@@ -7,14 +7,13 @@
 //
 
 import SwiftUI
+import MainFlow
 #if canImport(Firebase)
 import Firebase
 #endif
 
 @main
 struct StackOvApp: App {
-    
-    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         #if canImport(Firebase)
@@ -22,8 +21,7 @@ struct StackOvApp: App {
         #endif
         
         return WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            MainFlow()
         }
     }
 }

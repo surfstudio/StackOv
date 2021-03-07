@@ -101,16 +101,16 @@ struct PostItemView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 16, height: 16)
-                    .foregroundColor(Palette.white.opacity(0.5))
+                    .foregroundColor(Color.white.opacity(0.5))
                 Text("\(model.viewsNumber)")
-                    .foregroundColor(Palette.white.opacity(0.7))
+                    .foregroundColor(Color.white.opacity(0.7))
                     .font(.caption)
             }
             
             Spacer()
             
             Text(model.formattedLastActivity)
-                .foregroundColor(Palette.white.opacity(0.7))
+                .foregroundColor(Color.white.opacity(0.7))
                 .font(.caption)
         }
     }

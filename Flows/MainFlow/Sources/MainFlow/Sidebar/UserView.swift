@@ -1,6 +1,6 @@
 //
 //  UserView.swift
-//  StackOv
+//  StackOv (MainFlow module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -45,6 +45,6 @@ struct UserView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let nameForeground = Palette.white
+    static let nameForeground = Color.white
     static let emailForeground = Palette.telegrey
 }

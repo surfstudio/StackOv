@@ -1,6 +1,6 @@
 //
 //  SidebarView.swift
-//  StackOv
+//  StackOv (MainFlow module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -28,6 +28,7 @@ struct SidebarView: View {
             UserView()
                 .padding(EdgeInsets.leading(10))
         }
+        .padding(.top, 11)
         .frame(
             minWidth: 0,
             maxWidth: .infinity,

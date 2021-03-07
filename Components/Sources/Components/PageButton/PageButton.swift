@@ -106,6 +106,6 @@ fileprivate extension Color {
     static let foreground = Palette.dullGray
     static let foregroundText = Palette.gainsboro
     static func background(by pressed: Bool) -> Color {
-        pressed ? Palette.white.opacity(0.1) : Palette.white.opacity(0.06)
+        Color.white.opacity(pressed ? 0.1 : 0.06)
     }
 }
