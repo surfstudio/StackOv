@@ -28,29 +28,33 @@ struct PostView: View {
     // MARK: - View
     
     var body: some View {
-        ScrollView {
-            LazyVStack(spacing: 0) {
-                QuestionView(model: store.questionModel)
-                
-                switch store.state {
-                case .unknown:
-                    Text("")
-                        .onAppear {
-                            store.loadAnswers()
-                        }
-                case .emptyContent:
-                    Text("empty")
-                case let .content(_):
-                    content
-                case .loading:
-                    Text("Loading")
-                case .error:
-                    Text("error")
+        ZStack {
+            Color.background
+                .edgesIgnoringSafeArea(.all)
+            
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    QuestionView(model: store.questionModel)
+                    
+                    switch store.state {
+                    case .unknown:
+                        Text("")
+                            .onAppear {
+                                store.loadAnswers()
+                            }
+                    case .emptyContent:
+                        Text("empty")
+                    case let .content(_):
+                        content
+                    case .loading:
+                        Text("Loading")
+                    case .error:
+                        Text("error")
+                    }
                 }
+                .padding(contentEdgeInsets)
             }
-            .padding(contentEdgeInsets)
         }
-        .background(Palette.bluishblack)
         .navigationBarTitle("", displayMode: .inline)
         .toolbar {
             #if DEBUG
@@ -84,6 +88,11 @@ struct PostView_Previews: PreviewProvider {
 }
 
 // MARK: - Colors
+
+fileprivate extension Color {
+    
+    static let background = Palette.bluishblack
+}
 
 fileprivate extension UIColor {
     
