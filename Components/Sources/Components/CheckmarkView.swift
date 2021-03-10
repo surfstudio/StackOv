@@ -8,14 +8,9 @@
 
 import SwiftUI
 import Palette
+import Icons
 
 public struct CheckmarkView: View {
-    
-    // MARK: - Nested types
-    
-    enum Constants {
-        static let ratio: CGFloat = 0.2
-    }
     
     // MARK: - States
     
@@ -57,20 +52,19 @@ public struct CheckmarkView: View {
     public var body: some View {
         ZStack {
             if isFilled {
-                Circle()
-                    .foregroundColor(Color.backround(isSelected: isSelected))
-                    .overlay(
-                        Circle()
-                            .stroke(Color.border(isSelected: isSelected), lineWidth: 1)
-                    )
-                    .padding(.zero)
+                Circle().stroke(Color.border(isSelected: isSelected), lineWidth: 1)
             }
             
             if isSelected {
-                Image(systemName: "checkmark")
-                    .resizable()
-                    .foregroundColor(Color.foreground(isFilled: isFilled))
-                    .padding(maxSize.width * Constants.ratio)
+                if isFilled {
+                    Icons.checkmarkCircleFill.image
+                        .resizable()
+                } else {
+                    Icons.checkmark.image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: maxSize.width * 0.7)
+                }
             }
         }
         .frame(width: maxSize.width, height: maxSize.height)
@@ -89,14 +83,6 @@ struct CheckmarkView_Previews: PreviewProvider {
 // MARK: - Colors
 
 fileprivate extension Color {
-    
-    static func foreground(isFilled: Bool) -> Color {
-        isFilled ? .white : Palette.main
-    }
-    
-    static func backround(isSelected: Bool) -> Color {
-        isSelected ? Palette.main : .clear
-    }
     
     static func border(isSelected: Bool) -> Color {
         isSelected ? Palette.main : Palette.telegrey
