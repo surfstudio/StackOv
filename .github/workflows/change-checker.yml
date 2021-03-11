@@ -7,7 +7,7 @@ on:
       - develop
 
 jobs:
-  test-project:
+  build-and-test:
 
     runs-on: macos-latest
   
@@ -30,7 +30,7 @@ jobs:
         xcodebuild -project 'StackOv.xcodeproj' \
           -scheme 'StackOv (iOS)' \
           -sdk iphonesimulator \
-          -destination platform='iOS Simulator,name=iPhone 12,OS=14.2' \
+          -destination platform='iOS Simulator,name=iPhone SE (2nd generation),OS=14.4' \
           build test \
           | xcbeautify
       env:

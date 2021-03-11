@@ -2,11 +2,8 @@ import XCTest
 @testable import AppScript
 
 final class AppScriptTests: XCTestCase {
-    func testExample() {
-        XCTFail("Need add tests")
+    
+    func testExample() throws {
+        throw XCTSkip(#function)
     }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }
