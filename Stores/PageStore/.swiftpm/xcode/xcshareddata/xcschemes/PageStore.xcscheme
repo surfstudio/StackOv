@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1240"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Network"
-               BuildableName = "Network"
-               BlueprintName = "Network"
+               BlueprintIdentifier = "PageStore"
+               BuildableName = "PageStore"
+               BlueprintName = "PageStore"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NetworkTests"
-               BuildableName = "NetworkTests"
-               BlueprintName = "NetworkTests"
+               BlueprintIdentifier = "PageStoreTests"
+               BuildableName = "PageStoreTests"
+               BlueprintName = "PageStoreTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
@@ -60,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Network"
-            BuildableName = "Network"
-            BlueprintName = "Network"
+            BlueprintIdentifier = "PageStore"
+            BuildableName = "PageStore"
+            BlueprintName = "PageStore"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

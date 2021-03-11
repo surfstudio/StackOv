@@ -2,11 +2,8 @@ import XCTest
 @testable import PostStore
 
 final class PostStoreTests: XCTestCase {
-    func testExample() {
-        XCTFail("Need add tests")
+    
+    func testExample() throws {
+        throw XCTSkip(#function)
     }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }

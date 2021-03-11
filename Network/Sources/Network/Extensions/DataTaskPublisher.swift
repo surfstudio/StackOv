@@ -34,4 +34,3 @@ public extension URLSession.DataTaskPublisher {
         }
     }
 }
-

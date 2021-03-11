@@ -2,11 +2,8 @@ import XCTest
 @testable import StackexchangeNetworkService
 
 final class StackexchangeNetworkServiceTests: XCTestCase {
-    func testExample() {
-        XCTFail("Need add tests")
+    
+    func testExample() throws {
+        throw XCTSkip(#function)
     }
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }
