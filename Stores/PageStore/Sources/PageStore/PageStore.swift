@@ -36,10 +36,6 @@ public final class PageStore: ObservableObject {
     
     @Published public private(set) var state: State = .unknown
 
-    // MARK: - Private properties
-
-    private var models = [QuestionModel]()
-
     // MARK: - Initialization and deinitialization
     
     public init(dataManager: PageDataManagerProtocol, filterStore: FilterStore) {
@@ -57,8 +53,7 @@ public extension PageStore {
             switch result {
             case let .success(models):
                 if models.isEmpty { break }
-                self.models.append(contentsOf: models)
-                self.state = .content(self.models)
+                self.state = .content(models)
             case .failure:
                 // need show error not by changing the state of screen
                break
@@ -67,16 +62,14 @@ public extension PageStore {
     }
 
     func reloadQuestions() {
-        dataManager.reset()
-        models.removeAll()
         state = .loading
-        dataManager.fetch { [unowned self] result in
+        dataManager.reload { [unowned self] result in
             switch result {
             case let .success(models):
-                self.models.append(contentsOf: models)
                 self.state = models.isEmpty ? .emptyContent : .content(models)
-            case let .failure(error):
-                self.state = .error(error)
+            case .failure:
+                // TODO: - Handle error without kick data from view
+                break
             }
         }
     }
