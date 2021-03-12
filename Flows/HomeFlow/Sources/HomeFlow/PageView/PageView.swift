@@ -89,16 +89,22 @@ struct PageView: View {
                 sectionHeader
             }
             
-        LazyVGrid(columns: columns, spacing: defaultSpacing) {
-            ForEach(models) { item in
-                itemView(item)
-                    .onAppear {
-                        if models.last?.id == item.id {
-                            store.loadNextQuestions()
+            LazyVGrid(columns: columns, spacing: defaultSpacing) {
+                ForEach(models) { item in
+                    itemView(item)
+                        .onAppear {
+                            if models.last?.id == item.id {
+                                store.loadNextQuestions()
+                            }
                         }
-                    }
+                }
+                .padding(.all, defaultSpacing)
+                if store.loadMore {
+                    Spacer()
+                    LoaderView()
+                        .frame(width: 24, height: 24)
+                }
             }
-            .padding(.all, defaultSpacing)
         }
     }
 

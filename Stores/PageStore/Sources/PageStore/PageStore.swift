@@ -35,6 +35,7 @@ public final class PageStore: ObservableObject {
     // MARK: - Public properties
     
     @Published public private(set) var state: State = .unknown
+    @Published public private(set) var loadMore: Bool = false
 
     // MARK: - Initialization and deinitialization
     
@@ -49,12 +50,15 @@ public final class PageStore: ObservableObject {
 public extension PageStore {
 
     func loadNextQuestions() {
+        loadMore = true
         dataManager.fetch { [unowned self] result in
             switch result {
             case let .success(models):
                 if models.isEmpty { break }
                 self.state = .content(models)
+                loadMore = false
             case .failure:
+                loadMore = false
                 // need show error not by changing the state of screen
                break
             }
