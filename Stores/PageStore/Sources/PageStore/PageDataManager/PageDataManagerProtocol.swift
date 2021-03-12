@@ -18,5 +18,6 @@ public protocol PageDataManagerProtocol: class {
     var hasMoreData: Bool { get }
     
     func fetch(_ complitionHandler: @escaping FetchComplitionHandler)
+    func reload(_ complitionHandler: @escaping FetchComplitionHandler)
     func reset()
 }
