@@ -40,7 +40,7 @@ struct PageView: View {
             case .unknown:
                 Text("")
                     .onAppear {
-                        store.loadQuestions()
+                        store.reloadQuestions()
                     }
             case .emptyContent:
                 Text("empty")

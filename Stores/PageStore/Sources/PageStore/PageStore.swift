@@ -27,11 +27,6 @@ public final class PageStore: ObservableObject {
         case error(Error)
     }
     
-    public enum LoadingType {
-        case reload
-        case next
-    }
-    
     // MARK: - Substores & Services
 
     let dataManager: PageDataManagerProtocol
@@ -57,45 +52,32 @@ public final class PageStore: ObservableObject {
 
 public extension PageStore {
 
-    // MARK: - Public methods
-
-    func tryLoadMoreIfNeeded(current item: QuestionModel) {
-        guard let currentItemIndex = models.firstIndex(where: { $0.id == item.id } ),
-              models.count <= currentItemIndex + Constants.leftItemsCountToPrefetching else {
-            return
-        }
-        loadQuestions(.next)
-    }
-    
-    func loadQuestions(_ type: LoadingType = .reload) {
-        switch type {
-        case .reload:
-            dataManager.reset()
-            models.removeAll()
-        case .next:
-            tryLoadResultAndUpdateState { _ in
-                //not implemented yet
+    func loadNextQuestions() {
+        dataManager.fetch { [unowned self] result in
+            switch result {
+            case let .success(models):
+                if models.isEmpty { break }
+                self.models.append(contentsOf: models)
+                self.state = .content(self.models)
+            case .failure:
+                // need show error not by changing the state of screen
+               break
             }
-            return
-        }
-        state = .loading
-        tryLoadResultAndUpdateState { [unowned self] error in
-            self.state = .error(error)
         }
     }
 
-    // MARK: - Private methods
-
-    private func tryLoadResultAndUpdateState(_ onError: @escaping (Error) -> Void) {
+    func reloadQuestions() {
+        dataManager.reset()
+        models.removeAll()
+        state = .loading
         dataManager.fetch { [unowned self] result in
             switch result {
             case let .success(models):
                 self.models.append(contentsOf: models)
                 self.state = models.isEmpty ? .emptyContent : .content(models)
             case let .failure(error):
-                onError(error)
+                self.state = .error(error)
             }
         }
     }
-
 }
