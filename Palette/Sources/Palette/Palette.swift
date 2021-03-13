@@ -74,6 +74,18 @@ public enum PaletteCore {
         return CoreColor(named: "Main")!
         #endif
     }
+    public static var paleSky: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "PaleSky", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "PaleSky", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "PaleSky")!
+        #endif
+    }
     public static var telegrey: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
@@ -84,18 +96,6 @@ public enum PaletteCore {
         return CoreColor(named: "Telegrey", bundle: bundle)!
         #elseif os(watchOS)
         return CoreColor(named: "Telegrey")!
-        #endif
-    }
-    static var paleSky: CoreColor {
-        #if !os(watchOS)
-        let bundle: Bundle = .module
-        #endif
-        #if os(iOS) || os(tvOS)
-        return CoreColor(named: "PaleSky", in: bundle, compatibleWith: nil)!
-        #elseif os(macOS)
-        return CoreColor(named: "PaleSky", bundle: bundle)!
-        #elseif os(watchOS)
-        return CoreColor(named: "PaleSky")!
         #endif
     }
 
@@ -110,8 +110,8 @@ public enum Palette {
     public static var gainsboro: Color { .init(PaletteCore.gainsboro) }
     public static var grayblue: Color { .init(PaletteCore.grayblue) }
     public static var main: Color { .init(PaletteCore.main) }
-    public static var telegrey: Color { .init(PaletteCore.telegrey) }
     public static var paleSky: Color { .init(PaletteCore.paleSky) }
+    public static var telegrey: Color { .init(PaletteCore.telegrey) }
 
 }
 

@@ -29,6 +29,13 @@ public struct QuestionModel: Identifiable {
 
 // MARK: - Extensions
 
+extension QuestionModel: Equatable {
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 public extension QuestionModel {
     
     var isEmpty: Bool {
