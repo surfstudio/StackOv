@@ -33,6 +33,15 @@ struct LoaderCircle: View {
     }
 }
 
+// MARK: - Previews
+
+struct LoaderCircle_Previews: PreviewProvider {
+
+    static var previews: some View {
+        LoaderCircle()
+    }
+}
+
 // MARK: - Colors
 
 fileprivate extension Color {

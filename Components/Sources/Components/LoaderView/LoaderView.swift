@@ -23,15 +23,14 @@ public struct LoaderView: View, Animatable {
         set { rotationAngle = newValue }
     }
 
-    @State var rotationAngle: Double = 0
-
     // MARK: - Private properties
 
     private var animation: Animation {
         Animation.linear(duration: Constants.animationDuration)
             .repeatForever(autoreverses: false)
     }
-
+    
+    @State private var rotationAngle: Double = 0
 
     // MARK: - Initializers
 
@@ -50,7 +49,7 @@ public struct LoaderView: View, Animatable {
     }
 }
 
-// MARK: - LiveView
+// MARK: - Previews
 
 struct LoaderView_Previews: PreviewProvider {
 
