@@ -17,7 +17,7 @@ final public class PageDataManager: PageDataManagerProtocol {
     // MARK: - Nested types
     
     enum Constants {
-        static let defaultPage = 0
+        static let defaultPage = 1
         static let defaultPageSize = 30
     }
     
@@ -40,7 +40,6 @@ final public class PageDataManager: PageDataManagerProtocol {
     // MARK: - Internal properties
     
     var page: Int = Constants.defaultPage
-    var pageSize: Int = Constants.defaultPageSize
     var currentData: CollectedData?
     var loadingProcess: AnyCancellable?
     
@@ -81,30 +80,57 @@ final public class PageDataManager: PageDataManagerProtocol {
 
 public extension PageDataManager {
     
-    func fetch(_ complitionHandler: @escaping FetchComplitionHandler) {
+    func fetch(receiveCompletion: @escaping ResultHandler) {
         guard !isLoading, hasMoreData else { return }
-        
-        page += 1
-        loadingProcess = service.loadQuestions(page: page, pageSize: pageSize)
+
+        loadingProcess = service.loadQuestions(page: page, pageSize: Constants.defaultPageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
-                self.cancelLoadingProcess()
-                guard case let .failure(error) = completion else {
-                    return
+                cancelLoadingProcess()
+                switch completion {
+                case .finished:
+                    page += 1
+                case let .failure(error):
+                    receiveCompletion(.failure(error))
                 }
-                complitionHandler(.failure(error))
             }) { [unowned self] data in
                 let newData: [QuestionModel] = data.items.enumerated().map { index, item in
-                    let colors = self.nextBunchOfColors(step: index)
+                    let colors = nextBunchOfColors(step: index)
                     return QuestionModel.from(entry: item, withGradientColors: colors)
                 }
                 hasMoreData = data.hasMore
                 currentData = (currentData ?? []) + newData
-                complitionHandler(.success(currentData ?? []))
+                receiveCompletion(.success(currentData ?? []))
+            }
+    }
+
+    func reload(receiveCompletion: @escaping ResultHandler) {
+        cancelLoadingProcess()
+        loadingProcess = service.loadQuestions(page: Constants.defaultPage, pageSize: Constants.defaultPageSize)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [unowned self] completion in
+                cancelLoadingProcess()
+                switch completion {
+                case .finished:
+                    reset()
+                    page += 1
+                case let .failure(error):
+                    receiveCompletion(.failure(error))
+                }
+            }) { [unowned self] data in
+                let newData: [QuestionModel] = data.items.enumerated().map { index, item in
+                    let colors = nextBunchOfColors(step: index)
+                    return QuestionModel.from(entry: item, withGradientColors: colors)
+                }
+                hasMoreData = data.hasMore
+                currentData = (currentData ?? []) + newData
+                receiveCompletion(.success(currentData ?? []))
             }
     }
     
     func reset() {
+        currentData = nil
+        page = Constants.defaultPage
         resetColorStartIndex()
         cancelLoadingProcess()
         hasMoreData = true

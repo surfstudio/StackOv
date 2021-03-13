@@ -23,11 +23,6 @@ public final class PageStore: ObservableObject {
         case error(Error)
     }
     
-    public enum LoadingType {
-        case reload
-        case next
-    }
-    
     // MARK: - Substores & Services
 
     let dataManager: PageDataManagerProtocol
@@ -36,6 +31,7 @@ public final class PageStore: ObservableObject {
     // MARK: - Public properties
     
     @Published public private(set) var state: State = .unknown
+    @Published public private(set) var loadMore: Bool = false
 
     // MARK: - Initialization and deinitialization
     
@@ -48,21 +44,39 @@ public final class PageStore: ObservableObject {
 // MARK: - Actions
 
 public extension PageStore {
-    
-    func loadQuestions(_ type: LoadingType = .reload) {
-        switch type {
-        case .reload:
-            dataManager.reset()
-        case .next:
-            break
-        }
-        state = .loading
+
+    func loadNextQuestions() {
+        if case .loading = state { return }
+        loadMore = true
         dataManager.fetch { [unowned self] result in
+            loadMore = false
             switch result {
             case let .success(models):
-                self.state = models.isEmpty ? .emptyContent : .content(models)
-            case let .failure(error):
-                self.state = .error(error)
+                if models.isEmpty { break }
+                state = .content(models)
+            case .failure:
+                // need show error not by changing the state of screen
+               break
+            }
+        }
+    }
+
+    func reloadQuestions() {
+        loadMore = false
+        state = .loading
+        dataManager.reload { [unowned self] result in
+            switch result {
+            case let .success(models):
+                state = models.isEmpty ? .emptyContent : .content(models)
+            case .failure:
+                switch state {
+                case .emptyContent:
+                    // need show error state of screen
+                    break
+                default:
+                    // need show error not by changing the state of screen
+                    break
+                }
             }
         }
     }

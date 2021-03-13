@@ -11,12 +11,13 @@ import Foundation
 public protocol PageDataManagerProtocol: class {
     
     typealias CollectedData = [QuestionModel]
-    typealias FetchComplitionHandler = (Result<CollectedData, Error>) -> Void
+    typealias ResultHandler = (Result<CollectedData, Error>) -> Void
     
     var data: CollectedData? { get }
     var isLoading: Bool { get }
     var hasMoreData: Bool { get }
     
-    func fetch(_ complitionHandler: @escaping FetchComplitionHandler)
+    func fetch(receiveCompletion: @escaping ResultHandler)
+    func reload(receiveCompletion: @escaping ResultHandler)
     func reset()
 }

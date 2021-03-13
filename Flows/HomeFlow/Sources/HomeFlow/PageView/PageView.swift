@@ -40,7 +40,7 @@ struct PageView: View {
             case .unknown:
                 Text("")
                     .onAppear {
-                        store.loadQuestions()
+                        store.reloadQuestions()
                     }
             case .emptyContent:
                 Text("empty")
@@ -83,7 +83,7 @@ struct PageView: View {
     
     // MARK: - View methods
     
-    func content(_ models: [QuestionModel] = []) -> some View {
+    func content(_ models: [QuestionModel]) -> some View {
         VStack(spacing: .zero) {
             if UIDevice.current.userInterfaceIdiom.isPad {
                 sectionHeader
@@ -92,9 +92,20 @@ struct PageView: View {
             LazyVGrid(columns: columns, spacing: defaultSpacing) {
                 ForEach(models) { item in
                     itemView(item)
+                        .onAppear {
+                            if models.last == item {
+                                store.loadNextQuestions()
+                            }
+                        }
                 }
             }
             .padding(.all, defaultSpacing)
+            
+            if store.loadMore {
+                LoaderView()
+                    .frame(width: 24, height: 24)
+                    .padding(.vertical, 20)
+            }
         }
     }
 
