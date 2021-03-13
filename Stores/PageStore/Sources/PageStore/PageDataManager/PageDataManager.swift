@@ -80,17 +80,19 @@ final public class PageDataManager: PageDataManagerProtocol {
 
 public extension PageDataManager {
     
-    func fetch(_ complitionHandler: @escaping FetchComplitionHandler) {
+    func fetch(receiveCompletion: @escaping ResultHandler) {
         guard !isLoading, hasMoreData else { return }
 
         loadingProcess = service.loadQuestions(page: page, pageSize: Constants.defaultPageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 cancelLoadingProcess()
-                guard case let .failure(error) = completion else {
-                    return
+                switch completion {
+                case .finished:
+                    page += 1
+                case let .failure(error):
+                    receiveCompletion(.failure(error))
                 }
-                complitionHandler(.failure(error))
             }) { [unowned self] data in
                 let newData: [QuestionModel] = data.items.enumerated().map { index, item in
                     let colors = nextBunchOfColors(step: index)
@@ -98,32 +100,31 @@ public extension PageDataManager {
                 }
                 hasMoreData = data.hasMore
                 currentData = (currentData ?? []) + newData
-                page += 1
-                complitionHandler(.success(currentData ?? []))
+                receiveCompletion(.success(currentData ?? []))
             }
     }
 
-    func reload(_ complitionHandler: @escaping FetchComplitionHandler) {
-        guard !isLoading else { return }
-
+    func reload(receiveCompletion: @escaping ResultHandler) {
+        cancelLoadingProcess()
         loadingProcess = service.loadQuestions(page: Constants.defaultPage, pageSize: Constants.defaultPageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 cancelLoadingProcess()
-                guard case let .failure(error) = completion else {
-                    return
+                switch completion {
+                case .finished:
+                    reset()
+                    page += 1
+                case let .failure(error):
+                    receiveCompletion(.failure(error))
                 }
-                complitionHandler(.failure(error))
             }) { [unowned self] data in
                 let newData: [QuestionModel] = data.items.enumerated().map { index, item in
                     let colors = nextBunchOfColors(step: index)
                     return QuestionModel.from(entry: item, withGradientColors: colors)
                 }
-                reset()
                 hasMoreData = data.hasMore
                 currentData = (currentData ?? []) + newData
-                page += 1
-                complitionHandler(.success(currentData ?? []))
+                receiveCompletion(.success(currentData ?? []))
             }
     }
     

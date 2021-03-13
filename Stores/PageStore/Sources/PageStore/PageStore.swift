@@ -14,10 +14,6 @@ import FilterStore
 public final class PageStore: ObservableObject {
     
     // MARK: - Nested types
-
-    private enum Constants {
-        static let leftItemsCountToPrefetching = 3
-    }
     
     public enum State {
         case unknown
@@ -50,15 +46,15 @@ public final class PageStore: ObservableObject {
 public extension PageStore {
 
     func loadNextQuestions() {
+        if case .loading = state { return }
         loadMore = true
         dataManager.fetch { [unowned self] result in
+            loadMore = false
             switch result {
             case let .success(models):
                 if models.isEmpty { break }
-                self.state = .content(models)
-                loadMore = false
+                state = .content(models)
             case .failure:
-                loadMore = false
                 // need show error not by changing the state of screen
                break
             }
@@ -66,14 +62,21 @@ public extension PageStore {
     }
 
     func reloadQuestions() {
+        loadMore = false
         state = .loading
         dataManager.reload { [unowned self] result in
             switch result {
             case let .success(models):
-                self.state = models.isEmpty ? .emptyContent : .content(models)
+                state = models.isEmpty ? .emptyContent : .content(models)
             case .failure:
-                // TODO: - Handle error without kick data from view
-                break
+                switch state {
+                case .emptyContent:
+                    // need show error state of screen
+                    break
+                default:
+                    // need show error not by changing the state of screen
+                    break
+                }
             }
         }
     }
