@@ -93,9 +93,11 @@ struct FilterButtonStyle: ButtonStyle {
 
 fileprivate extension Color {
     
-    static let foreground = Palette.gainsboro
+    static let foreground = Palette.lightBlack | Palette.gainsboro
     static func background(by pressed: Bool) -> Color {
-        pressed ? Color.white.opacity(0.1) : .clear
+        pressed
+            ? (Palette.lightBlack | Color.white).opacity(0.1)
+            : .clear
     }
     static let border = Palette.telegrey
 }

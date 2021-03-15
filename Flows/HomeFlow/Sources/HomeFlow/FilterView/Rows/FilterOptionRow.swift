@@ -101,6 +101,6 @@ fileprivate extension FilterStore.FilterOption {
 
 fileprivate extension Color {
 
-    static let foreground = Color.white
-    static let background = Palette.grayblue
+    static let foreground = Palette.lightBlack | Color.white
+    static let background = Palette.bluishwhite | Palette.lightBlack
 }

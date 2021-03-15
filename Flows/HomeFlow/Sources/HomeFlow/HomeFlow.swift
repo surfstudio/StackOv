@@ -107,5 +107,5 @@ fileprivate extension Color {
 
 fileprivate extension UIColor {
     
-    static let background = PaletteCore.bluishblack
+    static let background = PaletteCore.bluishwhite | PaletteCore.bluishblack
 }
