@@ -27,7 +27,10 @@ fileprivate extension Target {
 fileprivate extension Package {
     
     static var dependencies: [Dependency] {
-        externalDependencies + serviceDependencies + storeDependencies
+        [.package(name: "Common", path: "../Common")]
+            + externalDependencies
+            + serviceDependencies
+            + storeDependencies
     }
     
     static var externalDependencies: [Dependency] {
@@ -35,7 +38,8 @@ fileprivate extension Package {
     }
     
     static var serviceDependencies: [Dependency] {
-        [.package(name: "StackexchangeNetworkService", path: "../Services/StackexchangeNetworkService")]
+        [.package(name: "StackexchangeNetworkService", path: "../Services/StackexchangeNetworkService"),
+         .package(name: "AuthManager", path: "../Services/AuthManager")]
     }
     
     static var storeDependencies: [Dependency] {

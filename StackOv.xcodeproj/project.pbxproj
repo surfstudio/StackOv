@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6F7542DB25F50EA00099A297 /* MainFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6F7542DA25F50EA00099A297 /* MainFlow */; };
+		6F834E5325FE8D7D00118890 /* AppScript in Frameworks */ = {isa = PBXBuildFile; productRef = 6F834E5225FE8D7D00118890 /* AppScript */; };
 		6F96F26725854E54009E7DED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F96F26625854E54009E7DED /* GoogleService-Info.plist */; };
 		6FCC9B4925237C5500BDD827 /* StackOv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1D25237C5300BDD827 /* StackOv.xcdatamodeld */; };
 		6FCC9B4B25237C5500BDD827 /* StackOvApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1F25237C5300BDD827 /* StackOvApp.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F1604DD25FD448100322C8A /* AuthManager */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AuthManager; sourceTree = "<group>"; };
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
 		6F4AC2DE25BC3FF3002D0D86 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F7542DB25F50EA00099A297 /* MainFlow in Frameworks */,
+				6F834E5325FE8D7D00118890 /* AppScript in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +147,7 @@
 		6FF362C72532568D009F9908 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				6F1604DD25FD448100322C8A /* AuthManager */,
 				6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */,
 			);
 			path = Services;
@@ -168,6 +172,7 @@
 			name = "StackOv (iOS)";
 			packageProductDependencies = (
 				6F7542DA25F50EA00099A297 /* MainFlow */,
+				6F834E5225FE8D7D00118890 /* AppScript */,
 			);
 			productName = "StackOv (iOS)";
 			productReference = 6FCC9B2725237C5500BDD827 /* StackOv.app */;
@@ -465,6 +470,10 @@
 		6F7542DA25F50EA00099A297 /* MainFlow */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MainFlow;
+		};
+		6F834E5225FE8D7D00118890 /* AppScript */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppScript;
 		};
 /* End XCSwiftPackageProductDependency section */
 

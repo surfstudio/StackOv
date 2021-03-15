@@ -85,7 +85,7 @@ public extension PageDataManager {
 
         loadingProcess = service.loadQuestions(page: page, pageSize: Constants.defaultPageSize)
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { [unowned self] completion in
+            .sink { [unowned self] completion in
                 cancelLoadingProcess()
                 switch completion {
                 case .finished:
@@ -93,7 +93,7 @@ public extension PageDataManager {
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }
-            }) { [unowned self] data in
+            } receiveValue: { [unowned self] data in
                 let newData: [QuestionModel] = data.items.enumerated().map { index, item in
                     let colors = nextBunchOfColors(step: index)
                     return QuestionModel.from(entry: item, withGradientColors: colors)
@@ -108,7 +108,7 @@ public extension PageDataManager {
         cancelLoadingProcess()
         loadingProcess = service.loadQuestions(page: Constants.defaultPage, pageSize: Constants.defaultPageSize)
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { [unowned self] completion in
+            .sink { [unowned self] completion in
                 cancelLoadingProcess()
                 switch completion {
                 case .finished:
@@ -117,7 +117,7 @@ public extension PageDataManager {
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }
-            }) { [unowned self] data in
+            } receiveValue: { [unowned self] data in
                 let newData: [QuestionModel] = data.items.enumerated().map { index, item in
                     let colors = nextBunchOfColors(step: index)
                     return QuestionModel.from(entry: item, withGradientColors: colors)
