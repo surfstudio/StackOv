@@ -26,6 +26,42 @@ public enum PaletteCore {
         return CoreColor(named: "Bluishblack")!
         #endif
     }
+    public static var bluishwhite: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "Bluishwhite", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "Bluishwhite", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "Bluishwhite")!
+        #endif
+    }
+    public static var darkDivider: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "DarkDivider", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "DarkDivider", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "DarkDivider")!
+        #endif
+    }
+    public static var darkGray: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "DarkGray", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "DarkGray", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "DarkGray")!
+        #endif
+    }
     public static var dullGray: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
@@ -62,6 +98,54 @@ public enum PaletteCore {
         return CoreColor(named: "Grayblue")!
         #endif
     }
+    public static var lightBlack: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "LightBlack", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "LightBlack", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "LightBlack")!
+        #endif
+    }
+    public static var lightDeepGray: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "LightDeepGray", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "LightDeepGray", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "LightDeepGray")!
+        #endif
+    }
+    public static var lightDivider: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "LightDivider", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "LightDivider", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "LightDivider")!
+        #endif
+    }
+    public static var lightGray: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "LightGray", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "LightGray", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "LightGray")!
+        #endif
+    }
     public static var main: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
@@ -86,6 +170,42 @@ public enum PaletteCore {
         return CoreColor(named: "PaleSky")!
         #endif
     }
+    public static var periwinkleCrayola: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "PeriwinkleCrayola", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "PeriwinkleCrayola", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "PeriwinkleCrayola")!
+        #endif
+    }
+    public static var slateGray: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "SlateGray", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "SlateGray", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "SlateGray")!
+        #endif
+    }
+    public static var slateGrayLight: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "SlateGrayLight", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "SlateGrayLight", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "SlateGrayLight")!
+        #endif
+    }
     public static var telegrey: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
@@ -106,11 +226,21 @@ public enum PaletteCore {
 public enum Palette {
 
     public static var bluishblack: Color { .init(PaletteCore.bluishblack) }
+    public static var bluishwhite: Color { .init(PaletteCore.bluishwhite) }
+    public static var darkDivider: Color { .init(PaletteCore.darkDivider) }
+    public static var darkGray: Color { .init(PaletteCore.darkGray) }
     public static var dullGray: Color { .init(PaletteCore.dullGray) }
     public static var gainsboro: Color { .init(PaletteCore.gainsboro) }
     public static var grayblue: Color { .init(PaletteCore.grayblue) }
+    public static var lightBlack: Color { .init(PaletteCore.lightBlack) }
+    public static var lightDeepGray: Color { .init(PaletteCore.lightDeepGray) }
+    public static var lightDivider: Color { .init(PaletteCore.lightDivider) }
+    public static var lightGray: Color { .init(PaletteCore.lightGray) }
     public static var main: Color { .init(PaletteCore.main) }
     public static var paleSky: Color { .init(PaletteCore.paleSky) }
+    public static var periwinkleCrayola: Color { .init(PaletteCore.periwinkleCrayola) }
+    public static var slateGray: Color { .init(PaletteCore.slateGray) }
+    public static var slateGrayLight: Color { .init(PaletteCore.slateGrayLight) }
     public static var telegrey: Color { .init(PaletteCore.telegrey) }
 
 }

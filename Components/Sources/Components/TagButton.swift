@@ -62,7 +62,6 @@ fileprivate struct TagButtonStyle: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .buttonStyle(BorderlessButtonStyle())
             .lineLimit(1)
             .foregroundColor(.foreground)
             .padding([.top, .bottom], 3)

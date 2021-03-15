@@ -40,7 +40,7 @@ public struct HomeFlow: View {
 
     var padContent: some View {
         NavigationView {
-            Color.background
+            Color.devider
                 .ignoresSafeArea(.container, edges: .top)
                 .navigationBarHidden(true)
             
@@ -100,11 +100,12 @@ fileprivate struct PadNavigationViewIntrospectModifier: ViewModifier {
 
 fileprivate extension Color {
     
-    static let navigationBarForeground = Palette.dullGray
-    static let background = Palette.bluishblack
+    static let navigationBarForeground = Palette.slateGrayLight | Palette.dullGray
+    static let devider = Palette.lightDivider | Palette.darkDivider
+    static let background = Palette.bluishwhite | Palette.bluishblack
 }
 
 fileprivate extension UIColor {
     
-    static let background = PaletteCore.bluishblack
+    static let background = PaletteCore.bluishwhite | PaletteCore.bluishblack
 }

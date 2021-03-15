@@ -35,7 +35,7 @@ struct PadContentView: View {
             ZStack {
                 HStack(spacing: 0) {
                     Color.Sidebar.devider.frame(width: 1)
-                    Color.MainView.background
+                    Color.MainView.navigationBarBackground
                 }
                 .ignoresSafeArea(.container, edges: .top)
                 .frame(
@@ -49,7 +49,7 @@ struct PadContentView: View {
                 MainView(state: $state)
             }
         }
-        .background(Color.MainView.background)
+        .background(Color.background)
     }
     
     // MARK: - Methods
@@ -99,26 +99,26 @@ struct PadContentView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
+    static let background = Palette.lightGray | Palette.lightBlack
+    
     enum Sidebar {
-        static let devider = Palette.bluishblack
-        static let backgound = Palette.grayblue
+        static let devider = Palette.lightDivider | Palette.darkDivider
+        static let backgound = Palette.periwinkleCrayola | Palette.grayblue
     }
     
     enum MainView {
-        static let background = Color(UIColor.MainView.navigationBarBackground)
+        static let navigationBarBackground = Palette.lightGray | Palette.lightBlack
     }
 }
 
 fileprivate extension UIColor {
     
     enum Sidebar {
-        static let backgound = PaletteCore.grayblue
-        static let foreground = PaletteCore.dullGray
+        static let backgound = PaletteCore.periwinkleCrayola | PaletteCore.grayblue
     }
     
     enum MainView {
-        static let foreground = PaletteCore.dullGray
-        static let background = PaletteCore.bluishblack
-        static let navigationBarBackground = PaletteCore.grayblue.withAlphaComponent(0.5).rgbaToRgb(by: Self.background)
+        static let foreground = PaletteCore.slateGrayLight | PaletteCore.dullGray
+        static let navigationBarBackground =  PaletteCore.lightGray | PaletteCore.lightBlack
     }
 }

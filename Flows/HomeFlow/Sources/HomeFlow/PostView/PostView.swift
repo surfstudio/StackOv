@@ -20,9 +20,7 @@ struct PostView: View {
     // MARK: - Properties
     
     var contentEdgeInsets: EdgeInsets {
-        UIDevice.current.userInterfaceIdiom.isPad
-            ? EdgeInsets(top: 18, leading: 18, bottom: 18, trailing: 18)
-            : EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12)
+        .all(UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12)
     }
  
     // MARK: - View
@@ -91,12 +89,5 @@ struct PostView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let background = Palette.bluishblack
-}
-
-fileprivate extension UIColor {
-    
-    static let foreground = PaletteCore.dullGray
-    static let background = PaletteCore.bluishblack
-    static let navigationBackground = PaletteCore.grayblue.withAlphaComponent(0.5).rgbaToRgb(by: .background)
+    static let background = Palette.bluishwhite | Palette.bluishblack
 }

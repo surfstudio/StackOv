@@ -22,7 +22,7 @@ struct SidebarView: View {
             ForEach(MainBar.ItemType.allCases) { item in
                 SidebarButton(item, state: $state)
             }
-            
+
             Spacer()
 
             UserView()

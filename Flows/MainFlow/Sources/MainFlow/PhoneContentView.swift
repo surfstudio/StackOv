@@ -33,5 +33,5 @@ struct PhoneContentView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let accentColor = Color.white
+    static let accentColor = Palette.lightBlack | Color.white
 }

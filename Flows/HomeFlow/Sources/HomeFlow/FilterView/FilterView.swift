@@ -39,7 +39,7 @@ struct FilterView: View {
                     }
                 }
                 .modifier(NavigationViewIntrospectModifier())
-        }
+        }.accentColor(Color.accentColor)
     }
     
     var content: some View {
@@ -66,6 +66,8 @@ struct FilterView: View {
                 Spacer()
             }
         }
+        .background(Color.background)
+        .edgesIgnoringSafeArea(.bottom)
     }
     
     // MARK: - View methods
@@ -81,7 +83,6 @@ struct FilterView: View {
                 Spacer()
             }
         }
-        .background(Color.sectionBackground)
     }
 }
 
@@ -101,7 +102,7 @@ fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
     func body(content: Content) -> some View {
         content.introspectNavigationController {
             $0.navigationBar.backgroundColor = UIColor.navigationBackground
-            $0.navigationBar.tintColor = UIColor.main
+            $0.navigationBar.barTintColor = UIColor.navigationBackground
             
             // This is hack to make navigation bar clear
             let image = UIImage()
@@ -115,14 +116,12 @@ fileprivate struct NavigationViewIntrospectModifier: ViewModifier {
 
 fileprivate extension Color {
     
-    static let sectionForeground = Palette.dullGray
-    static let sectionBackground = Palette.bluishblack
+    static let accentColor = Palette.main
+    static let sectionForeground = Palette.slateGrayLight | Palette.dullGray
+    static let background = Palette.lightGray | Palette.bluishblack
 }
 
 fileprivate extension UIColor {
     
-    static let main = PaletteCore.main
-    static let background = PaletteCore.bluishblack
-    static let navigationBackground = PaletteCore.grayblue
-        .withAlphaComponent(0.7).rgbaToRgb(by: .background)
+    static let navigationBackground = PaletteCore.bluishwhite | PaletteCore.lightBlack
 }
