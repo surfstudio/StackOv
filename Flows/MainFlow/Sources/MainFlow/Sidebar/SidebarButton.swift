@@ -12,9 +12,9 @@ import Palette
 struct SidebarButton: View {
 
     @Binding var globalState: MainBar.ItemType
-    @State private var hovered = false
     
-    private let type: MainBar.ItemType
+    let type: MainBar.ItemType
+    var isSelected: Bool { type == globalState }
     
     init(_ type: MainBar.ItemType, state: Binding<MainBar.ItemType>) {
         self.type = type
@@ -28,24 +28,20 @@ struct SidebarButton: View {
                     .resizable()
                     .frame(maxWidth: 20, maxHeight: 20)
                     .aspectRatio(contentMode: .fit)
-                
+                    .foregroundColor(Color.iconForeground(by: isSelected))
+
                 Text(type.title)
                     .font(.system(size: 13, weight: .medium))
+                    .foregroundColor(Color.textForeground(by: isSelected))
             }
-            .foregroundColor(Color.foreground)
-            
+
             Spacer()
         }
-        .padding(EdgeInsets(top: 9, leading: 13, bottom: 9, trailing: 13))
-        .background(Color.background(by: type == globalState))
+        .padding(.vertical, 9)
+        .padding(.horizontal, 13)
+        .background(Color.background(by: isSelected))
         .cornerRadius(4)
         .frame(height: 38)
-        .disabled(type == globalState)
-        .scaleEffect(hovered ? 1.05 : 1.0)
-        .animation(.default)
-        .onHover { isHovered in
-            self.hovered = isHovered
-        }
     }
 }
 
@@ -65,8 +61,21 @@ struct SidebarButton_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let foreground = Color.white
-    static func background(by pressed: Bool) -> Self {
-        pressed ? Color.white.opacity(0.05) : .clear
+    static func iconForeground(by selected: Bool) -> Self {
+        selected
+            ? Palette.lightBlack | Color.white
+            : Palette.slateGrayLight | Palette.telegrey
+    }
+    
+    static func textForeground(by selected: Bool) -> Self {
+        selected
+            ? Palette.lightBlack | Color.white
+            : Palette.slateGrayLight | Palette.gainsboro
+    }
+    
+    static func background(by selected: Bool) -> Self {
+        selected
+            ? Palette.lightDeepGray | Color.white.opacity(0.05)
+            : .clear
     }
 }

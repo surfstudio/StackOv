@@ -19,7 +19,6 @@ struct PageView: View {
     // MARK: - States
 
     @Store private var store: PageStore
-    @State private var selectedItem: Int?
     @State private var isFilterViewPresented = false
     
     // MARK: - Properties
@@ -88,7 +87,7 @@ struct PageView: View {
             if UIDevice.current.userInterfaceIdiom.isPad {
                 sectionHeader
             }
-            
+
             LazyVGrid(columns: columns, spacing: defaultSpacing) {
                 ForEach(models) { item in
                     itemView(item)
@@ -100,7 +99,7 @@ struct PageView: View {
                 }
             }
             .padding(.all, defaultSpacing)
-            
+
             if store.loadMore {
                 LoaderView()
                     .frame(width: 24, height: 24)
@@ -110,17 +109,9 @@ struct PageView: View {
     }
 
     func itemView(_ item: QuestionModel) -> some View {
-        ZStack {
-            NavigationLink(destination: destinationView(item), tag: item.id, selection: $selectedItem) {
-                EmptyView()
-            }
-            .buttonStyle(PlainButtonStyle())
-            
-            Button(action: { selectedItem = item.id }) {
-                PostItemView(model: item)
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
+        NavigationLink(destination: destinationView(item)) {
+            PostItemView(model: item)
+        }.buttonStyle(PlainButtonStyle())
     }
     
     func destinationView(_ item: QuestionModel) -> some View {
@@ -152,5 +143,5 @@ struct PageView_Previews: PreviewProvider {
 
 fileprivate extension Color {
     
-    static let background = Palette.bluishblack
+    static let background = Palette.bluishwhite | Palette.bluishblack
 }

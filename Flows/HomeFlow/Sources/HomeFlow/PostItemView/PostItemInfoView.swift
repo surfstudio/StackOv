@@ -26,12 +26,12 @@ struct PostItemInfoView: View {
     var body: some View {
         if model.isEmpty {
             content
-                .background(Color.white.opacity(0.1))
+                .background(Color.background.opacity(0.1))
                 .cornerRadius(Constants.cornerRadius)
         } else if model.hasAcceptedAnswer {
             content
                 .background(LinearGradient(
-                    gradient: Gradient(colors: [Color.white, Color.white.opacity(0.24)]),
+                    gradient: Gradient(colors: [Color.background, Color.background.opacity(0.24)]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 ).opacity(0.1))
@@ -41,7 +41,7 @@ struct PostItemInfoView: View {
                 .cornerRadius(Constants.cornerRadius)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.white.opacity(0.5), lineWidth: 0.5)
+                        .stroke(Color.border.opacity(0.5), lineWidth: 0.5)
                 )
         }
     }
@@ -51,14 +51,37 @@ struct PostItemInfoView: View {
             Text("\(model.answersNumber)")
                 .font(.body)
                 .fontWeight(.bold)
+                .foregroundColor(Color.foreground)
                 .lineLimit(1)
                 .opacity(model.isEmpty ? 0.5 : 1)
             Text("answers")
                 .font(.subheadline)
+                .foregroundColor(Color.foreground.opacity(0.7))
                 .lineLimit(1)
                 .opacity(model.isEmpty ? 0.5 : 1)
         }
         .padding(.horizontal, 6)
         .padding(.vertical, 7)
     }
+}
+
+// MARK: - Previews
+
+struct PostItemInfoView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        PostItemInfoView(model: QuestionModel.mock())
+            .padding()
+            .previewLayout(.sizeThatFits)
+    }
+}
+
+
+// MARK: - Colors
+
+fileprivate extension Color {
+    
+    static let foreground = Color.white
+    static let background = Color.white
+    static let border = Color.white
 }
