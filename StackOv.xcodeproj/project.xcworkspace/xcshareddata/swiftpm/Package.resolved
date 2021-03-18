@@ -1,0 +1,124 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "abseil",
+        "repositoryURL": "https://github.com/firebase/abseil-cpp-SwiftPM.git",
+        "state": {
+          "branch": null,
+          "revision": "05d8107f2971a37e6c77245b7c4c6b0a7e97bc99",
+          "version": "0.20200225.0"
+        }
+      },
+      {
+        "package": "BoringSSL-GRPC",
+        "repositoryURL": "https://github.com/firebase/boringssl-SwiftPM.git",
+        "state": {
+          "branch": null,
+          "revision": "7bcafa2660bc58715c39637494550d1ed7cd7229",
+          "version": "0.0.7"
+        }
+      },
+      {
+        "package": "Down",
+        "repositoryURL": "https://github.com/johnxnguyen/Down.git",
+        "state": {
+          "branch": null,
+          "revision": "f2e4658f79f2c1a482b1e73fbfce6ac9e0aad8b8",
+          "version": "0.9.5"
+        }
+      },
+      {
+        "package": "Firebase",
+        "repositoryURL": "https://github.com/firebase/firebase-ios-sdk.git",
+        "state": {
+          "branch": null,
+          "revision": "c67d97dc802aafe5474042156dce828e1c4145ca",
+          "version": "7.3.1"
+        }
+      },
+      {
+        "package": "gRPC",
+        "repositoryURL": "https://github.com/firebase/grpc-SwiftPM.git",
+        "state": {
+          "branch": null,
+          "revision": "91b62619e6c83bc5f1b99d9d60fe46b2862d3a5a",
+          "version": "1.28.2"
+        }
+      },
+      {
+        "package": "GTMSessionFetcher",
+        "repositoryURL": "https://github.com/google/gtm-session-fetcher.git",
+        "state": {
+          "branch": null,
+          "revision": "91ed3d188eb95705fef3c249453b81f32dc557d1",
+          "version": "1.5.0"
+        }
+      },
+      {
+        "package": "leveldb",
+        "repositoryURL": "https://github.com/firebase/leveldb.git",
+        "state": {
+          "branch": null,
+          "revision": "fa1f25f296a766e5a789c4dacd4798dea798b2c2",
+          "version": "1.22.1"
+        }
+      },
+      {
+        "package": "nanopb",
+        "repositoryURL": "https://github.com/firebase/nanopb.git",
+        "state": {
+          "branch": null,
+          "revision": "8119dfe5631f2616d11e50ead95448d12e816062",
+          "version": "2.30906.0"
+        }
+      },
+      {
+        "package": "Promises",
+        "repositoryURL": "https://github.com/google/promises.git",
+        "state": {
+          "branch": null,
+          "revision": "d8accebc8fa32f57196df191e733f946e955c549",
+          "version": "1.2.11"
+        }
+      },
+      {
+        "package": "ShimmerView",
+        "repositoryURL": "https://github.com/Vidhyadharan24/ShimmerView",
+        "state": {
+          "branch": null,
+          "revision": "8b1964570470174e687cee179deab5b3302a5643",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "HTMLEntities",
+        "repositoryURL": "https://github.com/Kitura/swift-html-entities.git",
+        "state": {
+          "branch": null,
+          "revision": "2b14531d0c36dbb7c1c45a4d38db9c2e7898a307",
+          "version": "3.0.200"
+        }
+      },
+      {
+        "package": "Introspect",
+        "repositoryURL": "https://github.com/Puasonych/SwiftUI-Introspect.git",
+        "state": {
+          "branch": "develop",
+          "revision": "759f1af85190db0988d2559805a47cf55da2fdc5",
+          "version": null
+        }
+      },
+      {
+        "package": "Swinject",
+        "repositoryURL": "https://github.com/Swinject/Swinject.git",
+        "state": {
+          "branch": null,
+          "revision": "8a76d2c74bafbb455763487cc6a08e91bad1f78b",
+          "version": "2.7.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
