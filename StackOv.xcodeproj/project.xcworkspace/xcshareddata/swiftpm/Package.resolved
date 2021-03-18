@@ -83,6 +83,15 @@
         }
       },
       {
+        "package": "ShimmerView",
+        "repositoryURL": "https://github.com/Vidhyadharan24/ShimmerView",
+        "state": {
+          "branch": null,
+          "revision": "8b1964570470174e687cee179deab5b3302a5643",
+          "version": "0.1.0"
+        }
+      },
+      {
         "package": "HTMLEntities",
         "repositoryURL": "https://github.com/Kitura/swift-html-entities.git",
         "state": {

@@ -8,80 +8,88 @@
 
 import SwiftUI
 import Palette
+import ShimmerView
 
 struct PostItemLoadingView: View {
 
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let minWidth: CGFloat = 267
+        static let minHeight: CGFloat = 223
+        static let lightItemColor = Color(red: 0.873, green: 0.873, blue: 0.892)
+        static let darkItemColor = Color(red: 0.231, green: 0.235, blue: 0.255)
+    }
+    
     // MARK: - States
     
     @Environment(\.colorScheme) var colorScheme
 
     // MARK: - Properties
         
-    let lightItemColor = Color(red: 0.873, green: 0.873, blue: 0.892)
-    let darkItemColor = Color(red: 0.231, green: 0.235, blue: 0.255)
+    let shimmerIsActive: Bool
     
     // MARK: - Views
     
     var body: some View {
-        items
-            .frame(minWidth: 267, maxWidth: .infinity, minHeight: 223, alignment: .leading)
+        Rectangle()
+            .shimmer(isActive: shimmerIsActive)
+            .environmentObject(ShimmerConfig(bgColor: Color.clear, fgColor: Color.clear))
+            .mask(items)
+            .foregroundColor(colorScheme == .dark ? Constants.darkItemColor : Constants.lightItemColor )
             .background(colorScheme == .dark ? Palette.grayblue : Palette.periwinkleCrayola)
+            .frame(minWidth: Constants.minWidth, maxWidth: .infinity, minHeight: Constants.minHeight, alignment: .leading)
             .cornerRadius(20)
     }
     
     var items: some View {
         VStack(alignment: .leading, spacing: 20) {
             topItems
-            centerItems
+            bottomItems
             Spacer()
             Rectangle()
-                .foregroundColor(itemColor())
+                .foregroundColor(Color.black)
                 .cornerRadius(12)
                 .frame(width: 80, height: 10)
         }
         .padding(EdgeInsets.all(16))
+        .frame(minWidth: Constants.minWidth, maxWidth: .infinity, minHeight: Constants.minHeight, alignment: .leading)
     }
     
     var topItems: some View {
         HStack(alignment: .center, spacing: 20) {
             Rectangle()
-                .foregroundColor(itemColor())
+                .foregroundColor(Color.black)
                 .cornerRadius(10)
                 .frame(width: 52, height: 41)
             Rectangle()
-                .foregroundColor(itemColor())
+                .foregroundColor(Color.black)
                 .cornerRadius(12)
                 .frame(width: 48, height: 10)
         }
     }
     
-    var centerItems: some View {
+    var bottomItems: some View {
         VStack(alignment: .leading, spacing: 10) {
             Rectangle()
-                .foregroundColor(itemColor())
+                .foregroundColor(Color.black)
                 .cornerRadius(12)
                 .frame(width: 219, height: 10)
             Rectangle()
-                .foregroundColor(itemColor())
+                .foregroundColor(Color.black)
                 .cornerRadius(12)
                 .frame(width: 92, height: 10)
             Rectangle()
-                .foregroundColor(itemColor())
+                .foregroundColor(Color.black)
                 .cornerRadius(12)
                 .frame(width: 143, height: 10)
         }
-    }
-    
-    // MARK: - View methods
-    
-    func itemColor() -> Color {
-        colorScheme == .dark ? darkItemColor : lightItemColor
     }
     
 }
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        PostItemLoadingView()
+        PostItemLoadingView(shimmerIsActive: true)
     }
 }

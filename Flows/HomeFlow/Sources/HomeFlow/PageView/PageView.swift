@@ -46,9 +46,9 @@ struct PageView: View {
             case let .content(model):
                 content(model)
             case .loading:
-                Text("Loading")
+                loadingView(shimmerIsActive: true)
             case .error:
-                Text("error")
+                loadingView(shimmerIsActive: false)
             }
         }.phoneToolbar {
             ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -128,6 +128,30 @@ struct PageView: View {
                 .environmentObject(store.filterStore)
         }
     }
+    
+    func loadingView(shimmerIsActive: Bool) -> some View {
+        GeometryReader { geometry in
+            VStack(spacing: .zero) {
+                if UIDevice.current.userInterfaceIdiom.isPad {
+                    sectionHeader
+                }
+                
+                LazyVGrid(columns: columns, spacing: defaultSpacing) {
+                    ForEach(0..<columnCount(geometry) * 2, id: \.self) { item in
+                        PostItemLoadingView(shimmerIsActive: shimmerIsActive)
+                    }
+                }
+                .padding(.all, defaultSpacing)
+            }
+        }
+    }
+    
+    // MARK: - Methods
+    
+    func columnCount(_ geometry: GeometryProxy) -> Int {
+        Int(((geometry.size.width - defaultSpacing) / (267 + defaultSpacing).rounded(.down)))
+    }
+    
 }
 
 // MARK: - Previews
