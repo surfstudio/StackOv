@@ -11,14 +11,21 @@ import Palette
 
 struct PostItemLoadingView: View {
 
-    // MARK: - Properties
+    // MARK: - States
     
-    // MARK: - View
+    @Environment(\.colorScheme) var colorScheme
+
+    // MARK: - Properties
+        
+    let lightItemColor = Color(red: 0.873, green: 0.873, blue: 0.892)
+    let darkItemColor = Color(red: 0.231, green: 0.235, blue: 0.255)
+    
+    // MARK: - Views
     
     var body: some View {
         items
             .frame(minWidth: 267, maxWidth: .infinity, minHeight: 223, alignment: .leading)
-            .background(Palette.bluishwhite)
+            .background(colorScheme == .dark ? Palette.grayblue : Palette.periwinkleCrayola)
             .cornerRadius(20)
     }
     
@@ -28,7 +35,7 @@ struct PostItemLoadingView: View {
             centerItems
             Spacer()
             Rectangle()
-                .background(Palette.gainsboro)
+                .foregroundColor(itemColor())
                 .cornerRadius(12)
                 .frame(width: 80, height: 10)
         }
@@ -38,11 +45,11 @@ struct PostItemLoadingView: View {
     var topItems: some View {
         HStack(alignment: .center, spacing: 20) {
             Rectangle()
-                .background(Palette.gainsboro)
+                .foregroundColor(itemColor())
                 .cornerRadius(10)
                 .frame(width: 52, height: 41)
             Rectangle()
-                .background(Palette.gainsboro)
+                .foregroundColor(itemColor())
                 .cornerRadius(12)
                 .frame(width: 48, height: 10)
         }
@@ -51,18 +58,24 @@ struct PostItemLoadingView: View {
     var centerItems: some View {
         VStack(alignment: .leading, spacing: 10) {
             Rectangle()
-                .background(Palette.gainsboro)
+                .foregroundColor(itemColor())
                 .cornerRadius(12)
                 .frame(width: 219, height: 10)
             Rectangle()
-                .background(Palette.gainsboro)
+                .foregroundColor(itemColor())
                 .cornerRadius(12)
                 .frame(width: 92, height: 10)
             Rectangle()
-                .background(Palette.gainsboro)
+                .foregroundColor(itemColor())
                 .cornerRadius(12)
                 .frame(width: 143, height: 10)
         }
+    }
+    
+    // MARK: - View methods
+    
+    func itemColor() -> Color {
+        colorScheme == .dark ? darkItemColor : lightItemColor
     }
     
 }
