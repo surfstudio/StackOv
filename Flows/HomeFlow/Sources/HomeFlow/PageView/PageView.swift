@@ -20,6 +20,7 @@ struct PageView: View {
 
     @Store private var store: PageStore
     @State private var isFilterViewPresented = false
+    @State private var count = 0
     
     // MARK: - Properties
     
@@ -44,7 +45,8 @@ struct PageView: View {
             case .emptyContent:
                 Text("empty")
             case let .content(model):
-                content(model)
+//                content(model)
+                loadingView(shimmerIsActive: true)
             case .loading:
                 loadingView(shimmerIsActive: true)
             case .error:
@@ -137,19 +139,32 @@ struct PageView: View {
                 }
                 
                 LazyVGrid(columns: columns, spacing: defaultSpacing) {
-                    ForEach(0..<columnCount(geometry) * 2, id: \.self) { item in
+                    ForEach(0..<count * 2, id: \.self) { item in
                         PostItemLoadingView(shimmerIsActive: shimmerIsActive)
                     }
                 }
                 .padding(.all, defaultSpacing)
+                .onAppear() {
+//                   print("columnCount(geometry) \(columnCount(geometry))")
+                    columnCount(geometry)
+                }
             }
         }
     }
     
     // MARK: - Methods
     
-    func columnCount(_ geometry: GeometryProxy) -> Int {
-        Int(((geometry.size.width - defaultSpacing) / (267 + defaultSpacing).rounded(.down)))
+//    func columnCount(_ geometry: GeometryProxy) -> Int {
+//        let res = Int(((geometry.size.width - defaultSpacing) / (267 + defaultSpacing).rounded(.down)))
+//        print("colums count \(res)")
+//        return res
+//    }
+    
+    func columnCount(_ geometry: GeometryProxy) {
+        let res = Int(((geometry.size.width - defaultSpacing) / (267 + defaultSpacing).rounded(.down)))
+        if res > 0 {
+            count = res
+        }
     }
     
 }
