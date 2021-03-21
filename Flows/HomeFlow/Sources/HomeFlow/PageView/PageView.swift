@@ -34,6 +34,8 @@ struct PageView: View {
         UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
     }
     
+    let shimmerConfig: ShimmerConfig = ShimmerConfig(bgColor: Color.clear, fgColor: Color.clear)
+    
     // MARK: - Views
     
     var body: some View {
