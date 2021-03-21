@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31F7F02C2603886900A115BC /* ShimmerView in Frameworks */ = {isa = PBXBuildFile; productRef = 31F7F02B2603886900A115BC /* ShimmerView */; };
 		6F7542DB25F50EA00099A297 /* MainFlow in Frameworks */ = {isa = PBXBuildFile; productRef = 6F7542DA25F50EA00099A297 /* MainFlow */; };
 		6F96F26725854E54009E7DED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F96F26625854E54009E7DED /* GoogleService-Info.plist */; };
 		6FCC9B4925237C5500BDD827 /* StackOv.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6FCC9B1D25237C5300BDD827 /* StackOv.xcdatamodeld */; };
@@ -49,7 +48,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F7542DB25F50EA00099A297 /* MainFlow in Frameworks */,
-				31F7F02C2603886900A115BC /* ShimmerView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +168,6 @@
 			name = "StackOv (iOS)";
 			packageProductDependencies = (
 				6F7542DA25F50EA00099A297 /* MainFlow */,
-				31F7F02B2603886900A115BC /* ShimmerView */,
 			);
 			productName = "StackOv (iOS)";
 			productReference = 6FCC9B2725237C5500BDD827 /* StackOv.app */;
@@ -200,7 +197,6 @@
 			);
 			mainGroup = 6FCC9B1725237C5300BDD827;
 			packageReferences = (
-				31F7F02A2603886900A115BC /* XCRemoteSwiftPackageReference "ShimmerView" */,
 			);
 			productRefGroup = 6FCC9B2825237C5500BDD827 /* Products */;
 			projectDirPath = "";
@@ -471,23 +467,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		31F7F02A2603886900A115BC /* XCRemoteSwiftPackageReference "ShimmerView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Vidhyadharan24/ShimmerView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		31F7F02B2603886900A115BC /* ShimmerView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 31F7F02A2603886900A115BC /* XCRemoteSwiftPackageReference "ShimmerView" */;
-			productName = ShimmerView;
-		};
 		6F7542DA25F50EA00099A297 /* MainFlow */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MainFlow;

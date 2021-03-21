@@ -34,6 +34,8 @@ struct PageView: View {
         UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
     }
     
+    let shimmerConfig: ShimmerConfig = ShimmerConfig(bgColor: Color.clear, fgColor: Color.clear)
+    
     // MARK: - Views
     
     var body: some View {
@@ -142,7 +144,7 @@ struct PageView: View {
                 
                 LazyVGrid(columns: columns, spacing: defaultSpacing) {
                     ForEach(0..<columnCount(geometry) * 2, id: \.self) { item in
-                        PostItemLoadingView(shimmerIsActive: shimmerIsActive)
+                        PostItemLoadingView(shimmerIsActive: shimmerIsActive, shimmerConfig: shimmerConfig)
                     }
                 }
                 .padding(.all, defaultSpacing)

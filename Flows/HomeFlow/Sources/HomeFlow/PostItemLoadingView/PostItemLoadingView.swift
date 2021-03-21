@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Palette
-import ShimmerView
+import Components
 
 struct PostItemLoadingView: View {
 
@@ -28,13 +28,14 @@ struct PostItemLoadingView: View {
     // MARK: - Properties
         
     let shimmerIsActive: Bool
+    let shimmerConfig: ShimmerConfig
     
     // MARK: - Views
     
     var body: some View {
         Rectangle()
             .shimmer(isActive: shimmerIsActive)
-            .environmentObject(ShimmerConfig(bgColor: Color.clear, fgColor: Color.clear))
+            .environmentObject(shimmerConfig)
             .mask(items)
             .foregroundColor(colorScheme == .dark ? Constants.darkItemColor : Constants.lightItemColor )
             .background(colorScheme == .dark ? Palette.grayblue : Palette.periwinkleCrayola)
@@ -90,6 +91,6 @@ struct PostItemLoadingView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        PostItemLoadingView(shimmerIsActive: true)
+        PostItemLoadingView(shimmerIsActive: true, shimmerConfig: ShimmerConfig(bgColor: .clear, fgColor: .clear))
     }
 }
