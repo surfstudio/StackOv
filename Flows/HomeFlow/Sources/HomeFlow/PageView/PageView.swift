@@ -18,13 +18,16 @@ struct PageView: View {
 
     // MARK: - States
 
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Store private var store: PageStore
     @State private var isFilterViewPresented = false
     
     // MARK: - Properties
     
     var columns: [GridItem] {
-        [GridItem(.adaptive(minimum: 267), spacing: defaultSpacing)]
+        sizeCategory.isAccessibilityCategory
+            ? [GridItem(.flexible(minimum: 267), spacing: defaultSpacing)]
+            : [GridItem(.adaptive(minimum: 267), spacing: defaultSpacing)]
     }
     
     var defaultSpacing: CGFloat {
@@ -65,8 +68,9 @@ struct PageView: View {
     var sectionHeader: some View {
         HStack {
             Text("All Questions")
+                .font(.title2)
+                .fontWeight(.bold)
                 .textCase(.none)
-                .font(.system(size: 22, weight: .bold))
             
             Spacer()
             
