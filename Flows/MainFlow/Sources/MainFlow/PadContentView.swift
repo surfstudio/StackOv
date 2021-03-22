@@ -113,10 +113,6 @@ fileprivate extension Color {
 
 fileprivate extension UIColor {
     
-    enum Sidebar {
-        static let backgound = PaletteCore.periwinkleCrayola | PaletteCore.grayblue
-    }
-    
     enum MainView {
         static let foreground = PaletteCore.slateGrayLight | PaletteCore.dullGray
         static let navigationBarBackground =  PaletteCore.lightGray | PaletteCore.lightBlack
