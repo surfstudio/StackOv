@@ -11,20 +11,32 @@ import Palette
 
 public struct FilterButton: View {
     
+    // MARK: - Nested types
+    
     public enum Style {
         case `default`
         case short
     }
+    
+    // MARK: - States
 
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Binding var activeFilters: Int
-    private let style: Style
-    private let action: () -> Void
+    
+    // MARK: - Properties
+    
+    let style: Style
+    let action: () -> Void
+    
+    // MARK: - Initialization
     
     public init(activeFilters: Binding<Int>, style: Style = .default, action: @escaping () -> Void) {
         self._activeFilters = activeFilters
         self.style = style
         self.action = action
     }
+    
+    // MARK: - View
     
     public var body: some View {
         switch style {
@@ -38,9 +50,10 @@ public struct FilterButton: View {
     var defaultButton: some View {
         Button(action: action) {
             HStack(spacing: 5.38) {
-                Text("Filters")
+                Text("Filter")
                     .foregroundColor(Color.foreground)
-                    .font(.system(size: 11, weight: .medium))
+                    .font(.caption)
+                    .fontWeight(.medium)
                 if activeFilters > 0 {
                     BadgeView(value: $activeFilters)
                         .frame(width: 15, height: 15)
@@ -60,6 +73,8 @@ public struct FilterButton: View {
             Image(systemName: "f.circle")
         }
     }
+    
+    // MARK: - View methods
     
     public func style(_ style: Style) -> some View {
         Self(activeFilters: $activeFilters, style: style, action: action)

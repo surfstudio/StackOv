@@ -10,28 +10,59 @@ import SwiftUI
 import Palette
 
 struct SidebarButton: View {
-
+    
+    // MARK: - States
+    
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Binding var globalState: MainBar.ItemType
+    
+    // MARK: - Properties
     
     let type: MainBar.ItemType
     var isSelected: Bool { type == globalState }
+    var labelMaxSize: CGSize {
+        sizeCategory.isAccessibilityCategory
+            ? CGSize(width: 30, height: 30)
+            : CGSize(width: 20, height: 20)
+    }
+    var fontSize: CGFloat {
+        switch sizeCategory {
+        case .extraSmall, .small, .medium, .large, .extraLarge, .extraExtraLarge, .extraExtraExtraLarge:
+            return 13
+        case .accessibilityMedium:
+            return 15
+        case .accessibilityLarge, .accessibilityExtraLarge:
+            return 16
+        case .accessibilityExtraExtraLarge:
+            return 17
+        case .accessibilityExtraExtraExtraLarge:
+            return 18
+        @unknown default:
+            assertionFailure()
+            return 13
+        }
+    }
+    
+    // MARK: - Initialization
     
     init(_ type: MainBar.ItemType, state: Binding<MainBar.ItemType>) {
         self.type = type
         self._globalState = state
     }
     
+    // MARK: - View
+    
     var body: some View {
         Button(action: { globalState = type }) {
             HStack(alignment: .center, spacing: 13) {
                 type.image
                     .resizable()
-                    .frame(maxWidth: 20, maxHeight: 20)
+                    .frame(maxWidth: labelMaxSize.width, maxHeight: labelMaxSize.height)
                     .aspectRatio(contentMode: .fit)
                     .foregroundColor(Color.iconForeground(by: isSelected))
 
                 Text(type.title)
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.system(size: fontSize, weight: .medium))
                     .foregroundColor(Color.textForeground(by: isSelected))
             }
 
