@@ -35,8 +35,8 @@ struct PostItemLoadingView: View {
             .shimmer(isActive: shimmerIsActive)
             .environmentObject(shimmerConfig)
             .mask(items)
-            .foregroundColor(colorScheme == .dark ? Color.darkItemColor : Color.lightItemColor )
-            .background(colorScheme == .dark ? Palette.grayblue : Palette.periwinkleCrayola)
+            .foregroundColor(Color.itemsColor)
+            .background(Color.background)
             .frame(minWidth: Constants.minWidth, maxWidth: .infinity, minHeight: Constants.minHeight, alignment: .leading)
             .cornerRadius(20)
     }
@@ -98,7 +98,7 @@ struct SwiftUIView_Previews: PreviewProvider {
 
 fileprivate extension Color {
 
-    static let lightItemColor = Color(red: 0.873, green: 0.873, blue: 0.892)
-    static let darkItemColor = Color(red: 0.231, green: 0.235, blue: 0.255)
+    static let itemsColor = Color(red: 0.873, green: 0.873, blue: 0.892) | Color(red: 0.231, green: 0.235, blue: 0.255)
+    static let background = Palette.periwinkleCrayola | Palette.grayblue
 
 }
