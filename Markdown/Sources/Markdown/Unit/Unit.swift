@@ -60,54 +60,12 @@ public extension Markdown {
             self.id = id
             self.type = type
             self.parent = parent
-            
-            var snippetBlock = false
-            var snippetCodeType: String?
-            var snippet: [Unit] = []
+
+            let snippet = SnippetContainer()
             switch type {
             case .document, .blockQuote, .list, .item:
                 self.data = nil
-                self.children = node.children.enumerated().compactMap { [weak self] child in
-                    guard let unit = Unit(id: child.offset, parent: self, node: child.element) else {
-                        return nil
-                    }
-                    switch unit.type {
-                    case let .htmlBlock(htmlText):
-                        let htmlContent = htmlText.lowercased()
-                        if htmlContent.contains("begin snippet") {
-                            snippetBlock = true
-                            return nil
-                        } else if snippetBlock, htmlContent.contains("language") {
-                            snippetCodeType = try? htmlText.firstMatch(regex: #"lang\-(\w*)"#, group: 1)
-                            return nil
-                        } else if htmlContent.contains("end snippet") {
-                            defer {
-                                snippetBlock = false
-                                snippet = []
-                            }
-                            return snippet.isEmpty
-                                ? nil
-                                : Unit(id: child.offset, type: .snippetBlock(snippet), parent: self, children: [])
-                        } else if htmlContent.starts(with: "<pre>"), !snippetBlock {
-                            let code = htmlText.htmlUnescape()
-                                .replacingOccurrences(of: "<pre>", with: "")
-                                .replacingOccurrences(of: "</pre>", with: "")
-                            return Unit(id: child.offset, type: .codeBlock(codeType: nil, code: code), parent: self, children: [])
-                        } else {
-                            return snippetBlock ? nil : unit
-                        }
-                    case let .codeBlock(_, code):
-                        if snippetBlock {
-                            snippet.append(Unit(id: snippet.count, type: .codeBlock(codeType: snippetCodeType, code: code), parent: self, children: []))
-                            snippetCodeType = nil
-                            return nil
-                        } else {
-                            return unit
-                        }
-                    default:
-                        return snippetBlock ? nil : unit
-                    }
-                }
+                self.children = configureChildren(at: node, snippet: snippet)
             case let .codeBlock(codeType, code):
                 self.data = .code(codeType: codeType, code: code)
                 self.children = []
@@ -126,6 +84,67 @@ public extension Markdown {
                     self.data = nil
                 }
                 self.children = []
+            }
+        }
+
+        // MARK: - Private methods
+
+        func configureChildren(at node: Node, snippet: SnippetContainer) -> [Unit] {
+            node.children.enumerated().compactMap { children in
+                guard let unit = Unit(id: children.offset, parent: self, node: children.element) else {
+                    return nil
+                }
+                switch unit.type {
+                case let .htmlBlock(htmlText):
+                    return try? configureHTMLBlock(id: id, htmlContent: htmlText, unit: unit, snippet: snippet)
+                case let .codeBlock(_, code):
+                    return try? configureCodeBlock(unit: unit, snippet: snippet, code: code)
+                default:
+                    return snippet.snippetBlock ? nil : unit
+                }
+            }
+        }
+
+        func configureHTMLBlock(id: Int, htmlContent: String, unit: Unit, snippet: SnippetContainer) throws -> Unit {
+            let htmlContent = htmlContent.lowercased()
+            switch htmlContent.contains("begin snippet") {
+            case true:
+                snippet.snippetBlock = true
+                throw UnitErrors.beginSnippet
+            case false where htmlContent.contains("language"):
+                snippet.snippetCodeType = try htmlContent.firstMatch(regex: #"lang\-(\w*)"#, group: 1)
+                throw UnitErrors.snippetType
+            case false where htmlContent.contains("end snippet"):
+                defer {
+                    snippet.snippetBlock = false
+                    snippet.snippets = []
+                }
+                if snippet.snippets.isEmpty {
+                    throw UnitErrors.snippetIsEmpty
+                }
+                return Unit(id: id, type: .snippetBlock(snippet.snippets), parent: self, children: [])
+            case false:
+                if htmlContent.starts(with: "<pre>"), !snippet.snippetBlock {
+                    let code = htmlContent.htmlUnescape()
+                        .replacingOccurrences(of: "<pre>", with: "")
+                        .replacingOccurrences(of: "</pre>", with: "")
+                    return Unit(id: id, type: .codeBlock(codeType: nil, code: code), parent: self, children: [])
+                } else {
+                    if snippet.snippetBlock {
+                        throw UnitErrors.isSnippet
+                    }
+                    return unit
+                }
+            }
+        }
+
+        func configureCodeBlock(unit: Unit, snippet: SnippetContainer, code: String) throws -> Unit {
+            if snippet.snippetBlock {
+                snippet.snippets.append(Unit(id: snippet.snippets.count, type: .codeBlock(codeType: snippet.snippetCodeType, code: code), parent: self, children: []))
+                snippet.snippetCodeType = nil
+                throw UnitErrors.isSnippetBody
+            } else {
+                return unit
             }
         }
     }
