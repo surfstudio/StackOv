@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  ShimmerModifier.swift
+//  StackOv (Components module)
 //
 //  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.

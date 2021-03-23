@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  ShimmerConfig.swift
+//  StackOv (Components module)
 //
 //  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -25,8 +25,8 @@ public class ShimmerConfig: ObservableObject {
     
     private var timer: AnyCancellable?
     
-    // MARK: - Init & Deinit
-    
+    // MARK: - Initialization and deinitialization
+
     public init(bgColor: Color = Color(white: 0.8),
                 fgColor: Color = .white,
                 shimmerColor: Color = Color(white: 1.0, opacity: 0.5),

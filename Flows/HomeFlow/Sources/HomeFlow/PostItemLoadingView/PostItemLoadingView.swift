@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  PostItemLoadingView.swift
+//  StackOv (HomeFlow module)
 //
 //  Created by Влад Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -17,8 +17,6 @@ struct PostItemLoadingView: View {
     private enum Constants {
         static let minWidth: CGFloat = 267
         static let minHeight: CGFloat = 223
-        static let lightItemColor = Color(red: 0.873, green: 0.873, blue: 0.892)
-        static let darkItemColor = Color(red: 0.231, green: 0.235, blue: 0.255)
     }
     
     // MARK: - States
@@ -37,7 +35,7 @@ struct PostItemLoadingView: View {
             .shimmer(isActive: shimmerIsActive)
             .environmentObject(shimmerConfig)
             .mask(items)
-            .foregroundColor(colorScheme == .dark ? Constants.darkItemColor : Constants.lightItemColor )
+            .foregroundColor(colorScheme == .dark ? Color.darkItemColor : Color.lightItemColor )
             .background(colorScheme == .dark ? Palette.grayblue : Palette.periwinkleCrayola)
             .frame(minWidth: Constants.minWidth, maxWidth: .infinity, minHeight: Constants.minHeight, alignment: .leading)
             .cornerRadius(20)
@@ -93,4 +91,14 @@ struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         PostItemLoadingView(shimmerIsActive: true, shimmerConfig: ShimmerConfig(bgColor: .clear, fgColor: .clear))
     }
+}
+
+
+// MARK: - Colors
+
+fileprivate extension Color {
+
+    static let lightItemColor = Color(red: 0.873, green: 0.873, blue: 0.892)
+    static let darkItemColor = Color(red: 0.231, green: 0.235, blue: 0.255)
+
 }

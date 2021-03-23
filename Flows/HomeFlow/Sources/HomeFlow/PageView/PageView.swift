@@ -21,7 +21,8 @@ struct PageView: View {
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Store private var store: PageStore
     @State private var isFilterViewPresented = false
-    
+    @StateObject var shimmerConfig: ShimmerConfig = ShimmerConfig(bgColor: Color.clear, fgColor: Color.clear)
+
     // MARK: - Properties
     
     var columns: [GridItem] {
@@ -33,8 +34,6 @@ struct PageView: View {
     var defaultSpacing: CGFloat {
         UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
     }
-    
-    let shimmerConfig: ShimmerConfig = ShimmerConfig(bgColor: Color.clear, fgColor: Color.clear)
     
     // MARK: - Views
     
@@ -136,26 +135,26 @@ struct PageView: View {
     }
     
     func loadingView(shimmerIsActive: Bool) -> some View {
-        GeometryReader { geometry in
-            VStack(spacing: .zero) {
-                if UIDevice.current.userInterfaceIdiom.isPad {
-                    sectionHeader
-                }
-                
-                LazyVGrid(columns: columns, spacing: defaultSpacing) {
-                    ForEach(0..<columnCount(geometry) * 2, id: \.self) { item in
-                        PostItemLoadingView(shimmerIsActive: shimmerIsActive, shimmerConfig: shimmerConfig)
-                    }
-                }
-                .padding(.all, defaultSpacing)
+        VStack(spacing: .zero) {
+            if UIDevice.current.userInterfaceIdiom.isPad {
+                sectionHeader
             }
+            
+            LazyVGrid(columns: columns, spacing: defaultSpacing) {
+                ForEach(0..<columnCount() * 2, id: \.self) { item in
+                    PostItemLoadingView(shimmerIsActive: shimmerIsActive, shimmerConfig: shimmerConfig)
+                }
+            }
+            .padding(.all, defaultSpacing)
         }
     }
     
     // MARK: - Methods
     
-    func columnCount(_ geometry: GeometryProxy) -> Int {
-        Int(((geometry.size.width - defaultSpacing) / (267 + defaultSpacing).rounded(.down)))
+    func columnCount() -> Int {
+        let sideBarWidth: CGFloat = UIDevice.current.userInterfaceIdiom.isPhone ? 0 : 210 // TODO: - Issue #72
+        let contentWidht = UIScreen.main.bounds.width - sideBarWidth
+        return Int((((contentWidht - defaultSpacing) / (267 + defaultSpacing)).rounded(.down)))
     }
     
 }
