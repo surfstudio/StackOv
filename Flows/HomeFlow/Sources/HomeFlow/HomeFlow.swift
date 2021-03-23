@@ -15,7 +15,7 @@ import Components
 public struct HomeFlow: View {
     
     // MARK: - Initialization
-
+    
     public init() {}
     
     // MARK: - View
@@ -37,7 +37,7 @@ public struct HomeFlow: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(Color.navigationBarForeground)
     }
-
+    
     var padContent: some View {
         NavigationView {
             Color.devider
@@ -47,7 +47,7 @@ public struct HomeFlow: View {
             VStack(spacing: .zero) {
                 Divider()
                     .background(Color.white.opacity(0.08))
-
+                
                 PageView()
                     .background(Color.background)
                     .navigationBarTitle("", displayMode: .inline)

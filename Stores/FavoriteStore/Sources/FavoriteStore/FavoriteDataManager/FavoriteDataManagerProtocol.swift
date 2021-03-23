@@ -1,6 +1,6 @@
 //
-//  PageDataManagerProtocol.swift
-//  StackOv (PageStore module)
+//  FavoriteDataManagerProtocol.swift
+//  StackOv (FavoriteStore module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -9,7 +9,7 @@
 import Foundation
 import Common
 
-public protocol PageDataManagerProtocol: class {
+public protocol FavoriteDataManagerProtocol: class {
     
     typealias CollectedData = [QuestionModel]
     typealias ResultHandler = (Result<CollectedData, Error>) -> Void

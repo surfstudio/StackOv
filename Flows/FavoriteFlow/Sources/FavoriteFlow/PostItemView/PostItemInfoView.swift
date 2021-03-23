@@ -2,7 +2,7 @@
 //  PostItemInfoView.swift
 //  StackOv (HomeFlow module)
 //
-//  Created by Erik Basargin
+//  Created by Evgeny Novgorodov
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 

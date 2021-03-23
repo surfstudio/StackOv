@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 import StackexchangeNetworkService
-import struct PageStore.QuestionModel
+import Common
 
 public final class PostStore: ObservableObject {
     

@@ -9,12 +9,11 @@ import Common
 import Components
 import Icons
 import AppScript
-import struct PageStore.QuestionModel
 
 struct PostView: View {
     
     // MARK: - States
-
+    
     @EnvironmentObject var store: PostStore
     
     // MARK: - Properties
@@ -22,7 +21,7 @@ struct PostView: View {
     var contentEdgeInsets: EdgeInsets {
         .all(UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12)
     }
- 
+    
     // MARK: - View
     
     var body: some View {

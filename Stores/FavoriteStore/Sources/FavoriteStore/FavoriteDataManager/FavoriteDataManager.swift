@@ -1,6 +1,6 @@
 //
-//  PageDataManager.swift
-//  StackOv (PageStore module)
+//  FavoriteDataManager.swift
+//  StackOv (FavoriteStore module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -13,7 +13,7 @@ import Palette
 import Common
 import struct SwiftUI.Color
 
-final public class PageDataManager: PageDataManagerProtocol {
+final public class FavoriteDataManager: FavoriteDataManagerProtocol {
     
     // MARK: - Nested types
     
@@ -79,11 +79,11 @@ final public class PageDataManager: PageDataManagerProtocol {
     }
 }
 
-public extension PageDataManager {
+public extension FavoriteDataManager {
     
     func fetch(receiveCompletion: @escaping ResultHandler) {
         guard !isLoading, hasMoreData else { return }
-
+        
         loadingProcess = service.loadQuestions(page: page, pageSize: Constants.defaultPageSize)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
@@ -104,7 +104,7 @@ public extension PageDataManager {
                 receiveCompletion(.success(currentData ?? []))
             }
     }
-
+    
     func reload(receiveCompletion: @escaping ResultHandler) {
         cancelLoadingProcess()
         loadingProcess = service.loadQuestions(page: Constants.defaultPage, pageSize: Constants.defaultPageSize)
