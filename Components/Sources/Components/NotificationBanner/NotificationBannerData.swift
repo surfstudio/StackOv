@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  NotificationBannerData.swift
+//  StackOv (Components module)
 //
 //  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -14,14 +14,16 @@ public struct NotificationBannerData {
     
     internal let title: String
     internal let description: String
-    internal let color: Color
+    internal let backgroundColor: Color
+    internal let buttonColor: Color
     
     // MARK: - Initialization
     
-    public init(title: String, description: String, color: Color) {
+    public init(title: String, description: String, bunnerType: NotificationBannerType) {
         self.title = title
         self.description = description
-        self.color = color
+        self.backgroundColor = bunnerType.backgroundColor
+        self.buttonColor = bunnerType.buttonColor
     }
     
 }

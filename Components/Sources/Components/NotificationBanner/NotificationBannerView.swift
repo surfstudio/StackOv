@@ -1,14 +1,20 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  NotificationBannerView.swift
+//  StackOv (Components module)
 //
 //  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import SwiftUI
+import Icons
+import Palette
 
 public struct NotificationBannerView: View {
+    
+    // MARK: - Private Properties
+    
+    private var buttonAction: () -> Void
     
     // MARK: - States
     
@@ -19,32 +25,46 @@ public struct NotificationBannerView: View {
     public var body: some View {
         VStack {
             HStack {
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(data.title)
-                        .bold()
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack {
+                        Text(data.title)
+                            .bold()
+                            .padding(.init(top: 20, leading: 20, bottom: 0, trailing: 0))
+                        Spacer()
+                        Button(action: {
+                            self.buttonAction()
+                        }) {
+                            Icons.xmark.image
+                                .foregroundColor(data.backgroundColor)
+                        }
+                        .frame(width: 18, height: 18, alignment: .center)
+                        .background( Palette.lightGray | Color.white.opacity(0.7))
+                        .cornerRadius(9)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 11))
+                    }
                     Text(data.description)
+                        .padding(.init(top: 0, leading: 20, bottom: 20, trailing: 20))
                 }
-                Spacer()
             }
             .foregroundColor(.white)
-            .padding()
-            .background(data.color)
-            .cornerRadius(8)
+            .background(data.backgroundColor)
+            .cornerRadius(14)
             Spacer()
         }
-        .padding()
+        .padding(12)
     }
     
     // MARK: - Initialization
     
-    public init(data: Binding<NotificationBannerData>) {
+    public init(data: Binding<NotificationBannerData>, action: @escaping () -> Void) {
         self._data = data
+        self.buttonAction = action
     }
     
 }
 
 struct NotificationBannerView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationBannerView(data: .constant(NotificationBannerData(title: "Title", description: "Description", color: .red)))
+        NotificationBannerView(data: .constant(NotificationBannerData(title: "Title", description: "Description", bunnerType: .error)), action: {})
     }
 }
