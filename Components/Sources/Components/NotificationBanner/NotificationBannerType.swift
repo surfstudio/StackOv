@@ -22,7 +22,7 @@ public enum NotificationBannerType {
         case .success:
             return Palette.main
         case .error:
-            return .red
+            return Palette.red
         case .empty:
             return .clear
         }
@@ -31,11 +31,31 @@ public enum NotificationBannerType {
     var buttonColor: Color {
         switch self {
         case .info:
-            return Palette.lightGray | Palette.dullGray
+            return Palette.gray | Palette.dullGray
         case .success:
             return Color.white.opacity(0.7)
         case .error:
             return Color.white.opacity(0.7)
+        case .empty:
+            return .clear
+        }
+    }
+    
+    var iconColor: Color {
+        switch self {
+        case .success, .error, .empty:
+            return backgroundColor
+        case .info:
+            return Palette.steelGray300 | backgroundColor
+        }
+    }
+    
+    var textColor: Color {
+        switch self {
+        case .info:
+            return Palette.black | .white
+        case .error, .success:
+            return .white
         case .empty:
             return .clear
         }

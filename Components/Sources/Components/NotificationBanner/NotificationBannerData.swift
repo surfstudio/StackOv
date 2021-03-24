@@ -14,16 +14,14 @@ public struct NotificationBannerData {
     
     internal let title: String
     internal let description: String
-    internal let backgroundColor: Color
-    internal let buttonColor: Color
+    internal let bunnerType: NotificationBannerType
     
     // MARK: - Initialization
     
     public init(title: String, description: String, bunnerType: NotificationBannerType) {
         self.title = title
         self.description = description
-        self.backgroundColor = bunnerType.backgroundColor
-        self.buttonColor = bunnerType.buttonColor
+        self.bunnerType = bunnerType
     }
     
 }

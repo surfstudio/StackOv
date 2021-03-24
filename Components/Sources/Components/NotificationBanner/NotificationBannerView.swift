@@ -30,25 +30,28 @@ public struct NotificationBannerView: View {
                         Text(data.title)
                             .bold()
                             .padding(.init(top: 20, leading: 20, bottom: 0, trailing: 0))
+                            .foregroundColor(data.bunnerType.textColor)
                         Spacer()
                         Button(action: {
                             self.buttonAction()
                         }) {
                             Icons.xmark.image
-                                .foregroundColor(data.backgroundColor)
+                                .foregroundColor(data.bunnerType.iconColor)
                         }
                         .frame(width: 18, height: 18, alignment: .center)
-                        .background( Palette.lightGray | Color.white.opacity(0.7))
+                        .background(Palette.lightGray | Color.white.opacity(0.7))
                         .cornerRadius(9)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 11))
                     }
                     Text(data.description)
                         .padding(.init(top: 0, leading: 20, bottom: 20, trailing: 20))
+                        .foregroundColor(data.bunnerType.textColor)
                 }
             }
             .foregroundColor(.white)
-            .background(data.backgroundColor)
+            .background(data.bunnerType.backgroundColor)
             .cornerRadius(14)
+            .shadow(color: Color.black.opacity(0.12), radius: 14, x: 0, y: 4)
             Spacer()
         }
         .padding(12)
