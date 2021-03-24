@@ -39,6 +39,7 @@
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
 		6FF33D382530917E00C316D7 /* Components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Components; sourceTree = "<group>"; };
 		6FF362BE25324920009F9908 /* Network */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Network; sourceTree = "<group>"; };
+		87C434EC260A3EAC0076F241 /* NotificationsDisplayService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = NotificationsDisplayService; sourceTree = "<group>"; };
 		CE9E15A325C722FA003D8E93 /* FilterStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FilterStore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +145,7 @@
 		6FF362C72532568D009F9908 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				87C434EC260A3EAC0076F241 /* NotificationsDisplayService */,
 				6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */,
 			);
 			path = Services;

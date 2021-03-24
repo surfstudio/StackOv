@@ -27,3 +27,13 @@ public struct NotificationBannerData {
     }
     
 }
+
+public extension NotificationBannerData {
+    
+    // MARK: - Public Methods
+    
+    static func emptyData() -> NotificationBannerData {
+        NotificationBannerData(title: "", description: "", bunnerType: .empty)
+    }
+    
+}

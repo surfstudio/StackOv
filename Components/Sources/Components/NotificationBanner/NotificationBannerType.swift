@@ -13,6 +13,7 @@ public enum NotificationBannerType {
     case info
     case success
     case error
+    case empty
     
     var backgroundColor: Color {
         switch self {
@@ -22,6 +23,8 @@ public enum NotificationBannerType {
             return Palette.main
         case .error:
             return .red
+        case .empty:
+            return .clear
         }
     }
     
@@ -33,6 +36,8 @@ public enum NotificationBannerType {
             return Color.white.opacity(0.7)
         case .error:
             return Color.white.opacity(0.7)
+        case .empty:
+            return .clear
         }
     }
     

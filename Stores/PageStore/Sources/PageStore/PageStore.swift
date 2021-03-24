@@ -10,8 +10,9 @@ import Foundation
 import Combine
 import StackexchangeNetworkService
 import FilterStore
+import NotificationsDisplayService
 
-public final class PageStore: ObservableObject {
+public final class PageStore: ObservableObject, NotificationsDisplayble {
     
     // MARK: - Nested types
     

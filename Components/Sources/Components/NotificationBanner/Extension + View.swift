@@ -9,7 +9,7 @@
 import SwiftUI
 
 public extension View {
-    func banner(data: Binding<NotificationBannerData>, show: Binding<Bool>) -> some View {
-        self.modifier(NotificationBannerModifier(show: show, bannerData: data))
+    func banner(show: Binding<Bool>, bannerData: Binding<NotificationBannerData>) -> some View {
+        self.modifier(NotificationBannerModifier(show: show, bannerData: bannerData))
     }
 }
