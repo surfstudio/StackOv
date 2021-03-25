@@ -12,9 +12,9 @@ public struct NotificationBannerData {
     
     // MARK: - Properties
     
-    internal let title: String
-    internal let description: String
-    internal let bunnerType: NotificationBannerType
+    let title: String
+    let description: String
+    let bunnerType: NotificationBannerType
     
     // MARK: - Initialization
     

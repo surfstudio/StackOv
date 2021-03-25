@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct NotificationBannerModifier: ViewModifier {
     
-    // MARK: - Properties
+    // MARK: - States
     
     @Binding var show: Bool
     @Binding var bannerData: NotificationBannerData

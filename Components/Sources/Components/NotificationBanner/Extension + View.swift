@@ -10,6 +10,6 @@ import SwiftUI
 
 public extension View {
     func banner(show: Binding<Bool>, bannerData: Binding<NotificationBannerData>) -> some View {
-        self.modifier(NotificationBannerModifier(show: show, bannerData: bannerData))
+        modifier(NotificationBannerModifier(show: show, bannerData: bannerData))
     }
 }
