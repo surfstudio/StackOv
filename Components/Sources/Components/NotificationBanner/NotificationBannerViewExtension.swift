@@ -1,5 +1,5 @@
 //
-//  View+Extension.swift
+//  NotificationBannerViewExtension.swift
 //  StackOv (Components module)
 //
 //  Created by Владислав Климов
