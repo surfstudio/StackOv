@@ -12,7 +12,9 @@ let package = Package(
     ],
     dependencies: Package.dependencies,
     targets: [
-        .target(name: "Common", dependencies: Target.dependencies),
+        .target(name: "Common",
+                dependencies: Target.dependencies,
+                resources: [.process("Resources/StackexchangeAuthConfigurations.json")]),
         .testTarget(name: "CommonTests", dependencies: ["Common"])
     ]
 )
@@ -27,7 +29,7 @@ fileprivate extension Package {
 fileprivate extension Target {
     
     static var dependencies: [Dependency] {
-        var packages: [Dependency] = ["Introspect"]
+        var packages: [Dependency] = ["URLBuilder", "Introspect"]
         if Package.firebaseIsEnable {
             packages.append(.product(name: "FirebaseCrashlytics", package: "Firebase"))
         }
@@ -43,6 +45,7 @@ fileprivate extension Package {
     
     static var externalDependencies: [Dependency] {
         var packages: [Dependency] = [
+            .package(name: "URLBuilder", url: "https://github.com/ephedra-software/URLBuilder.git", from: "1.0.3"),
             .package(name: "Introspect", url: "https://github.com/Puasonych/SwiftUI-Introspect.git", .branch("develop"))
         ]
         if Package.firebaseIsEnable {

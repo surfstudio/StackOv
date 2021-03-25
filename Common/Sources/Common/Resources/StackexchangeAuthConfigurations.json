@@ -1,0 +1,5 @@
+{
+    "client_id": 18018,
+    "scope": "read_inbox,write_access,private_info,no_expiry",
+    "redirect_uri": "stackov://stackexchange.com/oauth/login_success"
+}

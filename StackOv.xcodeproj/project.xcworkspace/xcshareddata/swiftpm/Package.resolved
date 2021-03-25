@@ -108,6 +108,15 @@
           "revision": "8a76d2c74bafbb455763487cc6a08e91bad1f78b",
           "version": "2.7.1"
         }
+      },
+      {
+        "package": "URLBuilder",
+        "repositoryURL": "https://github.com/ephedra-software/URLBuilder.git",
+        "state": {
+          "branch": null,
+          "revision": "e7067c5052f8a8358611907f56cb321dc2d743bd",
+          "version": "1.0.3"
+        }
       }
     ]
   },

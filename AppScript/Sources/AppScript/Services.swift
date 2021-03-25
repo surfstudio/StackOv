@@ -8,6 +8,8 @@
 
 import Swinject
 import StackexchangeNetworkService
+import AuthManager
+import class Common.StackexchangeAuthConfigurations
 import class PageStore.PageDataManager
 
 // MARK: - Services Assembly
@@ -17,6 +19,10 @@ final class ServicesAssembly: Assembly {
     func assemble(container: Container) {
         container.register(StackexchangeNetworkService.self) { _ in
             StackexchangeNetworkService()
+        }.inObjectScope(.weak)
+        
+        container.register(AuthManager.self) { resolver in
+            AuthManager(configurations: try! StackexchangeAuthConfigurations.load())
         }.inObjectScope(.weak)
         
         container.register(PageDataManager.self) { resolver in
@@ -38,4 +44,13 @@ public struct ServicesAssembler {
             ServicesAssembly()
         ])
     }()
+}
+
+// MARK: - Extensions
+
+public extension AuthManager {
+    
+    static func appearance() -> Self {
+        ServicesAssembler.shared.resolve(Self.self)!
+    }
 }
