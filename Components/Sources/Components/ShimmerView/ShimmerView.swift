@@ -7,50 +7,48 @@
 //
 
 import SwiftUI
+import Common
 
 struct ShimmerView : View {
     
     // MARK: - States
     
-    @EnvironmentObject private var shimmerConfig: ShimmerConfig
-        
+    @EnvironmentObject var shimmerConfig: ShimmerConfig
+    
+    // MARK: - Properties
+    
+    var linearGradient: LinearGradient {
+        let startGradient = Gradient.Stop(color: shimmerConfig.bgColor, location: 0.3)
+        let endGradient = Gradient.Stop(color: shimmerConfig.bgColor, location: 0.7)
+        let maskGradient = Gradient.Stop(color: shimmerConfig.shimmerColor, location: 0.5)
+        let gradient = Gradient(stops: [startGradient, maskGradient, endGradient])
+        return LinearGradient(gradient: gradient, startPoint: .leading, endPoint: .trailing)
+    }
+
     // MARK: - View
     
     var body: some View {
-        let startGradient = Gradient.Stop(color: self.shimmerConfig.bgColor, location: 0.3)
-        let endGradient = Gradient.Stop(color: self.shimmerConfig.bgColor, location: 0.7)
-        let maskGradient = Gradient.Stop(color: self.shimmerConfig.shimmerColor, location: 0.5)
-        
-        let gradient = Gradient(stops: [startGradient, maskGradient, endGradient])
-        
-        let linearGradient = LinearGradient(gradient: gradient,
-                                            startPoint: .leading,
-                                            endPoint: .trailing)
-            
-        return GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .background(self.shimmerConfig.bgColor)
-                    .foregroundColor(.clear)
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .background(linearGradient)
-                    .rotationEffect(Angle(degrees: self.shimmerConfig.shimmerAngle))
-                    .offset(x: self.shimmerConfig.isActive ? self.shimmerOffset(geometry.size.width) : -self.shimmerOffset(geometry.size.width), y: 0)
-                    .transition(.move(edge: .leading))
-                    .animation(.linear(duration: self.shimmerConfig.shimmerDuration))
-            }
-            .padding(EdgeInsets(top: -self.shimmerOffset(geometry.size.width),
-                                leading: 0,
-                                bottom: -self.shimmerOffset(geometry.size.width),
-                                trailing: 0))
+        GeometryReader {
+            content(shimmerOffset: $0.size.width + CGFloat(2 * shimmerConfig.shimmerAngle))
         }
     }
     
-    // MARK: - Methods
+    // MARK: - View methods
     
-    func shimmerOffset(_ width: CGFloat) -> CGFloat {
-        width + CGFloat(2 * self.shimmerConfig.shimmerAngle)
+    func content(shimmerOffset: CGFloat) -> some View {
+        ZStack(alignment: .leading) {
+            Rectangle()
+                .background(shimmerConfig.bgColor)
+                .foregroundColor(.clear)
+            
+            Rectangle()
+                .foregroundColor(.clear)
+                .background(linearGradient)
+                .rotationEffect(Angle(degrees: shimmerConfig.shimmerAngle))
+                .offset(x: (shimmerConfig.isActive ? 1 : -1) * shimmerOffset, y: .zero)
+                .transition(.move(edge: .leading))
+                .animation(.linear(duration: shimmerConfig.shimmerDuration))
+        }
+        .padding(.vertical(-shimmerOffset))
     }
-    
 }

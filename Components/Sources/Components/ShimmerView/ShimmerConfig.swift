@@ -11,15 +11,18 @@ import Combine
 
 public class ShimmerConfig: ObservableObject {
     
+    // MARK: - States
+    
+    @Published var isActive: Bool = false
+    
     // MARK: - Properties
     
-    var bgColor: Color
-    var fgColor: Color
-    var shimmerColor: Color
-    var shimmerAngle: Double
-    var shimmerDuration: Double
-
-    @Published internal var isActive: Bool = false
+    let bgColor: Color
+    let fgColor: Color
+    let shimmerColor: Color
+    let shimmerAngle: Double
+    let shimmerDuration: TimeInterval
+    let shimmerDelay: TimeInterval
 
     // MARK: - Private Properties
     
@@ -38,22 +41,32 @@ public class ShimmerConfig: ObservableObject {
         self.shimmerColor = shimmerColor
         self.shimmerAngle = shimmerAngle
         self.shimmerDuration = shimmerDuration
-
-        self.timer =  Timer
-               .publish(every: shimmerDelay, on: RunLoop.main, in: RunLoop.Mode.default)
-               .autoconnect()
-               .sink(receiveValue: { [weak self] _ in
-            guard let self = self else { return }
-            self.isActive = false
-            
-            withAnimation { self.isActive = true }
-        })
+        self.shimmerDelay = shimmerDelay
     }
     
     deinit {
-        timer?.cancel()
-        timer = nil
+        stopAnimation()
     }
     
+    // MARK: - Public methods
+    
+    public func startAnimation() {
+        stopAnimation()
+        timer?.cancel()
+        timer = Timer
+            .publish(every: shimmerDelay, on: .main, in: .default)
+            .autoconnect()
+            .sink(receiveValue: { [weak self] _ in
+                guard let self = self else { return }
+                self.isActive = false
+                withAnimation { self.isActive = true }
+            })
+    }
+    
+    public func stopAnimation() {
+        timer?.cancel()
+        timer = nil
+        isActive = false
+    }
 }
 

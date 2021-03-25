@@ -1,5 +1,5 @@
 //
-//  View + Extension.swift
+//  View+Extension.swift
 //  StackOv (Components module)
 //
 //  Created by Владислав Климов
@@ -11,7 +11,6 @@ import SwiftUI
 extension View {
     
     public func shimmer(isActive: Bool) -> some View {
-        self.modifier(ShimmerModifier(isActive: isActive))
+        modifier(ShimmerModifier(isActive: isActive))
     }
-    
 }

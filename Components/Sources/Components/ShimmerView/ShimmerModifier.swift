@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct ShimmerModifier: ViewModifier {
+struct ShimmerModifier: ViewModifier {
     
     // MARK: - Properties
     
@@ -16,13 +16,11 @@ public struct ShimmerModifier: ViewModifier {
     
     // MARK: - View Modifier
     
-    @ViewBuilder
-    public func body(content: Content) -> some View {
+    @ViewBuilder func body(content: Content) -> some View {
         if isActive {
             content.overlay(ShimmerView().clipped())
         } else {
             content
         }
     }
-    
 }

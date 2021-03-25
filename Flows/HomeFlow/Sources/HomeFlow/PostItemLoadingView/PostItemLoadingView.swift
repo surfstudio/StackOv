@@ -22,11 +22,11 @@ struct PostItemLoadingView: View {
     // MARK: - States
     
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var shimmerConfig: ShimmerConfig
 
     // MARK: - Properties
         
     let shimmerIsActive: Bool
-    let shimmerConfig: ShimmerConfig
     
     // MARK: - Views
     
@@ -87,9 +87,13 @@ struct PostItemLoadingView: View {
     
 }
 
+// MARK: - Previews
+
 struct SwiftUIView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        PostItemLoadingView(shimmerIsActive: true, shimmerConfig: ShimmerConfig(bgColor: .clear, fgColor: .clear))
+        PostItemLoadingView(shimmerIsActive: true)
+            .environmentObject(ShimmerConfig(bgColor: .clear, fgColor: .clear))
     }
 }
 
