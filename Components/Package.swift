@@ -11,9 +11,10 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Palette"),
+        .package(path: "../Icons"),
         .package(path: "../Markdown")
     ],
     targets: [
-        .target(name: "Components", dependencies: ["Palette", "Markdown"])
+        .target(name: "Components", dependencies: ["Palette", "Markdown", "Icons"])
     ]
 )
