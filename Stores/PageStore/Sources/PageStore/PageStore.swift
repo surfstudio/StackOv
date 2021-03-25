@@ -68,9 +68,8 @@ public extension PageStore {
             case let .success(models):
                 if models.isEmpty { break }
                 state = .content(models)
-            case .failure:
-                // need show error not by changing the state of screen
-                break
+            case let .failure(error):
+                showError(describedBy: error)
             }
         }
     }
