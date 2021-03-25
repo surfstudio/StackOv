@@ -10,11 +10,12 @@ let package = Package(
         .library(name: "NotificationsDisplayService", targets: ["NotificationsDisplayService"])
     ],
     dependencies: [
-        .package(path: "../Components")
+        .package(path: "../Components"),
+        .package(path: "../Errors")
     ],
     targets: [
         .target(
             name: "NotificationsDisplayService",
-            dependencies: ["Components"]),
+            dependencies: ["Components", "Errors"])
     ]
 )

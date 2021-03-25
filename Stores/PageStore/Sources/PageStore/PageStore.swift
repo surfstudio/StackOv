@@ -55,6 +55,7 @@ public extension PageStore {
                 state = models.isEmpty ? .emptyContent : .content(models)
             case let .failure(error):
                 state = .error(error)
+                showError(describedBy: error)
             }
         }
     }
