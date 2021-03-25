@@ -15,6 +15,10 @@ struct PadContentView: View {
     // MARK: - States
     
     @State private var state: MainBar.ItemType = .home
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Environment(\.sizeCategory) var sizeCategory
+
     
     // MARK: - Initialization
     
@@ -26,12 +30,13 @@ struct PadContentView: View {
     
     var body: some View {
         HStack(spacing: .zero) {
+            if horizontalSizeClass == .compact {
             SidebarView(state: $state)
                 .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
                 .background(Color.Sidebar.backgound)
                 .frame(maxWidth: 210)
                 .ignoresSafeArea(.container, edges: .top)
-
+            }
             ZStack {
                 HStack(spacing: 0) {
                     Color.Sidebar.devider.frame(width: 1)
@@ -60,7 +65,7 @@ struct PadContentView: View {
         coloredAppearance.backgroundColor = UIColor.MainView.navigationBarBackground
         coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.MainView.foreground]
         coloredAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.MainView.foreground]
-        
+
         UINavigationBar.appearance().standardAppearance = coloredAppearance
         UINavigationBar.appearance().compactAppearance = coloredAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance

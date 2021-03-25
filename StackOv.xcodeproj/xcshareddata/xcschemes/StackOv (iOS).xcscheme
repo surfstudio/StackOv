@@ -287,7 +287,17 @@
                ReferencedContainer = "container:Stores/FavoriteStore">
             </BuildableReference>
          </TestableReference>
-		<TestableReference
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SidebarStoreTests"
+               BuildableName = "SidebarStoreTests"
+               BlueprintName = "SidebarStoreTests"
+               ReferencedContainer = "container:Stores/SidebarStore">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
