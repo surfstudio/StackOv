@@ -44,9 +44,21 @@ public final class PageStore: ObservableObject {
 // MARK: - Actions
 
 public extension PageStore {
+    
+    func firstReloadQuestions() {
+        loadMore = false
+        state = .loading
+        dataManager.reload { [unowned self] result in
+            switch result {
+            case let .success(models):
+                state = models.isEmpty ? .emptyContent : .content(models)
+            case let .failure(error):
+                state = .error(error)
+            }
+        }
+    }
 
     func loadNextQuestions() {
-        if case .loading = state { return }
         loadMore = true
         dataManager.fetch { [unowned self] result in
             loadMore = false
@@ -56,27 +68,7 @@ public extension PageStore {
                 state = .content(models)
             case .failure:
                 // need show error not by changing the state of screen
-               break
-            }
-        }
-    }
-
-    func reloadQuestions() {
-        loadMore = false
-        state = .loading
-        dataManager.reload { [unowned self] result in
-            switch result {
-            case let .success(models):
-                state = models.isEmpty ? .emptyContent : .content(models)
-            case .failure:
-                switch state {
-                case .emptyContent:
-                    // need show error state of screen
-                    break
-                default:
-                    // need show error not by changing the state of screen
-                    break
-                }
+                break
             }
         }
     }

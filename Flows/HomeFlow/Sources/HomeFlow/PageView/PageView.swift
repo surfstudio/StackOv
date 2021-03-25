@@ -19,9 +19,9 @@ struct PageView: View {
     // MARK: - States
 
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
-    @Store private var store: PageStore
-    @State private var isFilterViewPresented = false
-    
+    @Store var store: PageStore
+    @State var isFilterViewPresented = false
+
     // MARK: - Properties
     
     var columns: [GridItem] {
@@ -42,16 +42,16 @@ struct PageView: View {
             case .unknown:
                 Text("")
                     .onAppear {
-                        store.reloadQuestions()
+                        store.firstReloadQuestions()
                     }
             case .emptyContent:
                 Text("empty")
             case let .content(model):
                 content(model)
             case .loading:
-                Text("Loading")
+                loadingView(shimmerIsActive: true)
             case .error:
-                Text("error")
+                loadingView(shimmerIsActive: false)
             }
         }.phoneToolbar {
             ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
@@ -74,7 +74,9 @@ struct PageView: View {
             
             Spacer()
             
-            filterButton(style: .default)
+            if case .content = store.state {
+                filterButton(style: .default)
+            }
         }
         .padding(.all, defaultSpacing)
         .frame(height: 30)
@@ -132,6 +134,39 @@ struct PageView: View {
                 .environmentObject(store.filterStore)
         }
     }
+    
+    func loadingView(shimmerIsActive: Bool) -> some View {
+        let shimmerConfig = getShimmerConfig(animation: shimmerIsActive)
+        return VStack(spacing: .zero) {
+            if UIDevice.current.userInterfaceIdiom.isPad {
+                sectionHeader
+            }
+            
+            LazyVGrid(columns: columns, spacing: defaultSpacing) {
+                ForEach(0..<getNumberOfLoadingItems(), id: \.self) { item in
+                    PostItemLoadingView(shimmerIsActive: shimmerIsActive)
+                        .environmentObject(shimmerConfig)
+                }
+            }.padding(.all, defaultSpacing)
+        }
+    }
+    
+    // MARK: - Methods
+    
+    func getShimmerConfig(animation: Bool) -> ShimmerConfig {
+        let config = ShimmerConfig(bgColor: Color.clear, fgColor: Color.clear)
+        if animation { config.startAnimation() }
+        return config
+    }
+    
+    func getNumberOfLoadingItems() -> Int {
+        let sideBarWidth: CGFloat = UIDevice.current.userInterfaceIdiom.isPhone ? 0 : 210 // TODO: - Issue #72
+        let contentWidht = UIScreen.main.bounds.width - sideBarWidth
+        let contentHeight =  UIScreen.main.bounds.height
+        return Int((((contentWidht - defaultSpacing) / (267 + defaultSpacing)).rounded(.down)))
+            * Int((((contentHeight - defaultSpacing) / (223 + defaultSpacing)).rounded(.down)))
+    }
+    
 }
 
 // MARK: - Previews
