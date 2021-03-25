@@ -1,5 +1,5 @@
 //
-//  Extension + View.swift
+//  View+Extension.swift
 //  StackOv (Components module)
 //
 //  Created by Владислав Климов
