@@ -21,20 +21,20 @@ extension Markdown {
         // MARK: - View
         
         var body: some View {
-            if case let .codeBlock(_, code) = unit.type {
-                content(code: code)
+            switch unit.type {
+            case let .codeBlock(codeType, code):
+                content(codeType: codeType, code: code)
+            default:
+                EmptyView()
             }
         }
         
         // MARK: - View methods
         
-        func content(code: String) -> some View {
+        func content(codeType: String?, code: String) -> some View {
             ScrollView(.horizontal, showsIndicators: true) {
                 VStack(alignment: .center, spacing: .zero) {
-                    Text(code)
-                        .font(.custom("Menlo-Regular", size: 13))
-                        .foregroundColor(.foreground)
-                        .fixedSize(horizontal: false, vertical: true)
+                    CodeView(codeType: codeType, code: code)
                 }
             }
             .padding([.leading, .top, .trailing], 12)
