@@ -14,9 +14,10 @@ let package = Package(
         .package(path: "../Icons"),
         .package(path: "../Common"),
         .package(path: "../Markdown"),
-        .package(path: "../AppScript")
+        .package(path: "../AppScript"),
+        .package(url: "https://github.com/raspu/Highlightr.git", .revision("93199b9e434f04bda956a613af8f571933f9f037"))
     ],
     targets: [
-        .target(name: "Components", dependencies: ["Palette", "Markdown", "AppScript", "Icons", "Common"])
+        .target(name: "Components", dependencies: ["Palette", "Markdown", "AppScript", "Icons", "Common", "Highlightr"])
     ]
 )
