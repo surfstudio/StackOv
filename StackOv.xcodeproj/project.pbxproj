@@ -402,7 +402,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
 				PRODUCT_NAME = StackOv;
 				PROVISIONING_PROFILE_SPECIFIER = StackOvDevProfile;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = StackOvDevMacOSProfile;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
@@ -438,7 +438,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ephedra-software.StackOv";
 				PRODUCT_NAME = StackOv;
 				PROVISIONING_PROFILE_SPECIFIER = StackOvDevProfile;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = StackOvDevMacOSProfile;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos";
 				SUPPORTS_MACCATALYST = YES;
