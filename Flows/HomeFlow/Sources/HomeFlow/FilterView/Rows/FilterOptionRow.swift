@@ -12,7 +12,7 @@ import Components
 import FilterStore
 
 struct FilterOptionRow: View {
-
+    
     // MARK: - States
     
     @Binding var filterState: FilterStore.FilterState
@@ -27,14 +27,14 @@ struct FilterOptionRow: View {
         self.option = option
         self._filterState = filterState
     }
-
+    
     // MARK: - View
-
+    
     var body: some View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
-
+                
                 HStack(spacing: 17) {
                     CheckmarkView(isSelected: filterState.contains(option), isFilled: true)
                     
@@ -44,9 +44,9 @@ struct FilterOptionRow: View {
                         .lineLimit(1)
                         .foregroundColor(Color.foreground)
                 }
-
+                
                 Spacer()
-
+                
                 // FIXME: During accessibility leading inset is wrong
                 Divider()
                     .padding(.leading, option.isLast ? -22 : 38)
@@ -58,7 +58,7 @@ struct FilterOptionRow: View {
     }
     
     // MARK: - View methods
-
+    
     func action() {
         if filterState.contains(option) {
             filterState.remove(option)
@@ -71,7 +71,7 @@ struct FilterOptionRow: View {
 // MARK: - Previews
 
 struct FilterOptionRow_Previews: PreviewProvider {
-
+    
     static var previews: some View {
         FilterOptionRow(option: .noAnswers, filterState: .constant([]))
     }
@@ -80,7 +80,7 @@ struct FilterOptionRow_Previews: PreviewProvider {
 // MARK: - Estensions
 
 fileprivate extension FilterStore.FilterOption {
-
+    
     var isLast: Bool {
         self == Self.allCases.last
     }
@@ -100,7 +100,7 @@ fileprivate extension FilterStore.FilterOption {
 // MARK: - Colors
 
 fileprivate extension Color {
-
+    
     static let foreground = Palette.lightBlack | Color.white
     static let background = Palette.bluishwhite | Palette.lightBlack
 }

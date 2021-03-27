@@ -41,6 +41,7 @@ fileprivate extension Package {
     static var storeDependencies: [Dependency] {
         [.package(name: "PageStore", path: "../Stores/PageStore"),
          .package(name: "PostStore", path: "../Stores/PostStore"),
-         .package(name: "FilterStore", path: "../Stores/FilterStore")]
+         .package(name: "FilterStore", path: "../Stores/FilterStore"),
+         .package(name: "FavoriteStore", path: "../Stores/FavoriteStore")]
     }
 }

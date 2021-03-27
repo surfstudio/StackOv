@@ -1,8 +1,8 @@
 //
 //  PostItemView.swift
-//  StackOv (HomeFlow module)
+//  StackOv (FavoriteFlow module)
 //
-//  Created by Erik Basargin
+//  Created by Evgeny Novgorodov
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
@@ -110,7 +110,7 @@ struct PostItemView: View {
 
 // MARK: - Previews
 
-struct QuestionItemView_Previews: PreviewProvider {
+struct PostItemView_Previews: PreviewProvider {
     
     static var previews: some View {
         PostItemView(model: QuestionModel.mock())

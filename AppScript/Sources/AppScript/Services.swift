@@ -9,6 +9,7 @@
 import Swinject
 import StackexchangeNetworkService
 import class PageStore.PageDataManager
+import class FavoriteStore.FavoriteDataManager
 
 // MARK: - Services Assembly
 
@@ -21,6 +22,10 @@ final class ServicesAssembly: Assembly {
         
         container.register(PageDataManager.self) { resolver in
             PageDataManager(service: resolver.resolve(StackexchangeNetworkService.self)!)
+        }.inObjectScope(.weak)
+        
+        container.register(FavoriteDataManager.self) { resolver in
+            FavoriteDataManager(service: resolver.resolve(StackexchangeNetworkService.self)!)
         }.inObjectScope(.weak)
     }
 }
