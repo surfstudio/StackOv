@@ -47,18 +47,18 @@ struct FilterView: View {
             VStack(spacing: 0) {
                 sectionHeader(title: "Filter by")
                 
-                ForEach(FilterStore.FilterOption.allCases) {
+                ForEach(FilterStore.FilterOption.allCases) { filterOption in
                     FilterOptionRow(
-                        option: $0,
+                        option: filterOption,
                         filterState: .init(get: { store.filterState }, set: { store.setFilterState(to: $0) } )
                     )
                 }
                 
                 sectionHeader(title: "Sorted by")
                 
-                ForEach(FilterStore.SortOption.allCases) {
+                ForEach(FilterStore.SortOption.allCases) { sortOption in
                     SortOptionRow(
-                        option: $0,
+                        option: sortOption,
                         selected: .init(get: { store.sortState }, set: { store.setSortState(to: $0) })
                     )
                 }
