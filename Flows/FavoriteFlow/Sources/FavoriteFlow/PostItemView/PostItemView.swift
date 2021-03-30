@@ -61,8 +61,9 @@ struct PostItemView: View {
             
             if !sizeCategory.isAccessibilityCategory {
                 TagsCollectionView(model.tags, preferredWidth: 267, alignment: .top) { tag in
-                    TagButton(tag: tag) {
-                        // TODO: - Issue #38
+                    TagButton(tag: tag) { selectedItem in
+                        print("Tag:", tag, "Selected action:", selectedItem.title)
+                        // TODO: In the future, you will need to process this data
                     }
                 }
             }

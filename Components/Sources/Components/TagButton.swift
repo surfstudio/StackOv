@@ -109,19 +109,6 @@ public extension TagButton.MenuItem {
         }
     }
     
-    var action: (_ tag: String) -> Void {
-        switch self {
-        case .addTagToFilter:
-            return { print(title, $0) }
-        case .watchUnwatchTag:
-            return { print(title, $0) }
-        case .ignoreTag:
-            return { print(title, $0) }
-        case .copyTag:
-            return { print(title, $0) }
-        }
-    }
-    
     var id: Int {
         hashValue
     }
