@@ -3,7 +3,7 @@ import XCTest
 
 final class SidebarStoreTests: XCTestCase {
     
-    func testExample() {
+    func testExample() throws {
         throw XCTSkip(#function)
     }
     

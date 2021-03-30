@@ -9,7 +9,6 @@ let package = Package(
     products: [
         .library(name: "SidebarStore", targets: ["SidebarStore"]),
     ],
-    dependencies: [],
     targets: [
         .target(name: "SidebarStore", dependencies: []),
         .testTarget(name: "SidebarStoreTests", dependencies: ["SidebarStore"])

@@ -6,8 +6,7 @@
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
-import SwiftUI
-import Combine
+import Foundation
 
 public final class SidebarStore: ObservableObject {
 
