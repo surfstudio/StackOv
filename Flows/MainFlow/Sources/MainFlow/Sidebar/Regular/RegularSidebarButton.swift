@@ -1,5 +1,5 @@
 //
-//  SidebarButton.swift
+//  RegularSidebarButton.swift
 //  StackOv (MainFlow module)
 //
 //  Created by Erik Basargin
@@ -9,7 +9,7 @@
 import SwiftUI
 import Palette
 
-struct SidebarButton: View {
+struct RegularSidebarButton: View {
     
     // MARK: - States
     
@@ -81,7 +81,7 @@ struct SidebarButton: View {
 struct SidebarButton_Previews: PreviewProvider {
     
     static var previews: some View {
-        SidebarButton(.home, state: .constant(.home))
+        RegularSidebarButton(.home, state: .constant(.home))
             .padding()
             .background(Palette.grayblue)
             .previewLayout(.sizeThatFits)

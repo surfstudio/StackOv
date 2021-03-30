@@ -1,5 +1,5 @@
 //
-//  UserView.swift
+//  RegularUserView.swift
 //  StackOv (MainFlow module)
 //
 //  Created by Erik Basargin
@@ -9,7 +9,7 @@
 import SwiftUI
 import Palette
 
-struct UserView: View {
+struct RegularUserView: View {
     
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
@@ -34,7 +34,7 @@ struct UserView: View {
 struct UserView_Previews: PreviewProvider {
     
     static var previews: some View {
-        UserView()
+        RegularUserView()
             .padding()
             .background(Palette.grayblue)
             .previewLayout(.sizeThatFits)

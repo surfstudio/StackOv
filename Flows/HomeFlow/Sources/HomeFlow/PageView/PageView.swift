@@ -18,6 +18,8 @@ struct PageView: View {
     // MARK: - States
     
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
     @Store var store: PageStore
     @State var isFilterViewPresented = false
 
@@ -165,7 +167,15 @@ struct PageView: View {
     }
     
     func getNumberOfLoadingItems() -> Int {
-        let sideBarWidth: CGFloat = UIDevice.current.userInterfaceIdiom.isPhone ? 0 : 210 // TODO: - Issue #72
+        let sideBarWidth: CGFloat
+
+        if UIDevice.current.userInterfaceIdiom.isPhone  {
+            sideBarWidth = 0
+        } else {
+            sideBarWidth = SidebarConstants.sidebarWidth(isRegular: horizontalSizeClass == .regular,
+                                                         isAccessibility: sizeCategory.isAccessibilityCategory)
+        }
+        
         let contentWidht = UIScreen.main.bounds.width - sideBarWidth
         let contentHeight =  UIScreen.main.bounds.height
         return Int((((contentWidht - defaultSpacing) / (267 + defaultSpacing)).rounded(.down)))
