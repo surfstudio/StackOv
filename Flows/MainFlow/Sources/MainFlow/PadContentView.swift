@@ -9,16 +9,16 @@
 import SwiftUI
 import Palette
 import Introspect
+import SidebarStore
+import AppScript
 
 struct PadContentView: View {
     
     // MARK: - States
     
+    @Environment(\.horizontalSizeClass) public var horizontalSizeClass
     @State private var state: MainBar.ItemType = .home
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Environment(\.verticalSizeClass) var verticalSizeClass
-    @Environment(\.sizeCategory) var sizeCategory
-
+    @Store private var store: SidebarStore
     
     // MARK: - Initialization
     
@@ -30,13 +30,7 @@ struct PadContentView: View {
     
     var body: some View {
         HStack(spacing: .zero) {
-            if horizontalSizeClass == .compact {
-            SidebarView(state: $state)
-                .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-                .background(Color.Sidebar.backgound)
-                .frame(maxWidth: 210)
-                .ignoresSafeArea(.container, edges: .top)
-            }
+            sidebar()
             ZStack {
                 HStack(spacing: 0) {
                     Color.Sidebar.devider.frame(width: 1)
@@ -55,6 +49,41 @@ struct PadContentView: View {
             }
         }
         .background(Color.background)
+    }
+    
+    var regularSidebar: some View {
+        SidebarView(state: $state)
+            .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
+            .background(Color.Sidebar.backgound)
+            .frame(maxWidth: 210)
+            .ignoresSafeArea(.container, edges: .top)
+    }
+    
+    var compactSideBar: some View {
+        EmptyView()
+    }
+    
+    // MARK: - View Methods
+    
+    private func sidebar() -> some View {
+        switch horizontalSizeClass {
+        case .regular:
+            store.changeShow(true)
+        case .compact:
+            store.changeShow(false)
+        default:
+            store.changeShow(false)
+        }
+        
+        return sidebarView()
+    }
+    
+    @ViewBuilder private func sidebarView() -> some View {
+        if (store.isShow) {
+            regularSidebar
+        } else {
+            compactSideBar
+        }
     }
     
     // MARK: - Methods

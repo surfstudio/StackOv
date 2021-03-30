@@ -14,6 +14,7 @@ import StackexchangeNetworkService
 @_exported import FilterStore
 @_exported import PostStore
 @_exported import FavoriteStore
+@_exported import SidebarStore
 
 // MARK: - Stores Assembly
 
@@ -36,7 +37,9 @@ final class StoresAssembly: Assembly {
         container.register(FilterStore.self) { resolver in
             FilterStore()
         }.inObjectScope(.transient)
-        
+        container.register(SidebarStore.self) { resolver in
+            SidebarStore()
+        }.inObjectScope(.transient)
         container.register(FavoriteStore.self) { resolver in
             FavoriteStore(dataManager: resolver.resolve(FavoriteDataManager.self)!)
         }.inObjectScope(.transient)
