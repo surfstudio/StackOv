@@ -40,8 +40,8 @@ fileprivate extension Package {
     
     static var storeDependencies: [Dependency] {
         [.package(name: "GlobalBannerStore", path: "../Stores/GlobalBannerStore"),
+         .package(name: "ThreadStore", path: "../Stores/ThreadStore"),
          .package(name: "PageStore", path: "../Stores/PageStore"),
-         .package(name: "PostStore", path: "../Stores/PostStore"),
          .package(name: "FilterStore", path: "../Stores/FilterStore"),
          .package(name: "FavoriteStore", path: "../Stores/FavoriteStore"),
          .package(name: "SidebarStore", path: "../Stores/SidebarStore")]

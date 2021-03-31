@@ -1,9 +1,10 @@
 import XCTest
-@testable import PostStore
+@testable import ThreadStore
 
-final class PostStoreTests: XCTestCase {
+final class ThreadStoreTests: XCTestCase {
     
     func testExample() throws {
         throw XCTSkip(#function)
     }
+    
 }

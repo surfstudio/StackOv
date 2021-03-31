@@ -12,6 +12,7 @@ import Common
 import Introspect
 import Components
 import AppScript
+import ThreadFlow
 
 struct PageView: View {
     
@@ -123,13 +124,13 @@ struct PageView: View {
     
     func itemView(_ item: QuestionModel) -> some View {
         NavigationLink(destination: destinationView(item)) {
-            PostItemView(model: item)
+            ThreadItemView(model: item)
         }.buttonStyle(PlainButtonStyle())
     }
     
     func destinationView(_ item: QuestionModel) -> some View {
-        PostView()
-            .environmentObject(StoresAssembler.shared.resolve(PostStore.self, argument: item)!)
+        ThreadFlow()
+            .environmentObject(StoresAssembler.shared.resolve(ThreadStore.self, argument: item)!)
     }
     
     func filterButton(style: FilterButton.Style) -> some View {

@@ -1,8 +1,8 @@
 //
 //  QuestionView.swift
-//  StackOv (HomeFlow module)
+//  StackOv (ThreadFlow module)
 //
-//  Created by Erik Basargin
+//  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
@@ -71,3 +71,4 @@ struct QuestionView_Previews: PreviewProvider {
         QuestionView(model: QuestionModel.mock())
     }
 }
+

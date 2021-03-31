@@ -1,17 +1,18 @@
 //
-//  PostStore.swift
-//  StackOv (PostStore module)
+//  ThreadStore.swift
+//  StackOv (ThreadStore module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
+
 
 import Foundation
 import Combine
 import StackexchangeNetworkService
 import Common
 
-public final class PostStore: ObservableObject {
+public final class ThreadStore: ObservableObject {
     
     // MARK: - Nested types
     
@@ -44,7 +45,7 @@ public final class PostStore: ObservableObject {
 
 // MARK: - Actions
 
-public extension PostStore {
+public extension ThreadStore {
 
     func loadAnswers(_ type: LoadingType = .reload) {
         #if DEBUG

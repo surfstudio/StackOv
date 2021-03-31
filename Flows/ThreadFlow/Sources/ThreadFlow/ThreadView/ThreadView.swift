@@ -1,6 +1,9 @@
 //
-//  PostView.swift
-//  This source file is part of the StackOv open source project
+//  ThreadView.swift
+//  StackOv (ThreadFlow module)
+//
+//  Created by Владислав Климов
+//  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import SwiftUI
@@ -10,11 +13,11 @@ import Components
 import Icons
 import AppScript
 
-struct PostView: View {
+struct ThreadView: View {
     
     // MARK: - States
     
-    @EnvironmentObject var store: PostStore
+    @EnvironmentObject var store: ThreadStore
     @Store private var sidebarStore: SidebarStore
     
     // MARK: - Properties
@@ -83,10 +86,10 @@ struct PostView: View {
 
 // MARK: - Previews
 
-struct PostView_Previews: PreviewProvider {
+struct ThreadView_Previews: PreviewProvider {
     
     static var previews: some View {
-        PostView()
+        ThreadView()
     }
 }
 
@@ -96,3 +99,4 @@ fileprivate extension Color {
     
     static let background = Palette.bluishwhite | Palette.bluishblack
 }
+

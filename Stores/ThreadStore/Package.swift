@@ -4,17 +4,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "PostStore",
+    name: "ThreadStore",
     platforms: [.iOS(.v14)],
     products: [
-        .library(name: "PostStore", targets: ["PostStore"])
+        .library(name: "ThreadStore", targets: ["ThreadStore"]),
     ],
     dependencies: [
         .package(path: "../Services/StackexchangeNetworkService"),
         .package(path: "../Stores/PageStore")
     ],
     targets: [
-        .target(name: "PostStore", dependencies: ["StackexchangeNetworkService", "PageStore"]),
-        .testTarget(name: "PostStoreTests", dependencies: ["PostStore"])
+        .target(name: "ThreadStore", dependencies: ["StackexchangeNetworkService", "PageStore"]),
+        .testTarget(name: "ThreadStoreTests", dependencies: ["ThreadStore"]),
     ]
 )

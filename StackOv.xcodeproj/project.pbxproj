@@ -15,6 +15,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31FEEC9F2614CAB700D08F7B /* ThreadStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThreadStore; sourceTree = "<group>"; };
+		31FEECA42614D5C100D08F7B /* ThreadFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThreadFlow; sourceTree = "<group>"; };
 		31C1A4AE260C938400B0D665 /* Errors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Errors; sourceTree = "<group>"; };
 		31D7FD4A260CE8C70096879D /* SidebarStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SidebarStore; sourceTree = "<group>"; };
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
@@ -37,7 +39,6 @@
 		6FCC9B2225237C5500BDD827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6FCC9B2725237C5500BDD827 /* StackOv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StackOv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FCC9B2A25237C5500BDD827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6FD7B2F525D946F8007E03F2 /* PostStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PostStore; sourceTree = "<group>"; };
 		6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DataTransferObjects; sourceTree = "<group>"; };
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
 		6FF33D382530917E00C316D7 /* Components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Components; sourceTree = "<group>"; };
@@ -84,11 +85,11 @@
 		6FAA728F253357740068F85F /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				31FEEC9F2614CAB700D08F7B /* ThreadStore */,
 				31D7FD4A260CE8C70096879D /* SidebarStore */,
 				CE2FF97E26090CCD00FDA68D /* FavoriteStore */,
 				6F780A97261B5F0100C8C0E4 /* GlobalBannerStore */,
 				CE9E15A325C722FA003D8E93 /* FilterStore */,
-				6FD7B2F525D946F8007E03F2 /* PostStore */,
 				6FB8E3FC25B01E7C00E25240 /* PageStore */,
 			);
 			path = Stores;
@@ -97,6 +98,7 @@
 		6FC027D4252C395A002150F5 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				31FEECA42614D5C100D08F7B /* ThreadFlow */,
 				6F7542D625F509250099A297 /* MainFlow */,
 				6FC02868252EE9E9002150F5 /* HomeFlow */,
 				6FC0287B252F0630002150F5 /* FavoriteFlow */,

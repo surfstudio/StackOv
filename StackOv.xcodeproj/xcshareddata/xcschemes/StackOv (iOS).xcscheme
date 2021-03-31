@@ -158,20 +158,6 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PostStoreTests"
-               BuildableName = "PostStoreTests"
-               BlueprintName = "PostStoreTests"
-               ReferencedContainer = "container:Stores/PostStore">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "FavoriteStoreTests"
                BuildableName = "FavoriteStoreTests"
                BlueprintName = "FavoriteStoreTests"
@@ -271,20 +257,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "PostStoreTests"
-               BuildableName = "PostStoreTests"
-               BlueprintName = "PostStoreTests"
-               ReferencedContainer = "container:Stores/PostStore">
+               BlueprintIdentifier = "FavoriteStoreTests"
+               BuildableName = "FavoriteStoreTests"
+               BlueprintName = "FavoriteStoreTests"
+               ReferencedContainer = "container:Stores/FavoriteStore">
             </BuildableReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FavoriteStoreTests"
-               BuildableName = "FavoriteStoreTests"
-               BlueprintName = "FavoriteStoreTests"
-               ReferencedContainer = "container:Stores/FavoriteStore">
+               BlueprintIdentifier = "ThreadStoreTests"
+               BuildableName = "ThreadStoreTests"
+               BlueprintName = "ThreadStoreTests"
+               ReferencedContainer = "container:Stores/ThreadStore">
             </BuildableReference>
          </TestableReference>
          <TestableReference

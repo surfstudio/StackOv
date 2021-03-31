@@ -12,7 +12,7 @@ import StackexchangeNetworkService
 @_exported import GlobalBannerStore
 @_exported import PageStore
 @_exported import FilterStore
-@_exported import PostStore
+@_exported import ThreadStore
 @_exported import FavoriteStore
 @_exported import SidebarStore
 
@@ -30,8 +30,8 @@ final class StoresAssembly: Assembly {
                       filterStore: resolver.resolve(FilterStore.self)!)
         }.inObjectScope(.transient)
         
-		container.register(PostStore.self) { resolver, model in
-            PostStore(model: model)
+		container.register(ThreadStore.self) { resolver, model in
+            ThreadStore(model: model)
         }.inObjectScope(.transient)
         
         container.register(FilterStore.self) { resolver in
