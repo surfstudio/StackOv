@@ -22,21 +22,29 @@ struct QuestionView: View {
     // MARK: - View
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 20) {
             Text(model.title)
                 .font(.title2)
                 .fontWeight(.bold)
             
-            #if DEBUG
             HStack(spacing: 24) {
-                Text("Asked 9 years, 6 months ago")
-                Text("Active today")
-                Text("Viewed 817k times")
+                Text("Asked \(model.timeHasPassedSinceCreation)")
+                    .foregroundColor(Color.subheadings)
+
+                Text("Active ")
+                    .foregroundColor(Color.subheadings)
+                    + Text(model.timeHasPassedSinceLastActivity)
+                        .foregroundColor(Color.text)
+
+                Text("Viewed ")
+                    .foregroundColor(Color.subheadings)
+                    + Text ("\(model.formattedViewsNumber) times")
+                        .foregroundColor(Color.text)
             }
             .font(.caption)
-            #endif
             
             Divider()
+                .padding(.top, 4)
             
             HStack(alignment: .top, spacing: .zero) {
                 if UIDevice.current.userInterfaceIdiom.isPad {
@@ -72,3 +80,9 @@ struct QuestionView_Previews: PreviewProvider {
     }
 }
 
+fileprivate extension Color {
+    
+    static var subheadings: Color = Palette.slateGray | Color.white.opacity(0.7)
+    static var text: Color = Palette.black | .white
+
+}

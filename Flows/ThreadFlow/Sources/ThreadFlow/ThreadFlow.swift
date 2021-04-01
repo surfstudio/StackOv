@@ -23,7 +23,9 @@ public struct ThreadFlow: View {
     // MARK: - Properties
     
     var contentEdgeInsets: EdgeInsets {
-        .all(UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12)
+        let horisontal: CGFloat = UIDevice.current.userInterfaceIdiom.isPad ? 60 : 20
+        let vertical: CGFloat = UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
+        return .init(top: vertical, leading: horisontal, bottom: vertical, trailing: horisontal)
     }
     
     // MARK: - Initialization
@@ -49,7 +51,7 @@ public struct ThreadFlow: View {
                             }
                     case .emptyContent:
                         Text("empty")
-                    case let .content(_):
+                    case .content(_):
                         content
                     case .loading:
                         Text("Loading")

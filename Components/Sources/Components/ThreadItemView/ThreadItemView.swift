@@ -106,7 +106,7 @@ public struct ThreadItemView: View {
             
             Spacer()
             
-            Text(model.formattedLastActivity)
+            Text(model.formattedLastActivityDate)
                 .foregroundColor(Color.foreground.opacity(0.7))
                 .font(.caption)
         }
