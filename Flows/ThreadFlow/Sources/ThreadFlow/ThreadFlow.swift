@@ -17,13 +17,14 @@ public struct ThreadFlow: View {
     
     // MARK: - States
     
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @EnvironmentObject var store: ThreadStore
     @Store private var sidebarStore: SidebarStore
     
     // MARK: - Properties
     
     var contentEdgeInsets: EdgeInsets {
-        let horisontal: CGFloat = UIDevice.current.userInterfaceIdiom.isPad ? 60 : 20
+        let horisontal: CGFloat = UIDevice.current.userInterfaceIdiom.isPad && horizontalSizeClass == .regular ? 60 : 20
         let vertical: CGFloat = UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
         return .init(top: vertical, leading: horisontal, bottom: vertical, trailing: horisontal)
     }

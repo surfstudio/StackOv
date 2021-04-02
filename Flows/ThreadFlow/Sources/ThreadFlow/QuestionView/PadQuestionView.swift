@@ -1,8 +1,8 @@
 //
-//  QuestionView.swift
+//  PadQuestionView.swift
 //  StackOv (ThreadFlow module)
 //
-//  Created by Erik Basargin
+//  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
@@ -13,13 +13,13 @@ import Components
 import Icons
 import AppScript
 
-struct QuestionView: View {
+struct PadQuestionView: View {
     
     // MARK: - Properties
     
     let model: QuestionModel
-    
-    // MARK: - View
+
+    // MARK: - Views
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -47,38 +47,25 @@ struct QuestionView: View {
                 .padding(.top, 4)
             
             HStack(alignment: .top, spacing: .zero) {
-                if UIDevice.current.userInterfaceIdiom.isPad {
-                    HStack(alignment: .center, spacing: .zero) {
-                        RetingView()
-                    }
-                    .frame(width: 60)
-                }
+                RetingView(viewed: model.formattedViewsNumber)
+                    .padding(.trailing, 34)
                 
                 MarkdownPostView(text: .constant(model.body))
             }
         }
     }
+
 }
 
-fileprivate struct RetingView: View {
-    
-    var body: some View {
-        VStack(alignment: .center, spacing: 8) {
-            Button(action: {}, icon: .handThumbsupFill)
-                .frame(width: 24, height: 24)
-            Text("363")
-                .font(.subheadline)
-            Button(action: {}, icon: .handThumbsdownFill)
-                .frame(width: 24, height: 24)
-        }
-    }
-}
+// MARK: - Previews
 
-struct QuestionView_Previews: PreviewProvider {
+struct PadQuestionView_Previews: PreviewProvider {
     static var previews: some View {
-        QuestionView(model: QuestionModel.mock())
+        PadQuestionView(model: QuestionModel.mock())
     }
 }
+
+// MARK: - Colors
 
 fileprivate extension Color {
     
