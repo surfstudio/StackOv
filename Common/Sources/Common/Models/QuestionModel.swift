@@ -157,7 +157,7 @@ extension QuestionModel {
     public static func from(entry: QuestionEntry,
                      withGradientColors colors: (top: Color, bottom: Color)) -> QuestionModel {
         
-        return QuestionModel(
+        QuestionModel(
             id: entry.id,
             title: String(htmlString: entry.title) ?? entry.title,
             body: entry.body ?? "",
