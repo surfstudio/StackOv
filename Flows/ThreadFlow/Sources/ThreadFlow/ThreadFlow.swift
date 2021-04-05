@@ -52,8 +52,8 @@ public struct ThreadFlow: View {
                             }
                     case .emptyContent:
                         Text("empty")
-                    case .content:
-                        content
+                    case let .content(model):
+                        content(model: model)
                     case .loading:
                         Text("Loading")
                     case .error:
@@ -86,8 +86,25 @@ public struct ThreadFlow: View {
         }
     }
     
-    var content: some View {
-        EmptyView()
+    func content(model: [AnswerModel]) -> some View {
+        VStack {
+            Divider()
+            ForEach(model, id: \.id) { item in
+                PostView(model: PostModel.from(model: item))
+                    .onAppear() {
+                        if item == model.last {
+                            store.loadNextAnswers()
+                        }
+                    }
+                Divider()
+            }
+            
+            if store.loadMore {
+                LoaderView()
+                    .frame(width: 24, height: 24)
+                    .padding(.vertical, 20)
+            }
+        }
     }
 
 }

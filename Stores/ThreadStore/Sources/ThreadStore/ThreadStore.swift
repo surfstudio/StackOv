@@ -56,13 +56,20 @@ public extension ThreadStore {
     func firstReloadAnswers() {
         loadMore = false
         state = .loading
-        dataManager.reload(questionId: questionModel.id) { [unowned self] result in
+        
+        let receiveCompletion: (Result<[AnswerModel], Error>) -> Void = { [unowned self] result in
             switch result {
             case let .success(models):
                 state = models.isEmpty ? .emptyContent : .content(models)
             case let .failure(error):
                 state = .error(error)
             }
+        }
+        
+        if questionModel.hasAcceptedAnswer {
+            dataManager.reload(acceptedId: questionModel.acceptedAnswerId!, receiveCompletion: receiveCompletion)
+        } else {
+            dataManager.reload(questionId: questionModel.id, receiveCompletion: receiveCompletion)
         }
     }
     
@@ -79,16 +86,4 @@ public extension ThreadStore {
             }
         }
     }
-}
-
-// MARK: - Private Methods
-
-private extension ThreadStore {
-    
-    func loadAccepterdAnswer(answerId: Int) {
-        dataManager.loadAnswer(by: answerId, receiveCompletion: { [unowned self] result in
-            
-        })
-    }
-
 }

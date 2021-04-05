@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  AnswerModel.swift
+//  StackOv (Common module)
 //
 //  Created by Влад Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -20,6 +20,16 @@ public struct AnswerModel: Identifiable {
     public let link: URL
     public let body: String?
     
+}
+
+// MARK: - Equatable
+
+extension AnswerModel: Equatable {
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+
 }
 
 // MARK: - Entry converter

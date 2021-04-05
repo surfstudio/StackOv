@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  ThreadDataManagerProtocol.swift
+//  StackOv (ThreadStore module)
 //
 //  Created by Влад Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -18,8 +18,9 @@ public protocol ThreadDataManagerProtocol {
     var isLoading: Bool { get }
     var hasMoreData: Bool { get }
     
-    func loadAnswer(by id: Int, receiveCompletion: @escaping ResultHandler)
+    func load(by id: Int, receiveCompletion: @escaping ResultHandler)
     func fetch(questionId: Int, receiveCompletion: @escaping ResultHandler)
     func reload(questionId: Int, receiveCompletion: @escaping ResultHandler)
+    func reload(acceptedId: Int, receiveCompletion: @escaping ResultHandler)
     func reset()
 }

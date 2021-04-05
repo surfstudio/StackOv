@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  ThreadDataManager.swift
+//  StackOv (ThreadStore module)
 //
 //  Created by Влад Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -83,9 +83,12 @@ public extension ThreadDataManager {
                     return AnswerModel.from(entry: item)
                 }
                 hasMoreData = data.hasMore
-                currentData = (currentData ?? []) + newData
-                receiveCompletion(.success(currentData ?? []))
                 
+                let currentData = self.currentData ?? []
+                let actualData = newData.filter { !currentData.contains($0) }
+                self.currentData = currentData + actualData
+                
+                receiveCompletion(.success(currentData))
             })
     }
     
@@ -112,7 +115,28 @@ public extension ThreadDataManager {
             }
     }
     
-    func loadAnswer(by id: Int, receiveCompletion: @escaping ResultHandler) {
+    func reload(acceptedId: Int, receiveCompletion: @escaping ResultHandler) {
+        cancelLoadingProcess()
+        loadingProcess = service.loadAnswer(answerId: acceptedId)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [unowned self] completion in
+                cancelLoadingProcess()
+                switch completion {
+                case .finished:
+                    reset()
+                case let .failure(error):
+                    receiveCompletion(.failure(error))
+                }
+            }) { [unowned self] data in
+                let newData: [AnswerModel] = data.items.enumerated().map { index, item in
+                    return AnswerModel.from(entry: item)
+                }
+                currentData = (currentData ?? []) + newData
+                receiveCompletion(.success(currentData ?? []))
+            }
+    }
+    
+    func load(by id: Int, receiveCompletion: @escaping ResultHandler) {
         cancelLoadingProcess()
         loadingProcess = service.loadAnswer(answerId: id)
             .receive(on: RunLoop.main)

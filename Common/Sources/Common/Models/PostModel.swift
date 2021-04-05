@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  PostModel.swift
+//  StackOv (Common module)
 //
 //  Created by Влад Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
