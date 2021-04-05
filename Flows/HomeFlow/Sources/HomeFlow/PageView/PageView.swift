@@ -129,7 +129,8 @@ struct PageView: View {
     }
     
     func destinationView(_ item: QuestionModel) -> some View {
-        ThreadFlow()
+//        ServicesAssembler.shared.resolve(ThreadDataManager.self, argument: item)!
+        return ThreadFlow()
             .environmentObject(StoresAssembler.shared.resolve(ThreadStore.self, argument: item)!)
     }
     

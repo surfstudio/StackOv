@@ -10,6 +10,7 @@ import Swinject
 import StackexchangeNetworkService
 import class PageStore.PageDataManager
 import class FavoriteStore.FavoriteDataManager
+import class ThreadStore.ThreadDataManager
 
 // MARK: - Services Assembly
 
@@ -26,6 +27,10 @@ final class ServicesAssembly: Assembly {
         
         container.register(FavoriteDataManager.self) { resolver in
             FavoriteDataManager(service: resolver.resolve(StackexchangeNetworkService.self)!)
+        }.inObjectScope(.weak)
+        
+        container.register(ThreadDataManager.self) { reslover in
+            ThreadDataManager(service: reslover.resolve(StackexchangeNetworkService.self)!)
         }.inObjectScope(.weak)
     }
 }

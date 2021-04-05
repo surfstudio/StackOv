@@ -31,7 +31,7 @@ final class StoresAssembly: Assembly {
         }.inObjectScope(.transient)
         
 		container.register(ThreadStore.self) { resolver, model in
-            ThreadStore(model: model)
+            ThreadStore(model: model, dataManager: resolver.resolve(ThreadDataManager.self)!)
         }.inObjectScope(.transient)
         
         container.register(FilterStore.self) { resolver in

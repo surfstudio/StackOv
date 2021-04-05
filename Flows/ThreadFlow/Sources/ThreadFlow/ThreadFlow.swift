@@ -48,11 +48,11 @@ public struct ThreadFlow: View {
                     case .unknown:
                         Text("")
                             .onAppear {
-                                store.loadAnswers()
+                                store.firstReloadAnswers()
                             }
                     case .emptyContent:
                         Text("empty")
-                    case .content(_):
+                    case .content:
                         content
                     case .loading:
                         Text("Loading")
@@ -89,6 +89,7 @@ public struct ThreadFlow: View {
     var content: some View {
         EmptyView()
     }
+
 }
 
 // MARK: - Previews
