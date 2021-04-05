@@ -13,6 +13,7 @@ import StackexchangeNetworkService
 @_exported import PageStore
 @_exported import FilterStore
 @_exported import PostStore
+@_exported import FavoriteStore
 
 // MARK: - Stores Assembly
 
@@ -34,6 +35,10 @@ final class StoresAssembly: Assembly {
         
         container.register(FilterStore.self) { resolver in
             FilterStore()
+        }.inObjectScope(.transient)
+        
+        container.register(FavoriteStore.self) { resolver in
+            FavoriteStore(dataManager: resolver.resolve(FavoriteDataManager.self)!)
         }.inObjectScope(.transient)
     }
 }

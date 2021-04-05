@@ -12,12 +12,11 @@ import Common
 import Introspect
 import Components
 import AppScript
-import struct PageStore.QuestionModel
 
 struct PageView: View {
-
+    
     // MARK: - States
-
+    
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Store var store: PageStore
     @State var isFilterViewPresented = false
@@ -93,7 +92,7 @@ struct PageView: View {
             if UIDevice.current.userInterfaceIdiom.isPad {
                 sectionHeader
             }
-
+            
             LazyVGrid(columns: columns, spacing: defaultSpacing) {
                 ForEach(models) { item in
                     itemView(item)
@@ -105,7 +104,7 @@ struct PageView: View {
                 }
             }
             .padding(.all, defaultSpacing)
-
+            
             if store.loadMore {
                 LoaderView()
                     .frame(width: 24, height: 24)
@@ -113,7 +112,7 @@ struct PageView: View {
             }
         }
     }
-
+    
     func itemView(_ item: QuestionModel) -> some View {
         NavigationLink(destination: destinationView(item)) {
             PostItemView(model: item)

@@ -1,6 +1,6 @@
 //
-//  PageStore.swift
-//  StackOv (PageStore module)
+//  FavoriteStore.swift
+//  StackOv (FavoriteStore module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
@@ -9,10 +9,9 @@
 import Foundation
 import Combine
 import StackexchangeNetworkService
-import FilterStore
 import Common
 
-public final class PageStore: ObservableObject {
+public final class FavoriteStore: ObservableObject {
     
     // MARK: - Nested types
     
@@ -26,8 +25,7 @@ public final class PageStore: ObservableObject {
     
     // MARK: - Substores & Services
     
-    let dataManager: PageDataManagerProtocol
-    public let filterStore: FilterStore
+    let dataManager: FavoriteDataManagerProtocol
     
     // MARK: - Public properties
     
@@ -36,31 +34,17 @@ public final class PageStore: ObservableObject {
     
     // MARK: - Initialization and deinitialization
     
-    public init(dataManager: PageDataManagerProtocol, filterStore: FilterStore) {
+    public init(dataManager: FavoriteDataManagerProtocol) {
         self.dataManager = dataManager
-        self.filterStore = filterStore
     }
 }
 
 // MARK: - Actions
 
-public extension PageStore {
+public extension FavoriteStore {
     
-    func firstReloadQuestions() {
-        loadMore = false
-        state = .loading
-        dataManager.reload { [unowned self] result in
-            switch result {
-            case let .success(models):
-                state = models.isEmpty ? .emptyContent : .content(models)
-            case let .failure(error):
-                state = .error(error)
-                GlobalBanner.show(error: error)
-            }
-        }
-    }
-
     func loadNextQuestions() {
+        if case .loading = state { return }
         loadMore = true
         dataManager.fetch { [unowned self] result in
             loadMore = false
@@ -68,8 +52,29 @@ public extension PageStore {
             case let .success(models):
                 if models.isEmpty { break }
                 state = .content(models)
-            case let .failure(error):
-                GlobalBanner.show(error: error)
+            case .failure:
+                // need show error not by changing the state of screen
+                break
+            }
+        }
+    }
+    
+    func reloadQuestions() {
+        loadMore = false
+        state = .loading
+        dataManager.reload { [unowned self] result in
+            switch result {
+            case let .success(models):
+                state = models.isEmpty ? .emptyContent : .content(models)
+            case .failure:
+                switch state {
+                case .emptyContent:
+                    // need show error state of screen
+                    break
+                default:
+                    // need show error not by changing the state of screen
+                    break
+                }
             }
         }
     }

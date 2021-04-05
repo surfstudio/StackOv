@@ -1,14 +1,12 @@
 //
 //  QuestionModel.swift
-//  StackOv (PageStore module)
+//  StackOv (Common module)
 //
 //  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
-
 import Foundation
-import Common
 import struct DataTransferObjects.QuestionEntry
 import struct SwiftUI.Color
 
@@ -44,7 +42,7 @@ public extension QuestionModel {
     
     var formattedLastActivity: String {
         let distance = lastActivity.date.distance(to: Date())
-            
+        
         let timeString: String
         if distance < 86400 {
             let formatter = DateComponentsFormatter()
@@ -58,7 +56,7 @@ public extension QuestionModel {
             formatter.dateFormat = "MMM d, h:mm a"
             timeString = formatter.string(from: lastActivity.date)
         }
-
+        
         switch lastActivity {
         case .answered:
             return "answered \(timeString)"
@@ -91,7 +89,7 @@ public extension QuestionModel {
 
 extension QuestionModel {
     
-    static func from(entry: QuestionEntry,
+    public static func from(entry: QuestionEntry,
                      withGradientColors colors: (top: Color, bottom: Color)) -> QuestionModel {
         QuestionModel(
             id: entry.id,
