@@ -15,11 +15,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31C1A4AE260C938400B0D665 /* Errors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Errors; sourceTree = "<group>"; };
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
 		6F4AC2DE25BC3FF3002D0D86 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
 		6F61730025D7F76F0011AB44 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
 		6F7542D625F509250099A297 /* MainFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainFlow; sourceTree = "<group>"; };
+		6F780A97261B5F0100C8C0E4 /* GlobalBannerStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GlobalBannerStore; sourceTree = "<group>"; };
 		6F96F26625854E54009E7DED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6FB8E3FC25B01E7C00E25240 /* PageStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PageStore; sourceTree = "<group>"; };
 		6FC0280A252CB0E7002150F5 /* Common */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Common; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		6F2E47F92524A7F50080F778 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				31C1A4AE260C938400B0D665 /* Errors */,
 				6F61730025D7F76F0011AB44 /* Icons */,
 				6F4AC2DE25BC3FF3002D0D86 /* Markdown */,
 				6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */,
@@ -81,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				CE2FF97E26090CCD00FDA68D /* FavoriteStore */,
+				6F780A97261B5F0100C8C0E4 /* GlobalBannerStore */,
 				CE9E15A325C722FA003D8E93 /* FilterStore */,
 				6FD7B2F525D946F8007E03F2 /* PostStore */,
 				6FB8E3FC25B01E7C00E25240 /* PageStore */,
@@ -134,8 +138,8 @@
 		6FD295E0258990480012BFEE /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				6F3415C52525E6430077F65A /* StackOv.entitlements */,
 				6FCC9B2225237C5500BDD827 /* Assets.xcassets */,
+				6F3415C52525E6430077F65A /* StackOv.entitlements */,
 				6FCC9B1D25237C5300BDD827 /* StackOv.xcdatamodeld */,
 				6FCC9B2A25237C5500BDD827 /* Info.plist */,
 				6F96F26625854E54009E7DED /* GoogleService-Info.plist */,

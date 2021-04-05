@@ -1,4 +1,5 @@
 import Foundation
+import Errors
 
 public extension HTTPURLResponse {
     

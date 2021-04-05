@@ -287,6 +287,16 @@
                ReferencedContainer = "container:Stores/FavoriteStore">
             </BuildableReference>
          </TestableReference>
+		<TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "GlobalBannerStoreTests"
+               BuildableName = "GlobalBannerStoreTests"
+               BlueprintName = "GlobalBannerStoreTests"
+               ReferencedContainer = "container:Stores/GlobalBannerStore">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

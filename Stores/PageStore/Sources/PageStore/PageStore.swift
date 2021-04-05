@@ -55,6 +55,7 @@ public extension PageStore {
                 state = models.isEmpty ? .emptyContent : .content(models)
             case let .failure(error):
                 state = .error(error)
+                GlobalBanner.show(error: error)
             }
         }
     }
@@ -67,9 +68,8 @@ public extension PageStore {
             case let .success(models):
                 if models.isEmpty { break }
                 state = .content(models)
-            case .failure:
-                // need show error not by changing the state of screen
-                break
+            case let .failure(error):
+                GlobalBanner.show(error: error)
             }
         }
     }

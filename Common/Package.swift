@@ -27,7 +27,7 @@ fileprivate extension Package {
 fileprivate extension Target {
     
     static var dependencies: [Dependency] {
-        var packages: [Dependency] = ["Introspect", "DataTransferObjects"]
+        var packages: [Dependency] = ["Introspect", "DataTransferObjects", "Errors"]
         if Package.firebaseIsEnable {
             packages.append(.product(name: "FirebaseCrashlytics", package: "Firebase"))
         }
@@ -38,7 +38,14 @@ fileprivate extension Target {
 fileprivate extension Package {
     
     static var dependencies: [Dependency] {
-        externalDependencies + internalDependencies
+        internalDependencies + externalDependencies
+    }
+    
+    static var internalDependencies: [Dependency] {
+        return [
+			.package(name: "DataTransferObjects", path: "../DataTransferObjects"),
+            .package(path: "../Errors")
+        ]
     }
     
     static var externalDependencies: [Dependency] {
@@ -51,9 +58,5 @@ fileprivate extension Package {
             )
         }
         return packages
-    }
-    
-    static var internalDependencies: [Dependency] {
-        [.package(name: "DataTransferObjects", path: "../DataTransferObjects")]
     }
 }

@@ -7,9 +7,10 @@
 //
 
 import SwiftUI
+import AppScript
 
 public struct MainFlow: View {
-    
+
     // MARK: - Initialization
 
     public init() {}
@@ -19,8 +20,10 @@ public struct MainFlow: View {
     public var body: some View {
         if UIDevice.current.userInterfaceIdiom.isPhone {
             PhoneContentView()
+                .globalBanner()
         } else {
             PadContentView()
+                .globalBanner()
         }
     }
 }
