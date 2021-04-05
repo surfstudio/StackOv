@@ -9,10 +9,7 @@ let package = Package(
     products: [
         .library(name: "Errors", targets: ["Errors"])
     ],
-    dependencies: [
-        .package(path: "../Network")
-    ],
     targets: [
-        .target(name: "Errors", dependencies: ["Network"])
+        .target(name: "Errors", dependencies: [])
     ]
 )

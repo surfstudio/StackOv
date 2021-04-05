@@ -10,9 +10,9 @@ import Foundation
 import Combine
 import StackexchangeNetworkService
 import FilterStore
-import NotificationsDisplayService
+import Common
 
-public final class PageStore: ObservableObject, NotificationsDisplayble {
+public final class PageStore: ObservableObject {
     
     // MARK: - Nested types
     
@@ -55,7 +55,7 @@ public extension PageStore {
                 state = models.isEmpty ? .emptyContent : .content(models)
             case let .failure(error):
                 state = .error(error)
-                showError(describedBy: error)
+                GlobalBanner.show(error: error)
             }
         }
     }
@@ -69,7 +69,7 @@ public extension PageStore {
                 if models.isEmpty { break }
                 state = .content(models)
             case let .failure(error):
-                showError(describedBy: error)
+                GlobalBanner.show(error: error)
             }
         }
     }

@@ -1,3 +1,3 @@
-# NotificationsDisplayService
+# GlobalBannerStore
 
 A description of this package.

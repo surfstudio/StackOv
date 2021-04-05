@@ -7,13 +7,9 @@
 //
 
 import SwiftUI
-import NotificationsDisplayService
+import AppScript
 
 public struct MainFlow: View {
-    
-    // MARK: - Properties
-    
-    @StateObject var notificationsDisplayService = NotificationsDisplayService.shared
 
     // MARK: - Initialization
 
@@ -24,10 +20,10 @@ public struct MainFlow: View {
     public var body: some View {
         if UIDevice.current.userInterfaceIdiom.isPhone {
             PhoneContentView()
-                .banner(show: $notificationsDisplayService.isShow, bannerData: $notificationsDisplayService.notificationBannerData)
+                .globalBanner()
         } else {
             PadContentView()
-                .banner(show: $notificationsDisplayService.isShow, bannerData: $notificationsDisplayService.notificationBannerData)
+                .globalBanner()
         }
     }
 }

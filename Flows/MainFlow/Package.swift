@@ -10,7 +10,9 @@ let package = Package(
         .library(name: "MainFlow", targets: ["MainFlow"])
     ],
     dependencies: [
+        .package(path: "../AppScript"),
         .package(path: "../Common"),
+        .package(path: "../Components"),
         .package(path: "../Icons"),
         .package(path: "../Palette"),
         .package(path: "HomeFlow"),
@@ -22,7 +24,9 @@ let package = Package(
     targets: [
         .target(name: "MainFlow",
                 dependencies: [
+                    "AppScript",
                     "Common",
+                    "Components",
                     "Icons",
                     "Palette",
                     "HomeFlow",

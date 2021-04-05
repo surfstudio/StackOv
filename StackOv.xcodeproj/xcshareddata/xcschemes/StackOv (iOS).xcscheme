@@ -150,7 +150,7 @@
                ReferencedContainer = "container:Stores/FilterStore">
             </BuildableReference>
          </BuildActionEntry>
-		 <BuildActionEntry
+         <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "NO"
             buildForProfiling = "NO"
@@ -253,7 +253,7 @@
                ReferencedContainer = "container:Stores/FilterStore">
             </BuildableReference>
          </TestableReference>
-		 <TestableReference
+         <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
@@ -261,6 +261,16 @@
                BuildableName = "PostStoreTests"
                BlueprintName = "PostStoreTests"
                ReferencedContainer = "container:Stores/PostStore">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "GlobalBannerStoreTests"
+               BuildableName = "GlobalBannerStoreTests"
+               BlueprintName = "GlobalBannerStoreTests"
+               ReferencedContainer = "container:Stores/GlobalBannerStore">
             </BuildableReference>
          </TestableReference>
       </Testables>
