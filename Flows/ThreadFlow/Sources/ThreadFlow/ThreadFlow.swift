@@ -114,7 +114,8 @@ public struct ThreadFlow: View {
 struct ThreadFlow_Previews: PreviewProvider {
     
     static var previews: some View {
-        ThreadFlow()            .environmentObject(StoresAssembler.shared.resolve(ThreadStore.self, argument: QuestionModel.mock())!)
+        ThreadFlow()
+            .environmentObject(StoresAssembler.shared.resolve(ThreadStore.self, argument: QuestionModel.mock())!)
 
     }
 }
