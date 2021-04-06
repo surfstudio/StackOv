@@ -32,7 +32,7 @@ public struct ThreadFlow: View {
     // MARK: - Initialization
          
     public init() {}
-    
+
     // MARK: - View
     
     public var body: some View {
@@ -87,12 +87,12 @@ public struct ThreadFlow: View {
     }
     
     func content(model: [AnswerModel]) -> some View {
-        VStack {
+        LazyVStack {
             Divider()
             ForEach(model, id: \.id) { item in
                 PostView(model: PostModel.from(model: item))
-                    .onAppear() {
-                        if item == model.last {
+                    .onAppear {
+                        if item.id == model.last!.id {
                             store.loadNextAnswers()
                         }
                     }
@@ -114,7 +114,8 @@ public struct ThreadFlow: View {
 struct ThreadFlow_Previews: PreviewProvider {
     
     static var previews: some View {
-        ThreadFlow()
+        ThreadFlow()            .environmentObject(StoresAssembler.shared.resolve(ThreadStore.self, argument: QuestionModel.mock())!)
+
     }
 }
 
@@ -124,3 +125,4 @@ fileprivate extension Color {
     
     static let background = Palette.bluishwhite | Palette.bluishblack
 }
+

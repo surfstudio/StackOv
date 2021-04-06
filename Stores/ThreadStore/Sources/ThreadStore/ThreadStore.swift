@@ -23,11 +23,6 @@ public final class ThreadStore: ObservableObject {
         case error(Error)
     }
     
-    public enum LoadingType {
-        case reload
-        case next
-    }
-    
     // MARK: - Substores & Services
     
     let dataManager: ThreadDataManagerProtocol

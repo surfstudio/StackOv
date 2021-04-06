@@ -76,7 +76,7 @@ public extension ThreadDataManager {
                 case .finished:
                     page += 1
                 case let .failure(error):
-                receiveCompletion(.failure(error))
+                    receiveCompletion(.failure(error))
                 }
             }, receiveValue: { [unowned self] data in
                 let newData: [AnswerModel] = data.items.enumerated().map { index, item in
@@ -84,11 +84,9 @@ public extension ThreadDataManager {
                 }
                 hasMoreData = data.hasMore
                 
-                let currentData = self.currentData ?? []
-                let actualData = newData.filter { !currentData.contains($0) }
-                self.currentData = currentData + actualData
-                
-                receiveCompletion(.success(currentData))
+                let actualData = newData.filter { !(currentData ?? []).contains($0) }
+                currentData = (currentData ?? []) + actualData
+                receiveCompletion(.success(currentData ?? []))
             })
     }
     
@@ -124,27 +122,6 @@ public extension ThreadDataManager {
                 switch completion {
                 case .finished:
                     reset()
-                case let .failure(error):
-                    receiveCompletion(.failure(error))
-                }
-            }) { [unowned self] data in
-                let newData: [AnswerModel] = data.items.enumerated().map { index, item in
-                    return AnswerModel.from(entry: item)
-                }
-                currentData = (currentData ?? []) + newData
-                receiveCompletion(.success(currentData ?? []))
-            }
-    }
-    
-    func load(by id: Int, receiveCompletion: @escaping ResultHandler) {
-        cancelLoadingProcess()
-        loadingProcess = service.loadAnswer(answerId: id)
-            .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { [unowned self] completion in
-                cancelLoadingProcess()
-                switch completion {
-                case .finished:
-                    break
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }

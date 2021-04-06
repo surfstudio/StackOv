@@ -18,7 +18,6 @@ public protocol ThreadDataManagerProtocol {
     var isLoading: Bool { get }
     var hasMoreData: Bool { get }
     
-    func load(by id: Int, receiveCompletion: @escaping ResultHandler)
     func fetch(questionId: Int, receiveCompletion: @escaping ResultHandler)
     func reload(questionId: Int, receiveCompletion: @escaping ResultHandler)
     func reload(acceptedId: Int, receiveCompletion: @escaping ResultHandler)
