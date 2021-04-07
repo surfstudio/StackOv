@@ -17,6 +17,8 @@ public struct GlobalBannerModifier: ViewModifier {
     
     @Store var store: GlobalBannerStore
     @State var height: CGFloat = 0
+    @State var offset: CGFloat = 0
+    @State var activeId: UUID?
 
     // MARK: - Views
     
@@ -26,8 +28,6 @@ public struct GlobalBannerModifier: ViewModifier {
             
             if !store.notifications.isEmpty {
                 notificationList
-                    .animation(.easeInOut)
-                    .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
             }
         }
     }
@@ -44,18 +44,45 @@ public struct GlobalBannerModifier: ViewModifier {
             }
         }
     }
-    
+        
     // MARK: - View Methods
     
     func phoneNotificationList(_ model: GlobalBanner.Model) -> some View {
         NotificationBannerView(model: .constant(model), action: closeAllBanners)
+            .animation(.easeInOut)
+            .padding(.horizontal, 12)
+            .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+            .offset(x: 0, y: model.id == activeId ? offset : 0)
             .onAppear {
-                if model.isAutoHidden {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                switch model.autoHide {
+                case let .active(after: time):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + time) {
                         closeAllBanners()
                     }
+                case .inactive:
+                    break
                 }
             }
+            .gesture(DragGesture()
+                        .onChanged { value in
+                            let horizontalAmount = value.translation.width as CGFloat
+                            let verticalAmount = value.translation.height as CGFloat
+                            
+                            if abs(verticalAmount) > abs(horizontalAmount), verticalAmount < 0 {
+                                activeId = model.id
+                                offset = verticalAmount
+                            } else {
+                                activeId = nil
+                            }
+                        }
+                        .onEnded { value in
+                            let horizontalAmount = value.translation.width as CGFloat
+                            let verticalAmount = value.translation.height as CGFloat
+                            
+                            if abs(verticalAmount) > abs(horizontalAmount), verticalAmount < -30 {
+                                closeAllBanners()
+                            }
+                        })
     }
     
     func padNotificationList(_ models: [GlobalBanner.Model]) -> some View {
@@ -65,17 +92,7 @@ public struct GlobalBannerModifier: ViewModifier {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
                         ForEach(models) { model in
-                            NotificationBannerView(model: .constant(model), action: closeBunner)
-                                .frame(width: 393)
-                                .padding(EdgeInsets.horizontal(12))
-                                .background(HeightPreferenceKeyReader())
-                                .onAppear {
-                                    if !model.isAutoHidden {
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                                            closeAllBanners()
-                                        }
-                                    }
-                                }
+                            padNotificationBannerView(model)
                         }
                         .padding(.top, 12)
                         Spacer()
@@ -89,6 +106,46 @@ public struct GlobalBannerModifier: ViewModifier {
         }
     }
     
+    func padNotificationBannerView(_ model: GlobalBanner.Model) -> some View {
+        NotificationBannerView(model: .constant(model), action: closeBunner)
+            .frame(width: 393)
+            .padding(EdgeInsets.horizontal(12))
+            .background(HeightPreferenceKeyReader())
+            .animation(.easeInOut)
+            .transition(.asymmetric(insertion: .move(edge: .top), removal: .move(edge: .trailing)))
+            .offset(x: model.id == activeId ? offset : 0, y: 0)
+            .onAppear {
+                switch model.autoHide {
+                case let .active(after: time):
+                    DispatchQueue.main.asyncAfter(deadline: .now() + time) {
+                        closeBunner(with: model.id)
+                    }
+                case .inactive:
+                    break
+                }
+            }
+            .gesture(DragGesture()
+                        .onChanged { value in
+                            let horizontalAmount = value.translation.width as CGFloat
+                            let verticalAmount = value.translation.height as CGFloat
+                            
+                            if abs(horizontalAmount) > abs(verticalAmount), horizontalAmount > 0 {
+                                activeId = model.id
+                                offset = horizontalAmount
+                            } else {
+                                activeId = nil
+                            }
+                        }
+                        .onEnded { value in
+                            let horizontalAmount = value.translation.width as CGFloat
+                            let verticalAmount = value.translation.height as CGFloat
+                            
+                            if abs(horizontalAmount) > abs(verticalAmount), horizontalAmount > 40 {
+                                closeBunner(with: model.id)
+                            }
+                        })
+    }
+
     // MARK: - Private Methods
     
     private func closeAllBanners() {
@@ -112,6 +169,7 @@ public extension View {
     func globalBanner() -> some View {
         modifier(GlobalBannerModifier())
     }
+
 }
 
 // MARK: - Fileprivate Preference Keys
