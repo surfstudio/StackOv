@@ -37,4 +37,9 @@ public final class GlobalBannerStore: ObservableObject {
     public func hideAllBanners() {
         notifications = []
     }
+    
+    public func hideBanner(with id: UUID) {
+        notifications.removeAll { $0.id == id }
+    }
+    
 }
