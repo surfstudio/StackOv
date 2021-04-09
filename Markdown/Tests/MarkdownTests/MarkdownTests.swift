@@ -5,6 +5,8 @@ final class MarkdownTests: XCTestCase {
     
     // MARK: - Neasted types
     
+    typealias SnippetStep = Markdown.Unit.SnippetStep
+    
     private enum Mock {
         
         static let markdownString = """
@@ -46,8 +48,8 @@ final class MarkdownTests: XCTestCase {
             _ = try unit.configureCodeBlock(unit: unit, snippet: mokeSnippet, code: Mock.codeString)
         }
         catch {
-            if let error = error as? UnitErrors {
-                XCTAssertTrue(error == UnitErrors.isSnippetBody)
+            if let error = error as? SnippetStep {
+                XCTAssertTrue(error == SnippetStep.isSnippetBody)
             } else {
                 XCTFail(error.localizedDescription)
             }
@@ -72,11 +74,11 @@ final class MarkdownTests: XCTestCase {
                         snippet: mokeSnippet
                     )
                 } catch {
-                    guard let error = error as? UnitErrors else {
+                    guard let error = error as? SnippetStep else {
                         XCTFail("Unexpected error")
                         return
                     }
-                    XCTAssertTrue(error == .beginSnippet || error == .isSnippet || error == .snippetIsEmpty || error == .snippetType)
+                    XCTAssertTrue(error == .beginSnippet || error == .isSnippet || error == .snippetIsEmpty || error == .snippetCodeType)
                 }
             default:
                 XCTFail("Moke not html")

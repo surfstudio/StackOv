@@ -14,6 +14,16 @@ public extension Markdown {
     
     final class Unit: Identifiable {
         
+        // MARK: - Neasted types
+        
+        enum SnippetStep: Error {
+            case beginSnippet
+            case snippetCodeType
+            case snippetIsEmpty
+            case isSnippet
+            case isSnippetBody
+        }
+        
         // MARK: - Public properties
         
         public let id: Int
@@ -87,7 +97,7 @@ public extension Markdown {
             }
         }
 
-        // MARK: - Private methods
+        // MARK: - Internal methods
 
         func configureChildren(at node: Node, snippet: SnippetContainer) -> [Unit] {
             node.children.enumerated().compactMap { children in
@@ -110,17 +120,17 @@ public extension Markdown {
             switch htmlContent.contains("begin snippet") {
             case true:
                 snippet.snippetBlock = true
-                throw UnitErrors.beginSnippet
+                throw SnippetStep.beginSnippet
             case false where htmlContent.contains("language"):
                 snippet.snippetCodeType = try htmlContent.firstMatch(regex: #"lang\-(\w*)"#, group: 1)
-                throw UnitErrors.snippetType
+                throw SnippetStep.snippetCodeType
             case false where htmlContent.contains("end snippet"):
                 defer {
                     snippet.snippetBlock = false
                     snippet.snippets = []
                 }
                 if snippet.snippets.isEmpty {
-                    throw UnitErrors.snippetIsEmpty
+                    throw SnippetStep.snippetIsEmpty
                 }
                 return Unit(id: id, type: .snippetBlock(snippet.snippets), parent: self, children: [])
             case false:
@@ -131,7 +141,7 @@ public extension Markdown {
                     return Unit(id: id, type: .codeBlock(codeType: nil, code: code), parent: self, children: [])
                 } else {
                     if snippet.snippetBlock {
-                        throw UnitErrors.isSnippet
+                        throw SnippetStep.isSnippet
                     }
                     return unit
                 }
@@ -142,10 +152,25 @@ public extension Markdown {
             if snippet.snippetBlock {
                 snippet.snippets.append(Unit(id: snippet.snippets.count, type: .codeBlock(codeType: snippet.snippetCodeType, code: code), parent: self, children: []))
                 snippet.snippetCodeType = nil
-                throw UnitErrors.isSnippetBody
+                throw SnippetStep.isSnippetBody
             } else {
                 return unit
             }
+        }
+    }
+}
+
+// MARK: - Extensions
+
+fileprivate extension Markdown.Unit.SnippetStep {
+    
+    var localizedDescription: String {
+        switch self {
+        case .beginSnippet: return "Begin of the snippet"
+        case .snippetCodeType: return "Snippet code's type"
+        case .snippetIsEmpty: return "Snippet is empty"
+        case .isSnippet: return "Is the snippet"
+        case .isSnippetBody: return "Is the snipped body"
         }
     }
 }
