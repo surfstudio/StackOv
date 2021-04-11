@@ -16,7 +16,7 @@ public struct StackexchangeNetworkService {
     
     enum Constants {
         static let baseUrl = URL(string: "https://api.stackexchange.com/2.2")!
-        static let questionsFilter = "!gB66lk5yFs_jDNjfXUw05bhJZ(a*QmeMZkH" //"!*7PZ(S77sKA3Rc8i4h4)QI0bM8HG"
+        static let questionsFilter =  "!gB66lk5yFs_jDNjfXUw05bhJZ(a*QmeMZkH" //"!*7PZ(S77sKA3Rc8i4h4)QI0bM8HG"
         static let questionFilter = "!PvyfxTBzonJRcqwIa*BHYvqSvHDWMY"
         static let answerFilter = "!3xJkL2qoqNZw7Litv"
         static let quotaKey = "P8uUWwsGz2WbRs6)qHu)yw(("

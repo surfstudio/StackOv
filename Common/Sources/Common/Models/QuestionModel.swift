@@ -21,7 +21,8 @@ public struct QuestionModel: Identifiable {
     public let votesNumber: Int
     public let tags: [String]
     public let link: URL
-    public let lastActivity: PostActivity
+    public let lastActivityDate: Date?
+    public let creationDate: Date?
     public let gradientColors: (top: Color, bottom: Color)
 }
 
@@ -40,31 +41,28 @@ public extension QuestionModel {
         answersNumber == 0
     }
     
-    var formattedLastActivity: String {
-        let distance = lastActivity.date.distance(to: Date())
-        
-        let timeString: String
-        if distance < 86400 {
-            let formatter = DateComponentsFormatter()
-            formatter.unitsStyle = .short
-            guard let distanceString = formatter.string(from: distance) else {
-                return ""
-            }
-            timeString = "\(distanceString) ago"
-        } else {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMM d, h:mm a"
-            timeString = formatter.string(from: lastActivity.date)
-        }
-        
-        switch lastActivity {
-        case .answered:
-            return "answered \(timeString)"
-        case .asked:
-            return "asked \(timeString)"
-        case .modified:
-            return "modified \(timeString)"
-        }
+    var timeHasPassedSinceLastActivity: String {
+        formatTimeHasPassed(since: lastActivityDate)
+    }
+    
+    var timeHasPassedSinceCreation: String {
+        formatTimeHasPassed(since: creationDate)
+    }
+    
+    var formattedCreationDate: String {
+        formatDate(creationDate)
+    }
+    
+    var formattedLastActivityDate: String {
+        formatDate(lastActivityDate)
+    }
+    
+    var formattedVotesNumber: String {
+        roundNumberWithAbbreviations(number: votesNumber)
+    }
+    
+    var formattedViewsNumber: String {
+        roundNumberWithAbbreviations(number: viewsNumber)
     }
     
     static func mock() -> QuestionModel {
@@ -79,9 +77,76 @@ public extension QuestionModel {
             tags: ["123", "perfomance", "microsoft-ui-automation", "css", "c++",
                    "123", "perfomance", "microsoft-ui-automation", "css", "c++"],
             link: URL(string: "google.com")!,
-            lastActivity: .asked(Date()),
+            lastActivityDate: Date(),
+            creationDate: Date(),
             gradientColors: (.red, .blue)
         )
+    }
+}
+
+// MARK: - Private extensions
+
+fileprivate extension QuestionModel {
+    
+    func formatTimeHasPassed(since date: Date?) -> String {
+        guard let date = date else {
+            return ""
+        }
+
+        let distance = date.distance(to: Date())
+        
+        let timeString: String
+        if distance < 86400 {
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .short
+            formatter.allowedUnits = [.hour, .minute]
+            guard let distanceString = formatter.string(from: distance) else {
+                return ""
+            }
+            timeString = "\(distanceString) ago"
+        } else if distance > 86400 && distance < 86400 * 31 {
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .short
+            formatter.allowedUnits = [.day]
+            guard let distanceString = formatter.string(from: distance) else {
+                return ""
+            }
+            timeString = "\(distanceString) ago"
+        } else if distance > 86400 * 31{
+            let formatter = DateComponentsFormatter()
+            formatter.unitsStyle = .full
+            formatter.allowedUnits = [.year, .month]
+            guard let distanceString = formatter.string(from: distance) else {
+                return ""
+            }
+            timeString = "\(distanceString) ago"
+        } else {
+           timeString = formatDate(date)
+        }
+        
+        return timeString
+    }
+
+    func formatDate(_ date: Date?) -> String {
+        guard let date = date else {
+            return ""
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, h:mm a"
+        return formatter.string(from: date)
+    }
+    
+    func roundNumberWithAbbreviations(number: Int?) -> String {
+        guard let number = number else {
+            return ""
+        }
+        
+        if number < 1000 {
+            return "\(number)"
+        } else {
+            let numberWithAbbreviation = number / 1000
+            return "\(numberWithAbbreviation)K"
+        }
     }
 }
 
@@ -89,8 +154,7 @@ public extension QuestionModel {
 
 extension QuestionModel {
     
-    public static func from(entry: QuestionEntry,
-                     withGradientColors colors: (top: Color, bottom: Color)) -> QuestionModel {
+    public static func from(entry: QuestionEntry, withGradientColors colors: (top: Color, bottom: Color)) -> QuestionModel {
         QuestionModel(
             id: entry.id,
             title: String(htmlString: entry.title) ?? entry.title,
@@ -101,7 +165,8 @@ extension QuestionModel {
             votesNumber: entry.score,
             tags: entry.tags,
             link: entry.link,
-            lastActivity: .answered(Date()), // FIXIT: - Need update service layer
+            lastActivityDate: entry.lastActivityDate,
+            creationDate: entry.creationDate,
             gradientColors: colors
         )
     }

@@ -25,7 +25,7 @@ public extension Request where Endpoint == StackexchangeNetworkService.LoadQuest
             return URLSession.shared.dataTaskPublisher(for: request)
                 .tryCatchHTTPError()
                 .map { $0.data }
-                .decode(type: Output.self, decoder: JSONDecoder())
+                .decode(type: Output.self, decoder: produceJSONDecoder())
                 .eraseToAnyPublisher()
         } catch {
             return Fail(error: error).eraseToAnyPublisher()

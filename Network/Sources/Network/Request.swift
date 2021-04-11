@@ -96,5 +96,5 @@ public struct Request<Endpoint, Output>: RequestProtocol where Output: Decodable
         }
         return urlComponents
     }
-    
+
 }

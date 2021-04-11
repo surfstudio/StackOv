@@ -24,6 +24,8 @@ public struct QuestionEntry: Codable {
         case body = "body_markdown"
         case owner
         case acceptedAnswerId = "accepted_answer_id"
+        case creationDate = "creation_date"
+        case lastActivityDate = "last_activity_date"
     }
     
     // MARK: - Public properties
@@ -39,5 +41,7 @@ public struct QuestionEntry: Codable {
     public let body: String?
     public let owner: UserEntry?
     public let acceptedAnswerId: Int?
+    public let creationDate: Date?
+    public let lastActivityDate: Date?
 }
 
