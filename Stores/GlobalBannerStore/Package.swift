@@ -10,12 +10,12 @@ let package = Package(
         .library(name: "GlobalBannerStore", targets: ["GlobalBannerStore"])
     ],
     dependencies: [
-        .package(path: "../Components")
+        .package(path: "../Common")
     ],
     targets: [
         .target(
             name: "GlobalBannerStore",
-            dependencies: ["Components"]),
+            dependencies: ["Common"]),
         .testTarget(
             name: "GlobalBannerStoreTests",
             dependencies: ["GlobalBannerStore"]),
