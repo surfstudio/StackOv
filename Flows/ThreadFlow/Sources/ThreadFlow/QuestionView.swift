@@ -2,7 +2,7 @@
 //  QuestionView.swift
 //  StackOv (ThreadFlow module)
 //
-//  Created by Владислав Климов
+//  Created by Erik Basargin
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 

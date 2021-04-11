@@ -2,7 +2,7 @@
 //  ThreadItemView.swift
 //  StackOv (Components module)
 //
-//  Created by Владислав Климов
+//  Created by Evgeny Novgorodov
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
