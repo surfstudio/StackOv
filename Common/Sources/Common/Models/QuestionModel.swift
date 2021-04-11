@@ -84,11 +84,11 @@ public extension QuestionModel {
     }
 }
 
-// MARK: - Private Methods
+// MARK: - Private extensions
 
-private extension QuestionModel {
+fileprivate extension QuestionModel {
     
-    private func formatTimeHasPassed(since date: Date?) -> String {
+    func formatTimeHasPassed(since date: Date?) -> String {
         guard let date = date else {
             return ""
         }
@@ -127,7 +127,7 @@ private extension QuestionModel {
         return timeString
     }
 
-    private func formatDate(_ date: Date?) -> String {
+    func formatDate(_ date: Date?) -> String {
         guard let date = date else {
             return ""
         }
@@ -136,7 +136,7 @@ private extension QuestionModel {
         return formatter.string(from: date)
     }
     
-    private func roundNumberWithAbbreviations(number: Int?) -> String {
+    func roundNumberWithAbbreviations(number: Int?) -> String {
         guard let number = number else {
             return ""
         }
@@ -154,9 +154,7 @@ private extension QuestionModel {
 
 extension QuestionModel {
     
-    public static func from(entry: QuestionEntry,
-                     withGradientColors colors: (top: Color, bottom: Color)) -> QuestionModel {
-        
+    public static func from(entry: QuestionEntry, withGradientColors colors: (top: Color, bottom: Color)) -> QuestionModel {
         QuestionModel(
             id: entry.id,
             title: String(htmlString: entry.title) ?? entry.title,

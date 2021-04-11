@@ -54,12 +54,12 @@ struct PadQuestionView: View {
             }
         }
     }
-
 }
 
 // MARK: - Previews
 
 struct PadQuestionView_Previews: PreviewProvider {
+    
     static var previews: some View {
         PadQuestionView(model: QuestionModel.mock())
     }
@@ -71,5 +71,4 @@ fileprivate extension Color {
     
     static var subheadings: Color = Palette.slateGray | Color.white.opacity(0.7)
     static var text: Color = Palette.black | .white
-
 }

@@ -37,6 +37,7 @@ struct QuestionView: View {
 // MARK: - Previews
 
 struct QuestionView_Previews: PreviewProvider {
+    
     static var previews: some View {
         QuestionView(model: QuestionModel.mock())
     }

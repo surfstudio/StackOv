@@ -57,12 +57,12 @@ struct PhoneQuestionView: View {
             MarkdownPostView(text: .constant(model.body))
         }
     }
-
 }
 
 // MARK: - Previews
 
 struct PhoneQuestionView_Previews: PreviewProvider {
+    
     static var previews: some View {
         PhoneQuestionView(model: QuestionModel.mock())
     }
@@ -74,5 +74,4 @@ fileprivate extension Color {
     
     static var subheadings: Color = Palette.slateGray | Color.white.opacity(0.7)
     static var text: Color = Palette.black | .white
-
 }

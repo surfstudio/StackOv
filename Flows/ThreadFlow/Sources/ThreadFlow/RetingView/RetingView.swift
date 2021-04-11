@@ -32,7 +32,10 @@ struct RetingView: View {
     }
 }
 
+// MARK: - Previews
+
 struct RetingView_Previews: PreviewProvider {
+    
     static var previews: some View {
         RetingView(viewed: "365")
     }
