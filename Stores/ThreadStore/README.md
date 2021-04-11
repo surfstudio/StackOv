@@ -1,3 +1,3 @@
-# PostStore
+# ThreadStore
 
 A description of this package.

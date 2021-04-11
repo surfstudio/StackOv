@@ -1,18 +1,17 @@
 //
-//  PostItemView.swift
-//  StackOv (HomeFlow module)
+//  ThreadItemView.swift
+//  StackOv (Components module)
 //
-//  Created by Erik Basargin
+//  Created by Evgeny Novgorodov
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import SwiftUI
 import Palette
 import Common
-import Components
 import Icons
 
-struct PostItemView: View {
+public struct ThreadItemView: View {
     
     // MARK: - States
     
@@ -22,9 +21,15 @@ struct PostItemView: View {
     
     let model: QuestionModel
     
+    // MARK: - Initialization
+    
+    public init (model: QuestionModel) {
+        self.model = model
+    }
+    
     // MARK: - View
     
-    var body: some View {
+    public var body: some View {
         content
             .frame(minWidth: 267, minHeight: 223)
             .background(
@@ -72,7 +77,7 @@ struct PostItemView: View {
     var menu: some View {
         HStack(alignment: .top) {
             HStack(spacing: 13) {
-                PostItemInfoView(model: model)
+                ThreadItemInfoView(model: model)
                 
                 Text(sizeCategory.isAccessibilityCategory
                         ? "\(model.votesNumber)\nvotes"
@@ -110,10 +115,10 @@ struct PostItemView: View {
 
 // MARK: - Previews
 
-struct QuestionItemView_Previews: PreviewProvider {
+struct ThreadItemView_Previews: PreviewProvider {
     
     static var previews: some View {
-        PostItemView(model: QuestionModel.mock())
+        ThreadItemView(model: QuestionModel.mock())
             .padding()
             .previewLayout(.sizeThatFits)
     }

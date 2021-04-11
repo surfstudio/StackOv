@@ -4,20 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "HomeFlow",
+    name: "ThreadFlow",
     platforms: [.iOS(.v14)],
     products: [
-        .library(name: "HomeFlow", targets: ["HomeFlow"]),
+        .library(name: "ThreadFlow", targets: ["ThreadFlow"]),
     ],
     dependencies: [
         .package(path: "../Common"),
         .package(path: "../Palette"),
         .package(path: "../Icons"),
         .package(path: "../Components"),
-        .package(path: "../AppScript"),
-        .package(path: "ThreadFlow")
+        .package(path: "../AppScript")
     ],
     targets: [
-        .target(name: "HomeFlow", dependencies: ["Common", "Palette", "Icons", "Components", "AppScript", "ThreadFlow"])
+        .target(name: "ThreadFlow", dependencies: ["Common", "Palette", "Icons", "Components", "AppScript"]),
     ]
 )

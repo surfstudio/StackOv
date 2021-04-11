@@ -100,7 +100,7 @@ struct PageView: View {
     
     func itemView(_ item: QuestionModel) -> some View {
         NavigationLink(destination: destinationView(item)) {
-            PostItemView(model: item)
+            ThreadItemView(model: item)
         }.buttonStyle(PlainButtonStyle())
     }
     

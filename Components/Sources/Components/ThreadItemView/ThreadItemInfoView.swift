@@ -1,15 +1,15 @@
 //
-//  PostItemInfoView.swift
-//  StackOv (HomeFlow module)
+//  ThreadItemInfoView.swift
+//  StackOv (Components module)
 //
-//  Created by Evgeny Novgorodov
+//  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
 import SwiftUI
 import Common
 
-struct PostItemInfoView: View {
+struct ThreadItemInfoView: View {
     
     // MARK: - Nested types
     
@@ -67,10 +67,10 @@ struct PostItemInfoView: View {
 
 // MARK: - Previews
 
-struct PostItemInfoView_Previews: PreviewProvider {
+struct ThreadItemInfoView_Previews: PreviewProvider {
     
     static var previews: some View {
-        PostItemInfoView(model: QuestionModel.mock())
+        ThreadItemInfoView(model: QuestionModel.mock())
             .padding()
             .previewLayout(.sizeThatFits)
     }
