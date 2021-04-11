@@ -96,6 +96,13 @@ fileprivate struct TagButtonStyle: ViewModifier {
 
 public extension TagButton.MenuItem {
     
+    var id: Int {
+        hashValue
+    }
+}
+
+fileprivate extension TagButton.MenuItem {
+    
     var title: String {
         switch self {
         case .addTagToFilter:
@@ -107,10 +114,6 @@ public extension TagButton.MenuItem {
         case .copyTag:
             return "Copy tag"
         }
-    }
-    
-    var id: Int {
-        hashValue
     }
 }
 
