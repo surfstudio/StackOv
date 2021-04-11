@@ -9,12 +9,15 @@
 import SwiftUI
 import Palette
 import Introspect
+import AppScript
 
 struct PadContentView: View {
     
     // MARK: - States
     
+    @Environment(\.horizontalSizeClass) public var horizontalSizeClass
     @State private var state: MainBar.ItemType = .home
+    @Store private var sidebarStore: SidebarStore
     
     // MARK: - Initialization
     
@@ -26,12 +29,11 @@ struct PadContentView: View {
     
     var body: some View {
         HStack(spacing: .zero) {
-            SidebarView(state: $state)
-                .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-                .background(Color.Sidebar.backgound)
-                .frame(maxWidth: 210)
-                .ignoresSafeArea(.container, edges: .top)
-
+            if sidebarStore.isShown {
+                SidebarView(state: $state)
+                    .transition(.move(edge: .leading))
+            }
+            
             ZStack {
                 HStack(spacing: 0) {
                     Color.Sidebar.devider.frame(width: 1)
@@ -50,6 +52,12 @@ struct PadContentView: View {
             }
         }
         .background(Color.background)
+        .onAppear {
+            sidebarStore.update(with: horizontalSizeClass)
+        }
+        .onChange(of: horizontalSizeClass) { value in
+            sidebarStore.update(with: value)
+        }
     }
     
     // MARK: - Methods
@@ -60,7 +68,7 @@ struct PadContentView: View {
         coloredAppearance.backgroundColor = UIColor.MainView.navigationBarBackground
         coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.MainView.foreground]
         coloredAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.MainView.foreground]
-        
+
         UINavigationBar.appearance().standardAppearance = coloredAppearance
         UINavigationBar.appearance().compactAppearance = coloredAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance

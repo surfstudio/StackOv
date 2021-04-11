@@ -8,34 +8,28 @@
 
 import SwiftUI
 import Palette
+import AppScript
 
 struct SidebarView: View {
     
+    // MARK: - States
+
     @Binding var state: MainBar.ItemType
+    @Store private var store: SidebarStore
     
-    init(state: Binding<MainBar.ItemType>) {
-        self._state = state
-    }
+    // MARK: - View
     
     var body: some View {
-        VStack(alignment: .leading, spacing: .zero) {
-            ForEach(MainBar.ItemType.allCases) { item in
-                SidebarButton(item, state: $state)
-            }
-
-            Spacer()
-
-            UserView()
-                .padding(EdgeInsets.leading(10))
+        switch store.sidebarStyle {
+        case .regular:
+            SidebarContentView(state: $state)
+                .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
+                .background(Color.backgound)
+                .frame(maxWidth: 210)
+                .ignoresSafeArea(.container, edges: .top)
+        case .compact:
+            EmptyView()
         }
-        .padding(.top, 11)
-        .frame(
-            minWidth: 0,
-            maxWidth: .infinity,
-            minHeight: 0,
-            maxHeight: .infinity,
-            alignment: .topLeading
-        )
     }
 }
 
@@ -45,7 +39,12 @@ struct SidebarView_Previews: PreviewProvider {
     
     static var previews: some View {
         SidebarView(state: .constant(.home))
-            .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-            .background(Palette.grayblue)
     }
+}
+
+// MARK: - Colors
+
+fileprivate extension Color {
+    
+    static let backgound = Palette.periwinkleCrayola | Palette.grayblue
 }

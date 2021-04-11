@@ -15,6 +15,7 @@ struct PostView: View {
     // MARK: - States
     
     @EnvironmentObject var store: PostStore
+    @Store private var sidebarStore: SidebarStore
     
     // MARK: - Properties
     
@@ -53,6 +54,11 @@ struct PostView: View {
             }
         }
         .navigationBarTitle("", displayMode: .inline)
+        .padToolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                SidebarLeftButton()
+            }
+        }
         .toolbar {
             #if DEBUG
             ToolbarItemGroup(placement: .navigationBarTrailing) {

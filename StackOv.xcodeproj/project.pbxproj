@@ -16,6 +16,7 @@
 
 /* Begin PBXFileReference section */
 		31C1A4AE260C938400B0D665 /* Errors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Errors; sourceTree = "<group>"; };
+		31D7FD4A260CE8C70096879D /* SidebarStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SidebarStore; sourceTree = "<group>"; };
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
 		6F4AC2DE25BC3FF3002D0D86 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		6FAA728F253357740068F85F /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				31D7FD4A260CE8C70096879D /* SidebarStore */,
 				CE2FF97E26090CCD00FDA68D /* FavoriteStore */,
 				6F780A97261B5F0100C8C0E4 /* GlobalBannerStore */,
 				CE9E15A325C722FA003D8E93 /* FilterStore */,

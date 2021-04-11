@@ -8,9 +8,7 @@
 
 import Foundation
 import Common
-import Components
 import Combine
-import protocol SwiftUI.View
 
 public final class GlobalBannerStore: ObservableObject {
     
