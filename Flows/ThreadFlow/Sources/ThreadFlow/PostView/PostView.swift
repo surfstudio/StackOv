@@ -21,7 +21,6 @@ struct PostView: View {
     var body: some View {
         MarkdownPostView(text: .constant(model.body))
     }
-
 }
 
 // MARK: - Previews
