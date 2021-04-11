@@ -11,11 +11,17 @@ import Palette
 
 struct RegularSidebarView: View {
     
+    // MARK: - States
+    
     @Binding var state: MainBar.ItemType
+    
+    // MARK: - Initialization
     
     init(state: Binding<MainBar.ItemType>) {
         self._state = state
     }
+    
+    // MARK: - View
     
     var body: some View {
         VStack(alignment: .leading, spacing: .zero) {

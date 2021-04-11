@@ -11,17 +11,17 @@ import AppScript
 import SidebarStore
 import Palette
 import AppScript
+import Common
 
 struct SidebarView: View {
     
     // MARK: - States
 
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Binding var state: MainBar.ItemType
     @Store private var store: SidebarStore
     
     // MARK: - View
-    
-    // MARK: - Views
     
     var body: some View {
         switch store.sidebarStyle {
@@ -35,16 +35,16 @@ struct SidebarView: View {
     var regularSidebar: some View {
         RegularSidebarView(state: $state)
             .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
-            .background(Color.Sidebar.backgound)
-            .frame(maxWidth: SidebarConstants.sidebarWidth(isRegular: isRegular, isAccessibility: sizeCategory.isAccessibilityCategory))
+            .background(Color.backgound)
+            .frame(maxWidth: SidebarConstants.sidebarWidth(isRegular: true, isAccessibility: sizeCategory.isAccessibilityCategory))
             .ignoresSafeArea(.container, edges: .top)
     }
     
     var compactSideBar: some View {
         CompactSidebarView(state: $state)
             .padding(.vertical, 20)
-            .background(Color.Sidebar.backgound)
-            .frame(maxWidth: SidebarConstants.sidebarWidth(isRegular: isRegular, isAccessibility: sizeCategory.isAccessibilityCategory))
+            .background(Color.backgound)
+            .frame(maxWidth: SidebarConstants.sidebarWidth(isRegular: false, isAccessibility: sizeCategory.isAccessibilityCategory))
             .ignoresSafeArea(.container, edges: .top)
     }
 

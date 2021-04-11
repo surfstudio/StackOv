@@ -21,7 +21,7 @@ struct CompactSidebarView: View {
         self._state = state
     }
     
-    // MARK: - Views
+    // MARK: - View
     
     var body: some View {
         VStack(alignment: .center, spacing: .zero) {
@@ -42,12 +42,12 @@ struct CompactSidebarView: View {
             alignment: .topLeading
         )
     }
-    
 }
 
 // MARK: - Previews
 
 struct CompactSidebarView_Previews: PreviewProvider {
+    
     static var previews: some View {
         CompactSidebarView(state: .constant(.home))
             .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))

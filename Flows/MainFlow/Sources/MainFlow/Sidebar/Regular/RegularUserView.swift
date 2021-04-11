@@ -24,8 +24,7 @@ struct RegularUserView: View {
                     .font(.system(size: 10, weight: .regular))
                     .foregroundColor(Color.emailForeground)
             }
-        }
-        .frame(height: 34)
+        }.frame(height: 34)
     }
 }
 

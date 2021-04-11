@@ -16,12 +16,12 @@ struct CompactUserView: View {
             .resizable()
             .frame(width: 34, height: 34)
     }
-
 }
 
 // MARK: - Previews
 
 struct CompactUserView_Previews: PreviewProvider {
+    
     static var previews: some View {
         CompactUserView()
     }

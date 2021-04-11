@@ -20,10 +20,13 @@ struct CompactSidebarButton: View {
     
     let type: MainBar.ItemType
     var isSelected: Bool { type == globalState }
+    var contentHeight: CGFloat {
+        sizeCategory.isAccessibilityCategory ? 60 : 38
+    }
     var labelMaxSize: CGSize {
         sizeCategory.isAccessibilityCategory
-            ? CGSize(width: 60, height: 60)
-            : CGSize(width: 40, height: 40)
+            ? CGSize(width: 30, height: 30)
+            : CGSize(width: 20, height: 20)
     }
     
     // MARK: - Initialization
@@ -36,25 +39,28 @@ struct CompactSidebarButton: View {
     // MARK: - View
     
     var body: some View {
-        Button(action: { globalState = type }) {
-            type.image
-                .resizable()
-                .frame(maxWidth: labelMaxSize.width,
-                       maxHeight: labelMaxSize.height)
-                .aspectRatio(contentMode: .fit)
-                .foregroundColor(Color.iconForeground(by: isSelected))
+        HStack(alignment: .center, spacing: .zero) {
+            Spacer()
+            
+            Button(action: { globalState = type }) {
+                type.image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(Color.iconForeground(by: isSelected))
+            }
+            .frame(maxWidth: labelMaxSize.width, maxHeight: labelMaxSize.height)
+            
+            Spacer()
         }
-        .padding(.vertical, 5)
-        .padding(.horizontal, 5)
+        .frame(height: contentHeight)
         .background(Color.background(by: isSelected))
-        .frame(height: labelMaxSize.height)
     }
-    
 }
 
 // MARK: - Previews
 
 struct CompactSidebarButton_Previews: PreviewProvider {
+    
     static var previews: some View {
         CompactSidebarButton(.home, state: .constant(.home))
             .padding()
@@ -78,5 +84,4 @@ fileprivate extension Color {
             ? Palette.lightDeepGray | Color.white.opacity(0.05)
             : .clear
     }
-
 }
