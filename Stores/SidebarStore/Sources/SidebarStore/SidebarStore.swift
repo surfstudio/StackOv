@@ -7,25 +7,41 @@
 //
 
 import Foundation
+import enum SwiftUI.UserInterfaceSizeClass
 
 public final class SidebarStore: ObservableObject {
+    
+    // MARK: - Neasted types
+    
+    public enum SidebarStyle {
+        case regular
+        case compact
+    }
 
     // MARK: - Public properties
         
-    public private(set) var isShow: Bool = true
+    @Published public private(set) var isShown: Bool = true
+    @Published public private(set) var sidebarStyle: SidebarStyle = .regular
                 
-    // MARK: - Initialization
+    // MARK: - Initialization and deinitialization
     
     public init() {}
-
 }
 
 // MARK: - Actions
 
 public extension SidebarStore {
-        
-    func changeShow(_ isShow: Bool) {
-        self.isShow = isShow
-    }
 
+    func update(sidebarStyle: SidebarStyle) {
+        self.sidebarStyle = sidebarStyle
+    }
+    
+    func update(with sizeClass:  UserInterfaceSizeClass?) {
+        switch sizeClass {
+        case .regular:
+            isShown = true
+        default:
+            isShown = false
+        }
+    }
 }

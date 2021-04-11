@@ -37,9 +37,11 @@ final class StoresAssembly: Assembly {
         container.register(FilterStore.self) { resolver in
             FilterStore()
         }.inObjectScope(.transient)
+        
         container.register(SidebarStore.self) { resolver in
             SidebarStore()
-        }.inObjectScope(.transient)
+        }.inObjectScope(.weak)
+        
         container.register(FavoriteStore.self) { resolver in
             FavoriteStore(dataManager: resolver.resolve(FavoriteDataManager.self)!)
         }.inObjectScope(.transient)
