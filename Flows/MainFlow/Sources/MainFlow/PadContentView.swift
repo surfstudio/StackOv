@@ -31,6 +31,7 @@ struct PadContentView: View {
         HStack(spacing: .zero) {
             if sidebarStore.isShown {
                 SidebarView(state: $state)
+                    .transition(.move(edge: .leading))
             }
             
             ZStack {

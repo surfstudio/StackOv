@@ -13,7 +13,7 @@ public final class SidebarStore: ObservableObject {
     
     // MARK: - Neasted types
     
-    public enum SidebarStyle {
+    public enum SidebarStyle: Comparable {
         case regular
         case compact
     }
@@ -22,6 +22,10 @@ public final class SidebarStore: ObservableObject {
         
     @Published public private(set) var isShown: Bool = true
     @Published public private(set) var sidebarStyle: SidebarStyle = .regular
+    
+    // MARK: - Internal properties
+    
+    var canBeShown: Bool = true
                 
     // MARK: - Initialization and deinitialization
     
@@ -39,9 +43,14 @@ public extension SidebarStore {
     func update(with sizeClass:  UserInterfaceSizeClass?) {
         switch sizeClass {
         case .regular:
-            isShown = true
+            isShown = canBeShown
         default:
             isShown = false
         }
+    }
+    
+    func toggle() {
+        canBeShown.toggle()
+        isShown = canBeShown
     }
 }

@@ -52,7 +52,13 @@ struct PageView: View {
             case .error:
                 loadingView(shimmerIsActive: false)
             }
-        }.phoneToolbar {
+        }
+        .padToolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                SidebarLeftButton()
+            }
+        }
+        .phoneToolbar {
             ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
                 filterButton(style: .short)
                 #if DEBUG
