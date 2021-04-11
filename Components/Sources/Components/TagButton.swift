@@ -10,20 +10,41 @@ import SwiftUI
 import Palette
 
 public struct TagButton: View {
-
-    let tag: String
-    let action: () -> Void
     
-    public init(tag: String, action: @escaping () -> Void) {
+    // MARK: - Nested types
+    
+    public enum MenuItem: Identifiable, CaseIterable {
+        case addTagToFilter
+        case watchUnwatchTag
+        case ignoreTag
+        case copyTag
+    }
+    
+    // MARK: - Properties
+    
+    let tag: String
+    let action: (_ selectedItem: TagButton.MenuItem) -> Void
+    
+    // MARK: - Initialization
+    
+    public init(tag: String, action: @escaping ((_ selectedItem: TagButton.MenuItem) -> Void)) {
         self.tag = tag
         self.action = action
     }
     
+    // MARK: - View
+    
     public var body: some View {
-        Button(action: action) {
-            Text(tag)
-                .font(.subheadline)
-                .fontWeight(.medium)
+        Button(action: {}) {
+            Menu {
+                ForEach(MenuItem.allCases) { menuItem in
+                    Button(menuItem.title) { action(menuItem) }
+                }
+            } label: {
+                Text(tag)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+            }
         }
         .modifier(TagButtonStyle())
     }
@@ -43,12 +64,12 @@ struct TagButton_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            TagButton(tag: "performance", action: {})
+            TagButton(tag: "performance", action: { _ in })
                 .padding()
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .light)
             
-            TagButton(tag: "performance", action: {})
+            TagButton(tag: "performance", action: { _ in })
                 .padding()
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .dark)
@@ -68,6 +89,31 @@ fileprivate struct TagButtonStyle: ViewModifier {
             .padding([.leading, .trailing], 10)
             .background(Color.background)
             .cornerRadius(6)
+    }
+}
+
+// MARK: - Extensions
+
+public extension TagButton.MenuItem {
+    
+    var id: Int {
+        hashValue
+    }
+}
+
+fileprivate extension TagButton.MenuItem {
+    
+    var title: String {
+        switch self {
+        case .addTagToFilter:
+            return "Add tag to filter"
+        case .watchUnwatchTag:
+            return "Watch tag"
+        case .ignoreTag:
+            return "Ignore tag"
+        case .copyTag:
+            return "Copy tag"
+        }
     }
 }
 
