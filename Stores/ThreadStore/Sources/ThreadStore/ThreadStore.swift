@@ -18,7 +18,7 @@ public final class ThreadStore: ObservableObject {
     public enum State {
         case unknown
         case emptyContent
-        case content([AnswerModel])
+        case content(totalAnswersNumber: Int, answers: [AnswerModel])
         case loading
         case error(Error)
     }
@@ -55,29 +55,34 @@ public extension ThreadStore {
         let receiveCompletion: (Result<[AnswerModel], Error>) -> Void = { [unowned self] result in
             switch result {
             case let .success(models):
-                state = models.isEmpty ? .emptyContent : .content(models)
+                state = models.isEmpty
+                    ? .emptyContent
+                    : .content(totalAnswersNumber: questionModel.answersNumber, answers: models)
             case let .failure(error):
+                GlobalBanner.show(error: error)
                 state = .error(error)
             }
         }
         
-        if questionModel.hasAcceptedAnswer {
-            dataManager.reload(acceptedId: questionModel.acceptedAnswerId!, receiveCompletion: receiveCompletion)
+        if questionModel.hasAcceptedAnswer, let id = questionModel.acceptedAnswerId {
+            dataManager.reload(acceptedId: id, receiveCompletion: receiveCompletion)
         } else {
             dataManager.reload(questionId: questionModel.id, receiveCompletion: receiveCompletion)
         }
     }
     
     func loadNextAnswers() {
+        guard dataManager.hasMoreData else { return }
+        
         loadMore = true
         dataManager.fetch(questionId: questionModel.id) { [unowned self] result in
             loadMore = false
             switch result {
             case let .success(models):
                 if models.isEmpty { break }
-                state = .content(models)
-            case .failure:
-                break
+                state = .content(totalAnswersNumber: questionModel.answersNumber, answers: models)
+            case let .failure(error):
+                GlobalBanner.show(error: error)
             }
         }
     }
