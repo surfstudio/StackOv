@@ -36,7 +36,8 @@ extension Markdown {
                             .padding([.top, .bottom], 4)
                     default:
                         if case let .text(lazyHtmlText) = child.data {
-                            MarkdownTextView(lazyHtmlText: lazyHtmlText)
+//                            MarkdownTextView(lazyHtmlText: lazyHtmlText)
+                            Text(lazyHtmlText)
                         } else {
                             fatalError("Unsupported type: \(child.type)")
                         }
