@@ -9,7 +9,7 @@
 import Foundation
 import struct DataTransferObjects.AnswerEntry
 
-public struct AnswerModel: Identifiable {
+public struct AnswerModel: Identifiable, Equatable {
     
     // MARK: - Properties
     
@@ -19,17 +19,15 @@ public struct AnswerModel: Identifiable {
     public let score: Int
     public let link: URL
     public let body: String?
-    
 }
 
 // MARK: - Equatable
 
-extension AnswerModel: Equatable {
+public extension AnswerModel {
     
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
-
 }
 
 // MARK: - Entry converter
@@ -44,5 +42,4 @@ public extension AnswerModel {
                     link: entry.link,
                     body: entry.body)
     }
-    
 }

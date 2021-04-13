@@ -26,6 +26,7 @@ struct PostView: View {
 // MARK: - Previews
 
 struct PostView_Previews: PreviewProvider {
+    
     static var previews: some View {
         PostView(model: PostModel.mock())
     }

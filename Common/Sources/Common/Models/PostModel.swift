@@ -13,7 +13,6 @@ public struct PostModel {
     // MARK: - Properties
     
     public let body: String
-
 }
 
 // MARK: - Extensions
@@ -36,5 +35,4 @@ public extension PostModel {
     static func from(model: AnswerModel) -> PostModel {
         PostModel(body: model.body ?? "")
     }
-
 }
