@@ -52,9 +52,11 @@ struct PhoneQuestionView: View {
                     
                 }
             }
+            
             Divider()
                 .padding(.top, 10)
-            MarkdownPostView(text: .constant(model.body))
+
+            PostView(model: PostModel.from(model: model))
         }
     }
 }

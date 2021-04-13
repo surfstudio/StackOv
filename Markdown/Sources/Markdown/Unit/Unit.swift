@@ -89,7 +89,7 @@ public extension Markdown {
                             .replacingOccurrences(of: "<p>", with: "")
                             .replacingOccurrences(of: "</p>", with: "")
                     }
-                    self.data = .text(NSAttributedString.from(htmlString: htmlString))
+                    self.data = .text(htmlString) //NSAttributedString.from(htmlString: htmlString))
                 } else {
                     self.data = nil
                 }

@@ -28,8 +28,6 @@ public struct MarkdownPostView: View {
     public var body: some View {
         if let unit = Markdown.Unit(text.htmlUnescape()), unit.type == .document {
             Markdown.DocumentView(unit: unit)
-        } else {
-            EmptyView()
         }
     }
 }

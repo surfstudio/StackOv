@@ -12,6 +12,6 @@ public extension Markdown {
     
     enum UnitData {
         case code(codeType: String?, code: String)
-        case text(NSAttributedString.HTMLResult)
+        case text(String) //NSAttributedString.HTMLResult)
     }
 }

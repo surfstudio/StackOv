@@ -21,11 +21,8 @@ extension Markdown {
         // MARK: - View
         
         var body: some View {
-            switch unit.type {
-            case let .snippetBlock(units):
+            if case let .snippetBlock(units) = unit.type {
                 content(units)
-            default:
-                EmptyView()
             }
         }
         

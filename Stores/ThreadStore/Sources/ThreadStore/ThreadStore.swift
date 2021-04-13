@@ -6,7 +6,6 @@
 //  Copyright © 2021 Erik Basargin. All rights reserved.
 //
 
-
 import Foundation
 import Combine
 import StackexchangeNetworkService
@@ -19,27 +18,29 @@ public final class ThreadStore: ObservableObject {
     public enum State {
         case unknown
         case emptyContent
-        case content(Void)
+        case content(totalAnswersNumber: Int, answers: [AnswerModel])
         case loading
         case error(Error)
     }
     
-    public enum LoadingType {
-        case reload
-        case next
-    }
-    
     // MARK: - Substores & Services
     
-    // MARK: - Public properties
+    let dataManager: ThreadDataManagerProtocol
+
+    // MARK: - States
     
     @Published public private(set) var state: State = .unknown
+    @Published public private(set) var loadMore: Bool = false
+    
+    // MARK: - Public properties
+
     public let questionModel: QuestionModel
 
     // MARK: - Initialization and deinitialization
     
-    public init(model: QuestionModel) {
+    public init(model: QuestionModel, dataManager: ThreadDataManagerProtocol) {
         self.questionModel = model
+        self.dataManager = dataManager
     }
 }
 
@@ -47,9 +48,42 @@ public final class ThreadStore: ObservableObject {
 
 public extension ThreadStore {
 
-    func loadAnswers(_ type: LoadingType = .reload) {
-        #if DEBUG
-        state = .content(())
-        #endif
+    func firstReloadAnswers() {
+        loadMore = false
+        state = .loading
+        
+        let receiveCompletion: (Result<[AnswerModel], Error>) -> Void = { [unowned self] result in
+            switch result {
+            case let .success(models):
+                state = models.isEmpty
+                    ? .emptyContent
+                    : .content(totalAnswersNumber: questionModel.answersNumber, answers: models)
+            case let .failure(error):
+                GlobalBanner.show(error: error)
+                state = .error(error)
+            }
+        }
+        
+        if questionModel.hasAcceptedAnswer, let id = questionModel.acceptedAnswerId {
+            dataManager.reload(acceptedId: id, receiveCompletion: receiveCompletion)
+        } else {
+            dataManager.reload(questionId: questionModel.id, receiveCompletion: receiveCompletion)
+        }
+    }
+    
+    func loadNextAnswers() {
+        guard dataManager.hasMoreData else { return }
+        
+        loadMore = true
+        dataManager.fetch(questionId: questionModel.id) { [unowned self] result in
+            loadMore = false
+            switch result {
+            case let .success(models):
+                if models.isEmpty { break }
+                state = .content(totalAnswersNumber: questionModel.answersNumber, answers: models)
+            case let .failure(error):
+                GlobalBanner.show(error: error)
+            }
+        }
     }
 }

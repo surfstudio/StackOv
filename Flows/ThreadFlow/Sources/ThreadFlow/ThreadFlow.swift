@@ -32,7 +32,7 @@ public struct ThreadFlow: View {
     // MARK: - Initialization
          
     public init() {}
-    
+
     // MARK: - View
     
     public var body: some View {
@@ -41,23 +41,28 @@ public struct ThreadFlow: View {
                 .edgesIgnoringSafeArea(.all)
             
             ScrollView {
-                LazyVStack(spacing: 0) {
+                VStack(spacing: 0) {
                     QuestionView(model: store.questionModel)
                     
                     switch store.state {
                     case .unknown:
-                        Text("")
-                            .onAppear {
-                                store.loadAnswers()
-                            }
+                        Text("").onAppear {
+                            store.firstReloadAnswers()
+                        }
                     case .emptyContent:
                         Text("empty")
-                    case .content(_):
-                        content
+                    case let .content(totalAnswersNumber, models):
+                        content(answersNumber: totalAnswersNumber, models: models)
                     case .loading:
                         Text("Loading")
                     case .error:
                         Text("error")
+                    }
+                    
+                    if store.loadMore {
+                        LoaderView()
+                            .frame(width: 24, height: 24)
+                            .padding(.vertical, 20)
                     }
                 }
                 .padding(contentEdgeInsets)
@@ -86,9 +91,29 @@ public struct ThreadFlow: View {
         }
     }
     
-    var content: some View {
-        EmptyView()
+    func content(answersNumber: Int, models: [AnswerModel]) -> some View {
+        VStack(spacing: .zero) {
+            HStack {
+                Text("\(answersNumber) Answers")
+                Spacer()
+            }.frame(height: 60)
+            
+            LazyVStack(spacing: .zero) {
+                ForEach(models) { item in
+                    PostView(model: PostModel.from(model: item)).onAppear {
+                        if item == models.last {
+                            store.loadNextAnswers()
+                        }
+                    }
+                    
+                    if item != models.last {
+                        Divider().padding(.vertical, 32)
+                    }
+                }
+            }
+        }
     }
+
 }
 
 // MARK: - Previews
@@ -97,6 +122,7 @@ struct ThreadFlow_Previews: PreviewProvider {
     
     static var previews: some View {
         ThreadFlow()
+            .environmentObject(StoresAssembler.shared.resolve(ThreadStore.self, argument: QuestionModel.mock())!)
     }
 }
 
@@ -106,3 +132,4 @@ fileprivate extension Color {
     
     static let background = Palette.bluishwhite | Palette.bluishblack
 }
+

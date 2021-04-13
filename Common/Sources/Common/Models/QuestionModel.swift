@@ -15,7 +15,6 @@ public struct QuestionModel: Identifiable {
     public let id: Int
     public let title: String
     public let body: String
-    public let hasAcceptedAnswer: Bool
     public let viewsNumber: Int
     public let answersNumber: Int
     public let votesNumber: Int
@@ -23,6 +22,7 @@ public struct QuestionModel: Identifiable {
     public let link: URL
     public let lastActivityDate: Date?
     public let creationDate: Date?
+    public let acceptedAnswerId: Int?
     public let gradientColors: (top: Color, bottom: Color)
 }
 
@@ -37,6 +37,10 @@ extension QuestionModel: Equatable {
 
 public extension QuestionModel {
     
+    var hasAcceptedAnswer: Bool {
+        acceptedAnswerId != nil
+    }
+
     var isEmpty: Bool {
         answersNumber == 0
     }
@@ -70,7 +74,6 @@ public extension QuestionModel {
             id: 0,
             title: "How to make TouchableOpacity wrap its content when nested inside parent that has flex = 1",
             body: "How can I set a SwiftUI `Text` to display rendered HTML or Markdown?\r\n\r\nSomething like this:  \r\n    \r\n    Text(HtmlRenderedString(fromString: &quot;&lt;b&gt;Hi!&lt;/b&gt;&quot;))\r\nor for MD:  \r\n\r\n    Text(MarkdownRenderedString(fromString: &quot;**Bold**&quot;))\r\n\r\nPerhaps I need a different View?",
-            hasAcceptedAnswer: true,
             viewsNumber: 207,
             answersNumber: 5,
             votesNumber: 15,
@@ -79,6 +82,7 @@ public extension QuestionModel {
             link: URL(string: "google.com")!,
             lastActivityDate: Date(),
             creationDate: Date(),
+            acceptedAnswerId: 0,
             gradientColors: (.red, .blue)
         )
     }
@@ -159,7 +163,6 @@ extension QuestionModel {
             id: entry.id,
             title: String(htmlString: entry.title) ?? entry.title,
             body: entry.body ?? "",
-            hasAcceptedAnswer: entry.acceptedAnswerId != nil,
             viewsNumber: entry.viewCount,
             answersNumber: entry.answerCount,
             votesNumber: entry.score,
@@ -167,6 +170,7 @@ extension QuestionModel {
             link: entry.link,
             lastActivityDate: entry.lastActivityDate,
             creationDate: entry.creationDate,
+            acceptedAnswerId: entry.acceptedAnswerId,
             gradientColors: colors
         )
     }
