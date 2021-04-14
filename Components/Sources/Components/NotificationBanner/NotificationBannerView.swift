@@ -19,13 +19,21 @@ public struct NotificationBannerView: View {
     
     // MARK: - Properties
     
-    let buttonAction: () -> Void
+    let buttonActionWithId: ((UUID) -> Void)?
+    let buttonAction: (() -> Void)?
     
     // MARK: - Initialization
+    
+    public init(model: Binding<NotificationBannerModel>, action: @escaping (UUID) -> Void) {
+        self._model = model
+        self.buttonActionWithId = action
+        self.buttonAction = nil
+    }
     
     public init(model: Binding<NotificationBannerModel>, action: @escaping () -> Void) {
         self._model = model
         self.buttonAction = action
+        self.buttonActionWithId = nil
     }
     
     // MARK: - View
@@ -41,7 +49,6 @@ public struct NotificationBannerView: View {
             
             Spacer()
         }
-        .padding(12)
     }
     
     var content: some View {
@@ -55,7 +62,11 @@ public struct NotificationBannerView: View {
                 
                 Spacer()
                 
-                Button(action: buttonAction) {
+                Button {
+                    buttonActionWithId?(model.id)
+                    buttonAction?()
+                }
+                    label: {
                     Icons.xmark.image
                         .foregroundColor(model.style.iconColor)
                 }
