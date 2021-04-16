@@ -14,7 +14,7 @@ import Icons
 import AppScript
 
 struct PadQuestionView: View {
-    
+
     // MARK: - Properties
     
     let model: QuestionModel
@@ -22,6 +22,17 @@ struct PadQuestionView: View {
     // MARK: - Views
     
     var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            header
+            Divider()
+                .padding(.top, 4)
+            content
+            tags
+            footer
+        }
+    }
+    
+    var header: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text(model.title)
                 .font(.title2)
@@ -42,18 +53,34 @@ struct PadQuestionView: View {
                         .foregroundColor(Color.text)
             }
             .font(.caption)
-            
-            Divider()
-                .padding(.top, 4)
-            
-            HStack(alignment: .top, spacing: .zero) {
-                RetingView(viewed: model.formattedViewsNumber)
-                    .padding(.trailing, 34)
+        }
+    }
+    
+    var content: some View {
+        HStack(alignment: .top, spacing: .zero) {
+            RetingView(viewed: model.formattedViewsNumber)
+                .padding(.trailing, 34)
 
-                PostView(model: PostModel.from(model: model))
+            PostView(model: PostModel.from(model: model))
+        }
+    }
+    
+    var tags: some View {
+        GeometryReader { frame in
+            TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
+                TagButton(tag: tag) { selectedItem in
+                    // TODO: In the future, you will need to process this data
+                }
             }
         }
     }
+    
+    var footer: some View {
+        PersonInfoView(model: PersonInfoModel.mock())
+//            .fixedSize()
+//            .frame(width: 284, height: 68)
+    }
+    
 }
 
 // MARK: - Previews

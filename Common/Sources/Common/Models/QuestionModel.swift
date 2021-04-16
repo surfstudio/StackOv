@@ -63,11 +63,11 @@ public extension QuestionModel {
     }
     
     var formattedVotesNumber: String {
-        roundNumberWithAbbreviations(number: votesNumber)
+        String.roundNumberWithAbbreviations(number: votesNumber)
     }
     
     var formattedViewsNumber: String {
-        roundNumberWithAbbreviations(number: viewsNumber)
+        String.roundNumberWithAbbreviations(number: viewsNumber)
     }
     
     static func mock() -> QuestionModel {
@@ -141,19 +141,7 @@ fileprivate extension QuestionModel {
         formatter.dateFormat = "MMM d, h:mm a"
         return formatter.string(from: date)
     }
-    
-    func roundNumberWithAbbreviations(number: Int?) -> String {
-        guard let number = number else {
-            return ""
-        }
-        
-        if number < 1000 {
-            return "\(number)"
-        } else {
-            let numberWithAbbreviation = number / 1000
-            return "\(numberWithAbbreviation)K"
-        }
-    }
+
 }
 
 // MARK: - Entry converter

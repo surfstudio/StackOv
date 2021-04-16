@@ -23,4 +23,22 @@ public extension String {
         
         self.init(attributedString.string)
     }
+    
+    static func roundNumberWithAbbreviations(number: Int?) -> String {
+        guard let number = number else {
+            return ""
+        }
+
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = ","
+        
+        if number < 1000 {
+            return formatter.string(from: NSNumber(value: number)) ?? ""
+        } else {
+            let numberWithAbbreviation = number / 1000
+            return (formatter.string(from: NSNumber(value: numberWithAbbreviation)) ?? "") + "K"
+        }
+    }
+    
 }
