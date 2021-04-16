@@ -35,16 +35,10 @@ extension Markdown {
                         Divider()
                             .padding([.top, .bottom], 4)
                     default:
-                        if case let .text(lazyHtmlText) = child.data {
-//                            MarkdownTextView(lazyHtmlText: lazyHtmlText)
-                            Text(lazyHtmlText)
-                        } else {
-                            fatalError("Unsupported type: \(child.type)")
-                        }
+                        TextView(unit: child)
                     }
                 }
             }
         }
     }
-    
 }

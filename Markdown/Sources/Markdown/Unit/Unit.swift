@@ -83,16 +83,7 @@ public extension Markdown {
                 self.data = nil
                 self.children = []
             default:
-                if var htmlString = try? DownCommonMarkRenderer.astToCommonMark(node.cmarkNode).toHTML() {
-                    if type == .paragraph {
-                        htmlString = htmlString
-                            .replacingOccurrences(of: "<p>", with: "")
-                            .replacingOccurrences(of: "</p>", with: "")
-                    }
-                    self.data = .text(htmlString) //NSAttributedString.from(htmlString: htmlString))
-                } else {
-                    self.data = nil
-                }
+                self.data = UnitData(node: node)
                 self.children = []
             }
         }
@@ -100,8 +91,8 @@ public extension Markdown {
         // MARK: - Internal methods
 
         func configureChildren(at node: Node, snippet: SnippetContainer) -> [Unit] {
-            node.children.enumerated().compactMap { children in
-                guard let unit = Unit(id: children.offset, parent: self, node: children.element) else {
+            node.children.enumerated().compactMap { child in
+                guard let unit = Unit(id: child.offset, parent: self, node: child.element) else {
                     return nil
                 }
                 switch unit.type {

@@ -32,5 +32,4 @@ extension Markdown {
             }
         }
     }
-    
 }
