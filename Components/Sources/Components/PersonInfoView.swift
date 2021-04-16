@@ -61,6 +61,7 @@ public struct PersonInfoView: View {
                     Text(model.formattedReputationDate)
                         .font(.caption2)
                         .foregroundColor(Color.statisticsColor)
+                        .fixedSize()
                     bagesView(bageType: .gold, number: model.goldBadges)
                     bagesView(bageType: .silver, number: model.silverBadges)
                     bagesView(bageType: .bronze, number: model.bronzeBadges)

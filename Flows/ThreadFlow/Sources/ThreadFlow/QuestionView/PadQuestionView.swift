@@ -76,9 +76,30 @@ struct PadQuestionView: View {
     }
     
     var footer: some View {
-        PersonInfoView(model: PersonInfoModel.mock())
-//            .fixedSize()
-//            .frame(width: 284, height: 68)
+        HStack(alignment: .center, spacing: 20) {
+            Button("Share") {
+                // TODO: Add functionality in the future
+            }
+            .font(.headline)
+            .foregroundColor(Palette.main)
+            .padding(.trailing, 4)
+            Button("Edit") {
+                // TODO: Add functionality in the future
+            }
+            .padding(.trailing, 4)
+            .font(.headline)
+            .foregroundColor(Palette.main)
+            Button("Follow") {
+                // TODO: Add functionality in the future
+            }
+            .font(.headline)
+            .foregroundColor(Palette.main)
+            
+            Spacer()
+            
+            PersonInfoView(model: PersonInfoModel.mock())
+            PersonInfoView(model: PersonInfoModel.mock())
+        }
     }
     
 }
