@@ -23,42 +23,84 @@ struct PhoneQuestionView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            HStack(alignment: .top, spacing: 0) {
-                RetingView(viewed: model.formattedVotesNumber)
-                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 28))
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(model.title)
-                        .font(.title3)
-                        .fontWeight(.bold)
-                    
-                    Text("Asked \(model.timeHasPassedSinceCreation)")
-                        .foregroundColor(Color.subheadings)
-                        .padding(.top, 16)
-                        .font(.caption)
-
-                    HStack(spacing: 20) {
-                        Text("Active ")
-                            .foregroundColor(Color.subheadings)
-                            + Text(model.timeHasPassedSinceLastActivity)
-                                .foregroundColor(Color.text)
-
-                        Text("Viewed ")
-                            .foregroundColor(Color.subheadings)
-                            + Text ("\(model.formattedViewsNumber) times")
-                                .foregroundColor(Color.text)
-                    }
-                    .font(.caption)
-                    .padding(.top, 10)
-                    
-                }
-            }
-            
+            header
             Divider()
                 .padding(.top, 10)
-
-            PostView(model: PostModel.from(model: model))
+            MarkdownPostView(text: .constant(model.body))
+            tags
+            footer
         }
     }
+    
+    var header: some View {
+        HStack(alignment: .top, spacing: 0) {
+            RetingView(viewed: model.formattedVotesNumber)
+                .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 28))
+            VStack(alignment: .leading, spacing: 0) {
+                Text(model.title)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                
+                Text("Asked \(model.timeHasPassedSinceCreation)")
+                    .foregroundColor(Color.subheadings)
+                    .padding(.top, 16)
+                    .font(.caption)
+
+                HStack(spacing: 20) {
+                    Text("Active ")
+                        .foregroundColor(Color.subheadings)
+                        + Text(model.timeHasPassedSinceLastActivity)
+                            .foregroundColor(Color.text)
+
+                    Text("Viewed ")
+                        .foregroundColor(Color.subheadings)
+                        + Text ("\(model.formattedViewsNumber) times")
+                            .foregroundColor(Color.text)
+                }
+                .font(.caption)
+                .padding(.top, 10)
+                
+            }
+        }
+    }
+    
+    var tags: some View {
+        GeometryReader { frame in
+            TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
+                TagButton(tag: tag) { selectedItem in
+                    // TODO: In the future, you will need to process this data
+                }
+            }
+        }
+    }
+    
+    var footer: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .center, spacing: 20) {
+                Button("Share") {
+                    // TODO: Add functionality in the future
+                }
+                .font(.headline)
+                .foregroundColor(Palette.main)
+                .padding(.trailing, 4)
+                Button("Edit") {
+                    // TODO: Add functionality in the future
+                }
+                .padding(.trailing, 4)
+                .font(.headline)
+                .foregroundColor(Palette.main)
+                Button("Follow") {
+                    // TODO: Add functionality in the future
+                }
+                .font(.headline)
+                .foregroundColor(Palette.main)
+            }.padding(.vertical, 12)
+            
+            PersonInfoView(model: PersonInfoModel.mock(), indent: 12, isFullScreen: true)
+            PersonInfoView(model: PersonInfoModel.mock(), indent: 12, isFullScreen: true)
+        }
+    }
+    
 }
 
 // MARK: - Previews

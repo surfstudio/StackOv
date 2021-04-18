@@ -100,7 +100,7 @@ public struct ThreadFlow: View {
             
             LazyVStack(spacing: .zero) {
                 ForEach(models) { item in
-                    PostView(model: PostModel.from(model: item)).onAppear {
+                    MarkdownPostView(text: .constant(item.body ?? "")).onAppear {
                         if item == models.last {
                             store.loadNextAnswers()
                         }

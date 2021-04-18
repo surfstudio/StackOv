@@ -61,7 +61,7 @@ struct PadQuestionView: View {
             RetingView(viewed: model.formattedViewsNumber)
                 .padding(.trailing, 34)
 
-            PostView(model: PostModel.from(model: model))
+            MarkdownPostView(text: .constant(model.body))
         }
     }
     

@@ -16,11 +16,15 @@ public struct PersonInfoView: View {
     // MARK: - Properties
     
     var model: PersonInfoModel
+    var indent: CGFloat
+    var isFullScreen: Bool
     
     // MARK: - Initialization
     
-    public init (model: PersonInfoModel) {
+    public init (model: PersonInfoModel, indent: CGFloat = 8, isFullScreen: Bool = false) {
         self.model = model
+        self.indent = indent
+        self.isFullScreen = isFullScreen
     }
     
     // MARK: - View
@@ -31,7 +35,12 @@ public struct PersonInfoView: View {
                 header
                 footer
             }
-            .padding(.all, 8)
+            .padding(.all, indent)
+            
+            if isFullScreen {
+                Spacer()
+            }
+
         }
         .background(Color.backroundColor)
         .cornerRadius(10)
