@@ -23,6 +23,7 @@ public struct QuestionModel: Identifiable {
     public let lastActivityDate: Date?
     public let creationDate: Date?
     public let acceptedAnswerId: Int?
+    public let comments: [CommentModel]
     public let gradientColors: (top: Color, bottom: Color)
     public let avatar: URL?
 }
@@ -84,6 +85,7 @@ public extension QuestionModel {
             lastActivityDate: Date(),
             creationDate: Date(),
             acceptedAnswerId: 0,
+            comments: [],
             gradientColors: (.red, .blue),
             avatar: nil
         )
@@ -161,6 +163,7 @@ extension QuestionModel {
             lastActivityDate: entry.lastActivityDate,
             creationDate: entry.creationDate,
             acceptedAnswerId: entry.acceptedAnswerId,
+            comments: entry.comments?.compactMap { CommentModel.from(entry: $0) } ?? [],
             gradientColors: colors,
             avatar: entry.owner?.avatar
         )

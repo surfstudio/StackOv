@@ -15,13 +15,13 @@ public struct PersonInfoView: View {
     
     // MARK: - Properties
     
-    var model: PersonInfoModel
+    var model: UserModel
     var indent: CGFloat
     var isFullScreen: Bool
     
     // MARK: - Initialization
     
-    public init (model: PersonInfoModel, indent: CGFloat = 8, isFullScreen: Bool = false) {
+    public init (model: UserModel, indent: CGFloat = 8, isFullScreen: Bool = false) {
         self.model = model
         self.indent = indent
         self.isFullScreen = isFullScreen
@@ -128,6 +128,6 @@ fileprivate enum BagesType {
 
 struct PersonInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonInfoView(model: PersonInfoModel.mock())
+        PersonInfoView(model: UserModel.mock())
     }
 }

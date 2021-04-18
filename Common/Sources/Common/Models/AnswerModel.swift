@@ -17,7 +17,7 @@ public struct AnswerModel: Identifiable, Equatable {
     public let questionId: Int
     public let isAccepted: Bool
     public let score: Int
-    public let link: URL
+    public let link: URL?
     public let body: String?
 }
 

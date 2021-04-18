@@ -28,7 +28,7 @@ public struct AnswerEntry: Codable {
     public let questionId: Int
     public let isAccepted: Bool
     public let score: Int
-    public let link: URL
+    public let link: URL?
     public let body: String?
-    public let owner: UserEntry
+    public let owner: ShallowUserEntry
 }

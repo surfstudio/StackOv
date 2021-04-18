@@ -59,7 +59,6 @@ struct PhoneQuestionView: View {
                 }
                 .font(.caption)
                 .padding(.top, 10)
-                
             }
         }
     }
@@ -96,8 +95,8 @@ struct PhoneQuestionView: View {
                 .foregroundColor(Palette.main)
             }.padding(.vertical, 12)
             
-            PersonInfoView(model: PersonInfoModel.mock(), indent: 12, isFullScreen: true)
-            PersonInfoView(model: PersonInfoModel.mock(), indent: 12, isFullScreen: true)
+            PersonInfoView(model: UserModel.mock(), indent: 12, isFullScreen: true)
+            PersonInfoView(model: UserModel.mock(), indent: 12, isFullScreen: true)
         }
     }
     

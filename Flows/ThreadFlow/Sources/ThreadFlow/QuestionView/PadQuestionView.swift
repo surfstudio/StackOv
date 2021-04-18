@@ -97,8 +97,8 @@ struct PadQuestionView: View {
             
             Spacer()
             
-            PersonInfoView(model: PersonInfoModel.mock())
-            PersonInfoView(model: PersonInfoModel.mock())
+            PersonInfoView(model: UserModel.mock())
+            PersonInfoView(model: UserModel.mock())
         }
     }
     

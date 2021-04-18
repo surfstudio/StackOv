@@ -26,6 +26,7 @@ public struct QuestionEntry: Codable {
         case acceptedAnswerId = "accepted_answer_id"
         case creationDate = "creation_date"
         case lastActivityDate = "last_activity_date"
+        case comments
     }
     
     // MARK: - Public properties
@@ -39,9 +40,10 @@ public struct QuestionEntry: Codable {
     public let tags: [String]
     public let link: URL
     public let body: String?
-    public let owner: UserEntry?
+    public let owner: ShallowUserEntry?
     public let acceptedAnswerId: Int?
     public let creationDate: Date?
     public let lastActivityDate: Date?
+    public let comments: [CommentEntry]?
 }
 
