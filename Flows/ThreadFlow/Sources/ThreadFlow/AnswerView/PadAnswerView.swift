@@ -35,28 +35,24 @@ struct PadAnswerView: View {
     
     var buttons: some View {
         HStack(spacing: 24) {
-            Button("Share") {
-                // TODO: Add functionality in the future
+            Group {
+                Button("Share") {
+                    // TODO: Add functionality in the future
+                }
+                Button("Edit") {
+                    // TODO: Add functionality in the future
+                }
+                Button("Follow") {
+                    // TODO: Add functionality in the future
+                }
+                Button("Add comment") {
+                    // TODO: Add functionality in the future
+                }
             }
             .font(.subheadline)
             .foregroundColor(Palette.main)
-            .padding(.trailing, 4)
-            Button("Edit") {
-                // TODO: Add functionality in the future
-            }
-            .padding(.trailing, 4)
-            .font(.subheadline)
-            .foregroundColor(Palette.main)
-            Button("Follow") {
-                // TODO: Add functionality in the future
-            }
-            .font(.subheadline)
-            .foregroundColor(Palette.main)
-            Button("Add comment") {
-                // TODO: Add functionality in the future
-            }
-            .font(.subheadline)
-            .foregroundColor(Palette.main)
+            .lineLimit(1)
+
             
             Spacer()
             
@@ -66,6 +62,7 @@ struct PadAnswerView: View {
                     .foregroundColor(Palette.main)
             }
             PersonInfoView(model: UserModel.mock(), indent: 8, isFullScreen: false)
+                .fixedSize(horizontal: true, vertical: false)
         }
     }
     

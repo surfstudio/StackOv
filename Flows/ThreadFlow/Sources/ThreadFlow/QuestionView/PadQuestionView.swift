@@ -90,30 +90,39 @@ struct PadQuestionView: View {
             .font(.subheadline)
             .foregroundColor(Palette.main)
             .padding(.trailing, 4)
+            .lineLimit(1)
+
             Button("Edit") {
                 // TODO: Add functionality in the future
             }
             .padding(.trailing, 4)
             .font(.subheadline)
             .foregroundColor(Palette.main)
+            .lineLimit(1)
+
             Button("Follow") {
                 // TODO: Add functionality in the future
             }
             .font(.subheadline)
             .foregroundColor(Palette.main)
-            
-            if model.comments.count == 0 {
+            .lineLimit(1)
+//            if model.comments.count == 0 {
                 Button("Add comment") {
                     // TODO: Add functionality in the future
                 }
                 .font(.subheadline)
                 .foregroundColor(Palette.main)
-            }
+                .lineLimit(1)
+
+//            }
             
             Spacer()
             
             PersonInfoView(model: UserModel.mock())
+                .fixedSize(horizontal: true, vertical: false)
             PersonInfoView(model: UserModel.mock())
+                .fixedSize(horizontal: true, vertical: false)
+
         }
     }
     

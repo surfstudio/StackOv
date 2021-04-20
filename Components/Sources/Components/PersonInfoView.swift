@@ -51,9 +51,10 @@ public struct PersonInfoView: View {
             Text(model.actionType.rawValue)
             Text(model.formattedActionDate)
         }
-        .fixedSize()
+//        .fixedSize()
         .font(.caption)
         .foregroundColor(Color.timeInfoColor)
+        .lineLimit(1)
     }
     
     var footer: some View {
@@ -77,6 +78,7 @@ public struct PersonInfoView: View {
                     bagesView(bageType: .bronze, number: model.bronzeBadges)
                 }
             }
+//            .fixedSize(horizontal: false, vertical: true)
         }
     }
     
@@ -84,7 +86,7 @@ public struct PersonInfoView: View {
     
     @ViewBuilder
     private func bagesView(bageType: BagesType, number: Int) -> some View {
-        if (number > 0) {
+        if number > 0 {
             HStack(alignment: .center, spacing: 3) {
                 switch bageType {
                 case .gold:
@@ -100,9 +102,7 @@ public struct PersonInfoView: View {
                 Text(model.formattedBagesNumber(number: number))
                     .foregroundColor(Color.statisticsColor)
                     .font(.caption)
-            }.fixedSize()
-        } else {
-            EmptyView()
+            }
         }
     }
     

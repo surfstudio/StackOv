@@ -11,6 +11,7 @@ import Common
 import Palette
 import Icons
 import AppScript
+import Components
 
 struct CommentsView: View {
     
@@ -49,18 +50,16 @@ struct CommentsView: View {
             
             ForEach(store.comments, id: \.commentId) { item in
                 comment(model: item)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             
             if (store.numberOfFollowingItems != 0) {
-                HStack {
-                    Spacer()
-                        .frame(width: 45)
-                    Button("Show \(store.numberOfFollowingItems) more comment") {
-                        store.showMore()
-                    }
-                    .font(.footnote)
-                    .foregroundColor(Palette.main)
+                Button("Show \(store.numberOfFollowingItems) more comment") {
+                    store.showMore()
                 }
+                .font(.footnote)
+                .foregroundColor(Palette.main)
+                .padding(.leading, 45)
             }
         }
     }
@@ -84,7 +83,7 @@ struct CommentsView: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text(model.body ?? "")
+                    MarkdownPostView(text: .constant(model.body ?? ""))
                         .font(.footnote)
                         .foregroundColor(Color.bodyColor)
                     HStack {
