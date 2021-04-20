@@ -27,7 +27,7 @@ fileprivate extension Package {
 fileprivate extension Target {
     
     static var dependencies: [Dependency] {
-        var packages: [Dependency] = ["Introspect", "DataTransferObjects", "Errors"]
+        var packages: [Dependency] = ["Introspect", "DataTransferObjects", "Errors", "Kingfisher"]
         if Package.firebaseIsEnable {
             packages.append(.product(name: "FirebaseCrashlytics", package: "Firebase"))
         }
@@ -50,7 +50,8 @@ fileprivate extension Package {
     
     static var externalDependencies: [Dependency] {
         var packages: [Dependency] = [
-            .package(name: "Introspect", url: "https://github.com/Puasonych/SwiftUI-Introspect.git", .branch("develop"))
+            .package(name: "Introspect", url: "https://github.com/Puasonych/SwiftUI-Introspect.git", .branch("develop")),
+            .package(name: "Kingfisher", url: "https://github.com/onevcat/Kingfisher.git", .upToNextMajor(from: "6.0.0"))
         ]
         if Package.firebaseIsEnable {
             packages.append(
