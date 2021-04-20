@@ -27,7 +27,7 @@ struct PadQuestionView: View {
             Divider()
                 .padding(.top, 4)
             content
-            tags
+//            tags
             footer
         }
     }
@@ -66,13 +66,20 @@ struct PadQuestionView: View {
     }
     
     var tags: some View {
-        GeometryReader { frame in
-            TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
-                TagButton(tag: tag) { selectedItem in
-                    // TODO: In the future, you will need to process this data
+//        VStack {
+            GeometryReader { frame in
+                TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
+                    TagButton(tag: tag, isAdaptColor: true) { selectedItem in
+                        // TODO: In the future, you will need to process this data
+                    }
                 }
             }
-        }
+//            TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width, alignment: .top) { tag in
+//                TagButton(tag: tag, isAdaptColor: true) { selectedItem in
+//                    // TODO: In the future, you will need to process this data
+//                }
+//            }
+//        }
     }
     
     var footer: some View {
@@ -80,26 +87,26 @@ struct PadQuestionView: View {
             Button("Share") {
                 // TODO: Add functionality in the future
             }
-            .font(.headline)
+            .font(.subheadline)
             .foregroundColor(Palette.main)
             .padding(.trailing, 4)
             Button("Edit") {
                 // TODO: Add functionality in the future
             }
             .padding(.trailing, 4)
-            .font(.headline)
+            .font(.subheadline)
             .foregroundColor(Palette.main)
             Button("Follow") {
                 // TODO: Add functionality in the future
             }
-            .font(.headline)
+            .font(.subheadline)
             .foregroundColor(Palette.main)
             
             if model.comments.count == 0 {
                 Button("Add comment") {
                     // TODO: Add functionality in the future
                 }
-                .font(.headline)
+                .font(.subheadline)
                 .foregroundColor(Palette.main)
             }
             

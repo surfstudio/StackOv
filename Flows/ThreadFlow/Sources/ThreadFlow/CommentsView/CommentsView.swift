@@ -21,20 +21,32 @@ struct CommentsView: View {
     // MARK: - Views
     
     var body: some View {
-        LazyVStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text("Comments")
+                    .foregroundColor(Color.headerColor)
+                    .font(.headline)
                 Spacer()
                 Button("Add comment") {
                     // TODO: Add functionality in the future
                 }
-            }
+                .foregroundColor(Palette.main)
+                .font(.subheadline)
+            }.padding(.bottom, 34)
+            
             ForEach(store.comments, id: \.commentId) { item in
                 comment(model: item)
             }
+            
             if (store.numberOfFollowingItems != 0) {
-                Button("Show \(store.numberOfFollowingItems) more comment") {
-                    store.showMore()
+                HStack {
+                    Spacer()
+                        .frame(width: 45)
+                    Button("Show \(store.numberOfFollowingItems) more comment") {
+                        store.showMore()
+                    }
+                    .font(.footnote)
+                    .foregroundColor(Palette.main)
                 }
             }
         }
@@ -43,24 +55,24 @@ struct CommentsView: View {
     // MARK: - View Methdos
     
     func comment(model: CommentModel) -> some View {
-        VStack {
-            HStack {
+        VStack(alignment: .leading) {
+            HStack(alignment: .top) {
                 if let score = model.score, score != 0 {
                     HStack {
                         Text("\(score)")
-                            .font(.caption2)
+                            .font(.footnote)
                             .foregroundColor(Palette.slateGray)
                         Spacer()
                     }
-                    .frame(width: 30)
+                    .frame(width: 45)
                 } else {
                     Spacer()
-                        .frame(width: 30)
+                        .frame(width: 45)
                 }
                 
                 VStack(alignment: .leading) {
                     Text(model.body ?? "")
-                        .font(.caption2)
+                        .font(.footnote)
                         .foregroundColor(Color.bodyColor)
                     HStack {
                         if let name = model.owner?.name {
@@ -68,19 +80,19 @@ struct CommentsView: View {
                                 // TODO: Add functionality in the future
                             }
                             .foregroundColor(Palette.main)
-                            .font(.caption2)
+                            .font(.footnote)
                         }
                         Text(model.formatCreationDate)
-                            .font(.caption2)
+                            .font(.footnote)
                             .foregroundColor(Palette.slateGray)
                         if model.edited {
                             Icons.pencil.image.frame(width: 16, height: 16)
                         }
-                    }
-                    Divider()
-                        .padding(.vertical, 10)
+                    }.padding(.top, 8)
                 }
             }
+            Divider()
+                .padding(.vertical, 10)
         }
     }
     
@@ -89,7 +101,8 @@ struct CommentsView: View {
 // MARK: - Colors
 
 fileprivate extension Color {
-    static let bodyColor: Color = .white | Palette.black
+    static let bodyColor: Color = Palette.black | .white
+    static let headerColor: Color = Palette.black | Color.white.opacity(0.7)
 }
 
 // MARK: - Previews

@@ -52,7 +52,7 @@ public struct PersonInfoView: View {
             Text(model.formattedActionDate)
         }
         .fixedSize()
-        .font(.caption2)
+        .font(.caption)
         .foregroundColor(Color.timeInfoColor)
     }
     
@@ -69,7 +69,7 @@ public struct PersonInfoView: View {
                     .font(.subheadline)
                 HStack {
                     Text(model.formattedReputationDate)
-                        .font(.caption2)
+                        .font(.caption)
                         .foregroundColor(Color.statisticsColor)
                         .fixedSize()
                     bagesView(bageType: .gold, number: model.goldBadges)
@@ -99,7 +99,7 @@ public struct PersonInfoView: View {
                 }
                 Text(model.formattedBagesNumber(number: number))
                     .foregroundColor(Color.statisticsColor)
-                    .font(.caption2)
+                    .font(.caption)
             }.fixedSize()
         } else {
             EmptyView()

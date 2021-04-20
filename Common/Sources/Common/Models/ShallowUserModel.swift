@@ -24,7 +24,7 @@ public struct ShallowUserModel {
     // MARK: - Properties
     
     public let reputation: Int?
-    public let id: Int
+    public let id: Int?
     public let type: UserType?
     public let acceptRate: Int?
     public let avatar: URL?

@@ -33,12 +33,12 @@ public struct QuestionEntry: Codable {
     
     public let id: Int
     public let title: String
-    public let isAnswered: Bool
+    public let isAnswered: Bool?
     public let viewCount: Int
     public let answerCount: Int
     public let score: Int
     public let tags: [String]
-    public let link: URL
+    public let link: URL?
     public let body: String?
     public let owner: ShallowUserEntry?
     public let acceptedAnswerId: Int?

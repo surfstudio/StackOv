@@ -24,12 +24,14 @@ public struct TagButton: View {
     
     let tag: String
     let action: (_ selectedItem: TagButton.MenuItem) -> Void
+    let isAdaptColor: Bool
     
     // MARK: - Initialization
     
-    public init(tag: String, action: @escaping ((_ selectedItem: TagButton.MenuItem) -> Void)) {
+    public init(tag: String, isAdaptColor: Bool = false, action: @escaping ((_ selectedItem: TagButton.MenuItem) -> Void)) {
         self.tag = tag
         self.action = action
+        self.isAdaptColor = isAdaptColor
     }
     
     // MARK: - View
@@ -46,7 +48,7 @@ public struct TagButton: View {
                     .fontWeight(.medium)
             }
         }
-        .modifier(TagButtonStyle())
+        .modifier(TagButtonStyle(isAdaptColor: isAdaptColor))
     }
     
     public static func size(for text: String) -> CGSize {
@@ -81,13 +83,19 @@ struct TagButton_Previews: PreviewProvider {
 
 fileprivate struct TagButtonStyle: ViewModifier {
     
+    // MARK: - Properties
+    
+    let isAdaptColor: Bool
+    
+    // MARK: - View
+    
     func body(content: Content) -> some View {
         content
             .lineLimit(1)
-            .foregroundColor(.foreground)
+            .foregroundColor(Color.foreground(isAdaptColor: isAdaptColor))
             .padding([.top, .bottom], 3)
             .padding([.leading, .trailing], 10)
-            .background(Color.background)
+            .background(Color.background(isAdaptColor: isAdaptColor))
             .cornerRadius(6)
     }
 }
@@ -121,6 +129,11 @@ fileprivate extension TagButton.MenuItem {
 
 fileprivate extension Color {
     
-    static let foreground = Color.white
-    static let background = Color.white.opacity(0.1)
+    static func foreground(isAdaptColor: Bool) -> Color {
+        isAdaptColor ? Palette.main | Color.white : Color.white
+    }
+    
+    static func background(isAdaptColor: Bool) -> Color {
+        isAdaptColor ? Palette.main.opacity(0.12) | Color.white.opacity(0.08) : Color.white.opacity(0.1)
+    }
 }

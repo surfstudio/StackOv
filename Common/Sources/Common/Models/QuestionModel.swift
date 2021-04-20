@@ -19,7 +19,7 @@ public struct QuestionModel: Identifiable {
     public let answersNumber: Int
     public let votesNumber: Int
     public let tags: [String]
-    public let link: URL
+    public let link: URL?
     public let lastActivityDate: Date?
     public let creationDate: Date?
     public let acceptedAnswerId: Int?

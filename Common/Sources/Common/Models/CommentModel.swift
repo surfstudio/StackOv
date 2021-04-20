@@ -30,7 +30,7 @@ public struct CommentModel {
     public let owner: ShallowUserModel?
     public let postId: Int
     public let postType: PostType?
-    public let replyToUser: String?
+    public let replyToUser: ShallowUserModel?
     public let score: Int?
     public let upvoted: Bool?
     
@@ -51,7 +51,12 @@ public extension CommentModel {
         if let entryOwner = entry.owner {
             owner = ShallowUserModel.from(entry: entryOwner)
         }
-        
+
+        var replyToUser: ShallowUserModel?
+        if let entryReplyToUser = entry.replyToUser {
+            replyToUser = ShallowUserModel.from(entry: entryReplyToUser)
+        }
+
         return CommentModel(body: entry.body,
                             bodyMarkdown: entry.bodyMarkdown,
                             commentId: entry.commentId,
@@ -61,7 +66,7 @@ public extension CommentModel {
                             owner: owner,
                             postId: entry.postId,
                             postType: PostType(rawValue: entry.postType ?? ""),
-                            replyToUser: entry.replyToUser,
+                            replyToUser: replyToUser,
                             score: entry.score,
                             upvoted: entry.upvoted)
     }

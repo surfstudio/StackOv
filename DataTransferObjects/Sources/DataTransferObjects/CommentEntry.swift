@@ -38,7 +38,7 @@ public struct CommentEntry: Codable {
     public let owner: ShallowUserEntry?
     public let postId: Int
     public let postType: String?
-    public let replyToUser: String?
+    public let replyToUser: ShallowUserEntry?
     public let score: Int?
     public let upvoted: Bool?
     

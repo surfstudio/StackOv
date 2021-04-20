@@ -27,7 +27,7 @@ struct PhoneQuestionView: View {
             Divider()
                 .padding(.top, 10)
             MarkdownPostView(text: .constant(model.body))
-            tags
+//            tags
             footer
         }
     }
@@ -64,13 +64,13 @@ struct PhoneQuestionView: View {
     }
     
     var tags: some View {
-        GeometryReader { frame in
-            TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
-                TagButton(tag: tag) { selectedItem in
-                    // TODO: In the future, you will need to process this data
-                }
+//        GeometryReader { frame in
+        TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width - 32, alignment: .top) { tag in
+            TagButton(tag: tag, isAdaptColor: true) { selectedItem in
+                // TODO: In the future, you will need to process this data
             }
         }
+//        }
     }
     
     var footer: some View {
@@ -79,20 +79,29 @@ struct PhoneQuestionView: View {
                 Button("Share") {
                     // TODO: Add functionality in the future
                 }
-                .font(.headline)
+                .font(.subheadline)
                 .foregroundColor(Palette.main)
                 .padding(.trailing, 4)
                 Button("Edit") {
                     // TODO: Add functionality in the future
                 }
                 .padding(.trailing, 4)
-                .font(.headline)
+                .font(.subheadline)
                 .foregroundColor(Palette.main)
                 Button("Follow") {
                     // TODO: Add functionality in the future
                 }
-                .font(.headline)
+                .font(.subheadline)
                 .foregroundColor(Palette.main)
+                
+                Spacer()
+                if model.comments.count == 0 {
+                    Button("Add comment") {
+                        // TODO: Add functionality in the future
+                    }
+                    .font(.subheadline)
+                    .foregroundColor(Palette.main)
+                }
             }.padding(.vertical, 12)
             
             PersonInfoView(model: UserModel.mock(), indent: 12, isFullScreen: true)
