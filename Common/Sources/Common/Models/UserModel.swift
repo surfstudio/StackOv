@@ -34,7 +34,7 @@ public struct UserModel {
 
     public var formattedActionDate: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMM, yyyy, 'at' HH:mm"
+        dateFormatter.dateFormat = "d MMM, yyyy 'at' HH:mm"
         return dateFormatter.string(from: actionDate)
     }
     

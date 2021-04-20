@@ -58,7 +58,7 @@ struct PadQuestionView: View {
     
     var content: some View {
         HStack(alignment: .top, spacing: .zero) {
-            RetingView(viewed: model.formattedViewsNumber)
+            RetingView(viewed: model.formattedViewsNumber, isVertical: true)
                 .padding(.trailing, 34)
 
             MarkdownPostView(text: .constant(model.body))

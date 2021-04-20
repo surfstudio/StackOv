@@ -140,7 +140,7 @@ fileprivate extension QuestionModel {
             return ""
         }
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, h:mm a"
+        formatter.dateFormat = "MMM d, yyyy, 'at' HH:mm"
         return formatter.string(from: date)
     }
 

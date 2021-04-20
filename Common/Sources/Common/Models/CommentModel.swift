@@ -36,7 +36,7 @@ public struct CommentModel {
     
     public var formatCreationDate: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM, yyyy, 'at' HH:mm"
+        formatter.dateFormat = "d MMM, yyyy 'at' HH:mm"
         return formatter.string(from: creationDate)
     }
     

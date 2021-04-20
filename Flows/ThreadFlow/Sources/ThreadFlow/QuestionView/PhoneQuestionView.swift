@@ -34,7 +34,7 @@ struct PhoneQuestionView: View {
     
     var header: some View {
         HStack(alignment: .top, spacing: 0) {
-            RetingView(viewed: model.formattedVotesNumber)
+            RetingView(viewed: model.formattedVotesNumber, isVertical: true)
                 .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 28))
             VStack(alignment: .leading, spacing: 0) {
                 Text(model.title)

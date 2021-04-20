@@ -18,6 +18,16 @@ struct CommentsView: View {
     
     @EnvironmentObject var store: CommentsStore
     
+    // MARK: - Properties
+    
+    let isNeedShowButton: Bool
+    
+    // MARK: - Initialization
+    
+    init(isNeedShowButton: Bool = true) {
+        self.isNeedShowButton = isNeedShowButton
+    }
+    
     // MARK: - Views
     
     var body: some View {
@@ -27,11 +37,14 @@ struct CommentsView: View {
                     .foregroundColor(Color.headerColor)
                     .font(.headline)
                 Spacer()
-                Button("Add comment") {
-                    // TODO: Add functionality in the future
+                
+                if isNeedShowButton {
+                    Button("Add comment") {
+                        // TODO: Add functionality in the future
+                    }
+                    .foregroundColor(Palette.main)
+                    .font(.subheadline)
                 }
-                .foregroundColor(Palette.main)
-                .font(.subheadline)
             }.padding(.bottom, 34)
             
             ForEach(store.comments, id: \.commentId) { item in

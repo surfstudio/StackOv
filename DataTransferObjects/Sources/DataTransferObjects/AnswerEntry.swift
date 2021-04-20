@@ -20,6 +20,8 @@ public struct AnswerEntry: Codable {
         case link
         case body = "body_markdown"
         case owner
+        case comments
+        case lastEditDate = "last_edit_date"
     }
     
     // MARK: - Public properties
@@ -31,4 +33,6 @@ public struct AnswerEntry: Codable {
     public let link: URL?
     public let body: String?
     public let owner: ShallowUserEntry
+    public let comments: [CommentEntry]?
+    public let lastEditDate: Date?
 }
