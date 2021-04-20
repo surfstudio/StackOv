@@ -16,7 +16,7 @@ public extension Request where Endpoint == StackexchangeNetworkService.LoadQuest
     func callAsFunction(page: Int, pageSize: Int) -> AnyPublisher<Output, Error> {
         let systemParameters: [URLQueryItem] = [
             URLQueryItem(name: "key", value: StackexchangeNetworkService.Constants.quotaKey),
-            URLQueryItem(name: "filter", value: StackexchangeNetworkService.Constants.questionsFilter),
+//            URLQueryItem(name: "filter", value: StackexchangeNetworkService.Constants.questionsFilter),
             URLQueryItem(name: "site", value: "stackoverflow")
         ]
         

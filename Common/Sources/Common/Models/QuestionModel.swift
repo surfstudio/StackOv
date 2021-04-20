@@ -24,6 +24,7 @@ public struct QuestionModel: Identifiable {
     public let creationDate: Date?
     public let acceptedAnswerId: Int?
     public let gradientColors: (top: Color, bottom: Color)
+    public let avatar: URL?
 }
 
 // MARK: - Extensions
@@ -83,7 +84,8 @@ public extension QuestionModel {
             lastActivityDate: Date(),
             creationDate: Date(),
             acceptedAnswerId: 0,
-            gradientColors: (.red, .blue)
+            gradientColors: (.red, .blue),
+            avatar: nil
         )
     }
 }
@@ -171,7 +173,8 @@ extension QuestionModel {
             lastActivityDate: entry.lastActivityDate,
             creationDate: entry.creationDate,
             acceptedAnswerId: entry.acceptedAnswerId,
-            gradientColors: colors
+            gradientColors: colors,
+            avatar: entry.owner?.avatar
         )
     }
 }
