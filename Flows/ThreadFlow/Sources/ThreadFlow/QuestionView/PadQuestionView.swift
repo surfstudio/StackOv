@@ -95,6 +95,14 @@ struct PadQuestionView: View {
             .font(.headline)
             .foregroundColor(Palette.main)
             
+            if model.comments.count == 0 {
+                Button("Add comment") {
+                    // TODO: Add functionality in the future
+                }
+                .font(.headline)
+                .foregroundColor(Palette.main)
+            }
+            
             Spacer()
             
             PersonInfoView(model: UserModel.mock())

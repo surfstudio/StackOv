@@ -44,6 +44,7 @@ fileprivate extension Package {
          .package(name: "PageStore", path: "../Stores/PageStore"),
          .package(name: "FilterStore", path: "../Stores/FilterStore"),
          .package(name: "FavoriteStore", path: "../Stores/FavoriteStore"),
-         .package(name: "SidebarStore", path: "../Stores/SidebarStore")]
+         .package(name: "SidebarStore", path: "../Stores/SidebarStore"),
+         .package(name: "CommentsStore", path: "../Stores/CommentsStore")]
     }
 }

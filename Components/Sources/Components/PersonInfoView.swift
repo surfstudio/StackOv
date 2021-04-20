@@ -51,6 +51,7 @@ public struct PersonInfoView: View {
             Text(model.actionType.rawValue)
             Text(model.formattedActionDate)
         }
+        .fixedSize()
         .font(.caption2)
         .foregroundColor(Color.timeInfoColor)
     }

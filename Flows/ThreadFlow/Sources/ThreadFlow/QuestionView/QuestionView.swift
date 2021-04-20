@@ -31,6 +31,13 @@ struct QuestionView: View {
         } else {
             PhoneQuestionView(model: model)
         }
+        
+        Divider()
+            .padding(.vertical, 24)
+        if model.comments.count > 0 {
+            CommentsView()
+                .environmentObject(StoresAssembler.shared.resolve(CommentsStore.self, argument: model.comments)!)
+        }
     }
 }
 
@@ -41,4 +48,5 @@ struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
         QuestionView(model: QuestionModel.mock())
     }
+
 }
