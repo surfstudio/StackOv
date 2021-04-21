@@ -93,4 +93,19 @@ public extension View {
             self
         }
     }
+    
+    /// Applies a pointer hover effect to the view.
+    ///
+    /// > Note: The system may fall back to a more appropriate effect.
+    @available(macOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    @ViewBuilder
+    func padHoverEffect(_ effect: HoverEffect = .automatic) -> some View {
+        if UIDevice.current.userInterfaceIdiom.isPad {
+            self.hoverEffect(effect)
+        } else {
+            self
+        }
+    }
 }

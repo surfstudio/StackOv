@@ -33,24 +33,20 @@ public struct ThreadItemView: View {
     public var body: some View {
         content
             .background(
-                ZStack {
-                    if let avatarURL = model.avatar {
-                        KFImage(avatarURL)
-                            .resizable()
-                            .scaledToFill()
-                            .blur(radius: 14)
-                    }
-                    LinearGradient(
-                        gradient: Gradient(colors: [model.gradientColors.top, model.gradientColors.bottom]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+                KFImage(model.avatar)
+                    .resizable()
+                    .blur(radius: 10)
+                    .overlay(
+                        LinearGradient(
+                            gradient: Gradient(colors: [model.gradientColors.top, model.gradientColors.bottom]),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ).compositingGroup()
                     )
-                }
-                .compositingGroup()
-                .drawingGroup()
+                    .drawingGroup()
             )
-            .cornerRadius(20)
             .frame(minWidth: 267, minHeight: 223)
+            .cornerRadius(20)
     }
     
     var content: some View {
@@ -76,7 +72,7 @@ public struct ThreadItemView: View {
                 .fixedSize(horizontal: false, vertical: true)
             
             if !sizeCategory.isAccessibilityCategory {
-                TagsCollectionView(model.tags, preferredWidth: 220, alignment: .top) { tag in
+                TagsCollectionView(model.tags, preferredWidth: 235, alignment: .top) { tag in
                     TagButton(tag: tag) { selectedItem in
                         // TODO: In the future, you will need to process this data
                     }

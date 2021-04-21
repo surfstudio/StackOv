@@ -74,6 +74,18 @@ public enum PaletteCore {
         return CoreColor(named: "DarkGray")!
         #endif
     }
+    public static var darkShadow: CoreColor {
+        #if !os(watchOS)
+        let bundle: Bundle = .module
+        #endif
+        #if os(iOS) || os(tvOS)
+        return CoreColor(named: "DarkShadow", in: bundle, compatibleWith: nil)!
+        #elseif os(macOS)
+        return CoreColor(named: "DarkShadow", bundle: bundle)!
+        #elseif os(watchOS)
+        return CoreColor(named: "DarkShadow")!
+        #endif
+    }
     public static var dullGray: CoreColor {
         #if !os(watchOS)
         let bundle: Bundle = .module
@@ -278,6 +290,7 @@ public enum Palette {
     public static var bluishwhite: Color { .init(PaletteCore.bluishwhite) }
     public static var darkDivider: Color { .init(PaletteCore.darkDivider) }
     public static var darkGray: Color { .init(PaletteCore.darkGray) }
+    public static var darkShadow: Color { .init(PaletteCore.darkShadow) }
     public static var dullGray: Color { .init(PaletteCore.dullGray) }
     public static var gainsboro: Color { .init(PaletteCore.gainsboro) }
     public static var gray: Color { .init(PaletteCore.gray) }

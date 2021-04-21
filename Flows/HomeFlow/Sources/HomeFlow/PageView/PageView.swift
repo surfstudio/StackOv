@@ -20,10 +20,10 @@ struct PageView: View {
     
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-
+    
     @Store var store: PageStore
     @State var isFilterViewPresented = false
-
+    
     // MARK: - Properties
     
     var columns: [GridItem] {
@@ -125,7 +125,7 @@ struct PageView: View {
     func itemView(_ item: QuestionModel) -> some View {
         NavigationLink(destination: destinationView(item)) {
             ThreadItemView(model: item)
-        }.buttonStyle(PlainButtonStyle())
+        }.buttonStyle(ThreadItemNavigationLinkStyle())
     }
     
     func destinationView(_ item: QuestionModel) -> some View {
@@ -169,7 +169,7 @@ struct PageView: View {
     
     func getNumberOfLoadingItems() -> Int {
         let sideBarWidth: CGFloat
-
+        
         if UIDevice.current.userInterfaceIdiom.isPhone  {
             sideBarWidth = 0
         } else {

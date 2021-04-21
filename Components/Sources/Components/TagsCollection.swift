@@ -37,7 +37,6 @@ public struct TagsCollectionView: View {
                     ForEach(section.items, id: \.self) {
                         self.elementContent($0).fixedSize()
                     }
-                    Spacer()
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }
