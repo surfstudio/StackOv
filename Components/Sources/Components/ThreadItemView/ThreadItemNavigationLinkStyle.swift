@@ -17,7 +17,7 @@ public struct ThreadItemNavigationLinkStyle: ButtonStyle {
     
     // MARK: - View methods
     
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .shadow(color: Color.shadow, radius: 16, x: 0, y: 14)
             .animation(.default)

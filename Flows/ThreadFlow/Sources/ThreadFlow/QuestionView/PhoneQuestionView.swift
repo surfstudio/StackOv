@@ -66,7 +66,7 @@ struct PhoneQuestionView: View {
     var tags: some View {
 //        GeometryReader { frame in
         TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width - 32, alignment: .top) { tag in
-            TagButton(tag: tag, isAdaptColor: true) { selectedItem in
+            TagButton(tag: tag, style: .large) { selectedItem in
                 // TODO: In the future, you will need to process this data
             }
         }

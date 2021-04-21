@@ -69,7 +69,7 @@ struct PadQuestionView: View {
 //        VStack {
             GeometryReader { frame in
                 TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
-                    TagButton(tag: tag, isAdaptColor: true) { selectedItem in
+                    TagButton(tag: tag, style: .large) { selectedItem in
                         // TODO: In the future, you will need to process this data
                     }
                 }

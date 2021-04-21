@@ -50,7 +50,7 @@ public struct TagsCollectionView: View {
         var result: [TagsSection] = [TagsSection(id: .zero)]
         var iterator: Int = .zero
         for element in elements {
-            if state.add(element: TagButton.size(for: element)) {
+            if state.add(element: TagButton.size(for: element, style: elementContent(element).style)) {
                 iterator += 1
                 result += [TagsSection(id: iterator, items: [element])]
             } else {
