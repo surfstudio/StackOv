@@ -13,7 +13,7 @@ let package = Package(
         .package(path: "../Common")
     ],
     targets: [
-        .target(name: "CommentsStore", dependencies: []),
+        .target(name: "CommentsStore", dependencies: ["Common"]),
         .testTarget(name: "CommentsStoreTests", dependencies: ["CommentsStore"]),
     ]
 )
