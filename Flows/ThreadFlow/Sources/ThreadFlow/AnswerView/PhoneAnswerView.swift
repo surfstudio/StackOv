@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  PhoneAnswerView.swift
+//  StackOv (ThreadFlow module)
 //
 //  Created by Влад Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.

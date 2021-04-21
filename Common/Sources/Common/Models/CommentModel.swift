@@ -1,6 +1,6 @@
 //
-//  [NAME].swift
-//  StackOv ([NAME] module)
+//  CommentModel.swift
+//  StackOv (Common module)
 //
 //  Created by Владислав Климов
 //  Copyright © 2021 Erik Basargin. All rights reserved.
