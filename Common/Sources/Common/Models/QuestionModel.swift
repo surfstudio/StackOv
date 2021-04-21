@@ -19,10 +19,11 @@ public struct QuestionModel: Identifiable {
     public let answersNumber: Int
     public let votesNumber: Int
     public let tags: [String]
-    public let link: URL
+    public let link: URL?
     public let lastActivityDate: Date?
     public let creationDate: Date?
     public let acceptedAnswerId: Int?
+    public let comments: [CommentModel]
     public let gradientColors: (top: Color, bottom: Color)
     public let avatar: URL?
 }
@@ -63,11 +64,11 @@ public extension QuestionModel {
     }
     
     var formattedVotesNumber: String {
-        roundNumberWithAbbreviations(number: votesNumber)
+        String.roundNumberWithAbbreviations(number: votesNumber)
     }
     
     var formattedViewsNumber: String {
-        roundNumberWithAbbreviations(number: viewsNumber)
+        String.roundNumberWithAbbreviations(number: viewsNumber)
     }
     
     static func mock() -> QuestionModel {
@@ -84,6 +85,7 @@ public extension QuestionModel {
             lastActivityDate: Date(),
             creationDate: Date(),
             acceptedAnswerId: 0,
+            comments: [],
             gradientColors: (.red, .blue),
             avatar: nil
         )
@@ -92,7 +94,7 @@ public extension QuestionModel {
 
 // MARK: - Private extensions
 
-fileprivate extension QuestionModel {
+private extension QuestionModel {
     
     func formatTimeHasPassed(since date: Date?) -> String {
         guard let date = date else {
@@ -138,22 +140,10 @@ fileprivate extension QuestionModel {
             return ""
         }
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, h:mm a"
+        formatter.dateFormat = "MMM d, yyyy, 'at' HH:mm"
         return formatter.string(from: date)
     }
-    
-    func roundNumberWithAbbreviations(number: Int?) -> String {
-        guard let number = number else {
-            return ""
-        }
-        
-        if number < 1000 {
-            return "\(number)"
-        } else {
-            let numberWithAbbreviation = number / 1000
-            return "\(numberWithAbbreviation)K"
-        }
-    }
+
 }
 
 // MARK: - Entry converter
@@ -173,6 +163,7 @@ extension QuestionModel {
             lastActivityDate: entry.lastActivityDate,
             creationDate: entry.creationDate,
             acceptedAnswerId: entry.acceptedAnswerId,
+            comments: entry.comments?.compactMap { CommentModel.from(entry: $0) } ?? [],
             gradientColors: colors,
             avatar: entry.owner?.avatar
         )

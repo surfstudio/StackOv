@@ -15,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		31B3618C262D865900FC79A1 /* CommentsStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CommentsStore; sourceTree = "<group>"; };
 		31C1A4AE260C938400B0D665 /* Errors */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Errors; sourceTree = "<group>"; };
 		31D7FD4A260CE8C70096879D /* SidebarStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SidebarStore; sourceTree = "<group>"; };
 		31FEEC9F2614CAB700D08F7B /* ThreadStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThreadStore; sourceTree = "<group>"; };
@@ -85,6 +86,7 @@
 		6FAA728F253357740068F85F /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				31B3618C262D865900FC79A1 /* CommentsStore */,
 				31FEEC9F2614CAB700D08F7B /* ThreadStore */,
 				31D7FD4A260CE8C70096879D /* SidebarStore */,
 				CE2FF97E26090CCD00FDA68D /* FavoriteStore */,

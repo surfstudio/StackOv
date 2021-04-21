@@ -14,7 +14,7 @@ import Icons
 import AppScript
 
 struct PadQuestionView: View {
-    
+
     // MARK: - Properties
     
     let model: QuestionModel
@@ -22,6 +22,17 @@ struct PadQuestionView: View {
     // MARK: - Views
     
     var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            header
+            Divider()
+                .padding(.top, 4)
+            content
+//            tags
+            footer
+        }
+    }
+    
+    var header: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text(model.title)
                 .font(.title2)
@@ -42,18 +53,70 @@ struct PadQuestionView: View {
                         .foregroundColor(Color.text)
             }
             .font(.caption)
-            
-            Divider()
-                .padding(.top, 4)
-            
-            HStack(alignment: .top, spacing: .zero) {
-                RetingView(viewed: model.formattedViewsNumber)
-                    .padding(.trailing, 34)
-
-                PostView(model: PostModel.from(model: model))
-            }
         }
     }
+    
+    var content: some View {
+        HStack(alignment: .top, spacing: .zero) {
+            RetingView(viewed: model.formattedViewsNumber, isVertical: true)
+                .padding(.trailing, 34)
+
+            MarkdownPostView(text: .constant(model.body))
+        }
+    }
+    
+    var tags: some View {
+//        VStack {
+            GeometryReader { frame in
+                TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
+                    TagButton(tag: tag, style: .large) { selectedItem in
+                        // TODO: In the future, you will need to process this data
+                    }
+                }
+            }
+//            TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width, alignment: .top) { tag in
+//                TagButton(tag: tag, isAdaptColor: true) { selectedItem in
+//                    // TODO: In the future, you will need to process this data
+//                }
+//            }
+//        }
+    }
+    
+    var footer: some View {
+        HStack(alignment: .center, spacing: 24) {
+            Group {
+                Button("Share") {
+                    // TODO: Add functionality in the future
+                }
+
+                Button("Edit") {
+                    // TODO: Add functionality in the future
+                }
+
+                Button("Follow") {
+                    // TODO: Add functionality in the future
+                }
+
+                if model.comments.count == 0 {
+                    Button("Add comment") {
+                        // TODO: Add functionality in the future
+                    }
+                }
+            }
+            .font(.subheadline)
+            .foregroundColor(Palette.main)
+            .lineLimit(1)
+            
+            Spacer()
+            
+            PersonInfoView(model: UserModel.mock())
+                .fixedSize(horizontal: true, vertical: false)
+            PersonInfoView(model: UserModel.mock())
+                .fixedSize(horizontal: true, vertical: false)
+
+        }
+    }
+    
 }
 
 // MARK: - Previews

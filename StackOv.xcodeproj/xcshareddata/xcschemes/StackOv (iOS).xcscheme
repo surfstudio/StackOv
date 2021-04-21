@@ -164,6 +164,20 @@
                ReferencedContainer = "container:Stores/FavoriteStore">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CommentsStoreTests"
+               BuildableName = "CommentsStoreTests"
+               BlueprintName = "CommentsStoreTests"
+               ReferencedContainer = "container:Stores/CommentsStore">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -291,6 +305,16 @@
                BuildableName = "GlobalBannerStoreTests"
                BlueprintName = "GlobalBannerStoreTests"
                ReferencedContainer = "container:Stores/GlobalBannerStore">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CommentsStoreTests"
+               BuildableName = "CommentsStoreTests"
+               BlueprintName = "CommentsStoreTests"
+               ReferencedContainer = "container:Stores/CommentsStore">
             </BuildableReference>
          </TestableReference>
       </Testables>

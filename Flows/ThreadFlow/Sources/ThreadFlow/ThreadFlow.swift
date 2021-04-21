@@ -100,15 +100,13 @@ public struct ThreadFlow: View {
             
             LazyVStack(spacing: .zero) {
                 ForEach(models) { item in
-                    PostView(model: PostModel.from(model: item)).onAppear {
-                        if item == models.last {
-                            store.loadNextAnswers()
+                    AnswerView(model: item)
+                        .padding(.bottom, 20)
+                        .onAppear {
+                            if item == models.last {
+                                store.loadNextAnswers()
+                            }
                         }
-                    }
-                    
-                    if item != models.last {
-                        Divider().padding(.vertical, 32)
-                    }
                 }
             }
         }

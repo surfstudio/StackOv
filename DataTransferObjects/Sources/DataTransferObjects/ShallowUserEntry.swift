@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct UserEntry: Codable {
+public struct ShallowUserEntry: Codable {
     
     // MARK: - Nested types
     
@@ -40,5 +40,3 @@ public struct UserEntry: Codable {
     public let name: String
     public let link: URL?
 }
-
-

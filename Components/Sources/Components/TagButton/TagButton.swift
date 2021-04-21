@@ -13,6 +13,11 @@ public struct TagButton: View {
     
     // MARK: - Nested types
     
+    public enum Style: Comparable {
+        case small
+        case large
+    }
+    
     public enum MenuItem: Identifiable, CaseIterable {
         case addTagToFilter
         case watchUnwatchTag
@@ -24,12 +29,14 @@ public struct TagButton: View {
     
     let tag: String
     let action: (_ selectedItem: TagButton.MenuItem) -> Void
+    let style: Style
     
     // MARK: - Initialization
     
-    public init(tag: String, action: @escaping ((_ selectedItem: TagButton.MenuItem) -> Void)) {
+    public init(tag: String, style: Style, action: @escaping ((_ selectedItem: TagButton.MenuItem) -> Void)) {
         self.tag = tag
         self.action = action
+        self.style = style
     }
     
     // MARK: - View
@@ -46,15 +53,20 @@ public struct TagButton: View {
                     .fontWeight(.medium)
             }
         }
-        .modifier(TagButtonStyle())
+        .modifier(TagButtonStyleModifier(style: style))
     }
     
-    public static func size(for text: String) -> CGSize {
+    public static func size(for text: String, style: TagButton.Style) -> CGSize {
         let trait = UITraitCollection(preferredContentSizeCategory: .medium)
         let tagSize = (text as NSString).size(
             withAttributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline, compatibleWith: trait)]
         )
-        return CGSize(width: ceil(20 + tagSize.width), height: ceil(6 + tagSize.height))
+        switch style {
+        case .small:
+            return CGSize(width: ceil(20 + tagSize.width), height: ceil(6 + tagSize.height))
+        case .large:
+            return CGSize(width: ceil(20 + tagSize.width), height: ceil(12 + tagSize.height))
+        }
     }
 }
 
@@ -64,12 +76,12 @@ struct TagButton_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            TagButton(tag: "performance", action: { _ in })
+            TagButton(tag: "performance", style: .small, action: { _ in })
                 .padding()
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .light)
             
-            TagButton(tag: "performance", action: { _ in })
+            TagButton(tag: "performance", style: .large, action: { _ in })
                 .padding()
                 .previewLayout(.sizeThatFits)
                 .environment(\.colorScheme, .dark)
@@ -79,16 +91,50 @@ struct TagButton_Previews: PreviewProvider {
 
 // MARK: - View Modifiers
 
-fileprivate struct TagButtonStyle: ViewModifier {
+fileprivate struct SmallTagButtonStyle: ButtonStyle {
     
-    func body(content: Content) -> some View {
-        content
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
             .lineLimit(1)
-            .foregroundColor(.foreground)
+            .foregroundColor(Color.foreground(style: .small))
             .padding([.top, .bottom], 3)
             .padding([.leading, .trailing], 10)
-            .background(Color.background)
+            .background(Color.background(style: .small))
             .cornerRadius(6)
+    }
+}
+
+fileprivate struct LargeTagButtonStyle: ButtonStyle {
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .lineLimit(1)
+            .foregroundColor(Color.foreground(style: .large))
+            .padding([.top, .bottom], 6)
+            .padding([.leading, .trailing], 10)
+            .background(Color.background(style: .large))
+            .cornerRadius(6)
+    }
+}
+
+fileprivate struct TagButtonStyleModifier: ViewModifier {
+    
+    // MARK: - Properties
+    
+    let style: TagButton.Style
+    
+    // MARK: - View
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        switch style {
+        case .small:
+            content
+                .buttonStyle(SmallTagButtonStyle())
+        case .large:
+            content
+                .buttonStyle(LargeTagButtonStyle())
+        }
     }
 }
 
@@ -121,6 +167,15 @@ fileprivate extension TagButton.MenuItem {
 
 fileprivate extension Color {
     
-    static let foreground = Color.white
-    static let background = Color.white.opacity(0.1)
+    static func foreground(style: TagButton.Style) -> Color {
+        style == .large
+            ? Palette.main | Color.white
+            : Color.white
+    }
+    
+    static func background(style: TagButton.Style) -> Color {
+        style == .large
+            ? Palette.main.opacity(0.12) | Color.white.opacity(0.08)
+            : Color.white.opacity(0.1)
+    }
 }
