@@ -34,6 +34,7 @@ struct QuestionView: View {
         
         Divider()
             .padding(.vertical, 24)
+
         if model.comments.count > 0 {
             CommentsView()
                 .environmentObject(StoresAssembler.shared.resolve(CommentsStore.self, argument: model.comments)!)

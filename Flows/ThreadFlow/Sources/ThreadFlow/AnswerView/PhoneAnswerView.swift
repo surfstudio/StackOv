@@ -38,25 +38,19 @@ struct PhoneAnswerView: View {
     }
     
     var buttons: some View {
-        HStack(alignment: .center, spacing: 20) {
+        HStack(alignment: .center, spacing: 24) {
             Button("Share") {
                 // TODO: Add functionality in the future
             }
-            .font(.subheadline)
-            .foregroundColor(Palette.main)
-            .padding(.trailing, 4)
             Button("Edit") {
                 // TODO: Add functionality in the future
             }
-            .padding(.trailing, 4)
-            .font(.subheadline)
-            .foregroundColor(Palette.main)
             Button("Follow") {
                 // TODO: Add functionality in the future
             }
-            .font(.subheadline)
-            .foregroundColor(Palette.main)
         }
+        .font(.subheadline)
+        .foregroundColor(Palette.main)
     }
     
 }

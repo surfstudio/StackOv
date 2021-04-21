@@ -53,7 +53,6 @@ struct PadAnswerView: View {
             .foregroundColor(Palette.main)
             .lineLimit(1)
 
-            
             Spacer()
             
             if model.lastEditDate != nil {

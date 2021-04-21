@@ -32,6 +32,7 @@ struct AnswerView: View {
             
             Divider()
                 .padding(.vertical, 24)
+
             if model.comments.count > 0 {
                 CommentsView(isNeedShowButton: false)
                     .environmentObject(StoresAssembler.shared.resolve(CommentsStore.self, argument: model.comments)!)

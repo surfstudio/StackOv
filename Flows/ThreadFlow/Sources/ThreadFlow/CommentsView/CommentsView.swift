@@ -91,10 +91,10 @@ struct CommentsView: View {
                             Button(name) {
                                 // TODO: Add functionality in the future
                             }
-                            .foregroundColor(Palette.main)
                             .font(.footnote)
+                            .foregroundColor(Palette.main)
                         }
-                        Text(model.formatCreationDate)
+                        Text(model.formattedCreationDate)
                             .font(.footnote)
                             .foregroundColor(Palette.slateGray)
                         if model.edited {

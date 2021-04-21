@@ -75,34 +75,30 @@ struct PhoneQuestionView: View {
     
     var footer: some View {
         VStack(alignment: .leading, spacing: 12) {
-            HStack(alignment: .center, spacing: 20) {
+            HStack(alignment: .center, spacing: 24) {
                 Button("Share") {
                     // TODO: Add functionality in the future
                 }
-                .font(.subheadline)
-                .foregroundColor(Palette.main)
-                .padding(.trailing, 4)
+
                 Button("Edit") {
                     // TODO: Add functionality in the future
                 }
-                .padding(.trailing, 4)
-                .font(.subheadline)
-                .foregroundColor(Palette.main)
+
                 Button("Follow") {
                     // TODO: Add functionality in the future
                 }
-                .font(.subheadline)
-                .foregroundColor(Palette.main)
                 
                 Spacer()
+
                 if model.comments.count == 0 {
                     Button("Add comment") {
                         // TODO: Add functionality in the future
                     }
-                    .font(.subheadline)
-                    .foregroundColor(Palette.main)
                 }
-            }.padding(.vertical, 12)
+            }
+            .padding(.vertical, 12)
+            .font(.subheadline)
+            .foregroundColor(Palette.main)
             
             PersonInfoView(model: UserModel.mock(), indent: 12, isFullScreen: true)
             PersonInfoView(model: UserModel.mock(), indent: 12, isFullScreen: true)

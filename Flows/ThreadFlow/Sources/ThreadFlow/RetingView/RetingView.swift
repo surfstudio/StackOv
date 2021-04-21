@@ -30,28 +30,24 @@ struct RetingView: View {
         VStack(alignment: .center, spacing: 8) {
             Button(action: {}, icon: .handThumbsupFill)
                 .frame(width: 24, height: 24)
-                .foregroundColor(Palette.slateGray | Palette.dullGray)
             Text(viewed)
                 .font(.footnote)
-                .foregroundColor(Palette.slateGray | Palette.dullGray)
             Button(action: {}, icon: .handThumbsdownFill)
                 .frame(width: 24, height: 24)
-                .foregroundColor(Palette.slateGray | Palette.dullGray)
         }
+        .foregroundColor(Palette.slateGray | Palette.dullGray)
     }
     
     var horisontalContent: some View {
         HStack(alignment: .center, spacing: 12) {
             Button(action: {}, icon: .handThumbsupFill)
                 .frame(width: 24, height: 24)
-                .foregroundColor(Palette.slateGray | Palette.dullGray)
             Text(viewed)
                 .font(.footnote)
-                .foregroundColor(Palette.slateGray | Palette.dullGray)
             Button(action: {}, icon: .handThumbsdownFill)
                 .frame(width: 24, height: 24)
-                .foregroundColor(Palette.slateGray | Palette.dullGray)
         }
+        .foregroundColor(Palette.slateGray | Palette.dullGray)
     }
     
 }

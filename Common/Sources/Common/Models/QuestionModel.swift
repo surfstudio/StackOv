@@ -94,7 +94,7 @@ public extension QuestionModel {
 
 // MARK: - Private extensions
 
-fileprivate extension QuestionModel {
+private extension QuestionModel {
     
     func formatTimeHasPassed(since date: Date?) -> String {
         guard let date = date else {

@@ -51,7 +51,6 @@ public struct PersonInfoView: View {
             Text(model.actionType.rawValue)
             Text(model.formattedActionDate)
         }
-//        .fixedSize()
         .font(.caption)
         .foregroundColor(Color.timeInfoColor)
         .lineLimit(1)
@@ -61,7 +60,7 @@ public struct PersonInfoView: View {
         HStack(alignment: .bottom, spacing: 8) {
             Rectangle()
                 .background(Color.red)
-//                Image("kek")
+//                Image("Make image in future")
                 .frame(width: 36, height: 36)
                 .cornerRadius(18)
             VStack(alignment: .leading, spacing: 5) {
@@ -78,7 +77,6 @@ public struct PersonInfoView: View {
                     bagesView(bageType: .bronze, number: model.bronzeBadges)
                 }
             }
-//            .fixedSize(horizontal: false, vertical: true)
         }
     }
     
