@@ -25,5 +25,4 @@ public extension UIUserInterfaceIdiom {
         return false
         #endif
     }
-    
 }

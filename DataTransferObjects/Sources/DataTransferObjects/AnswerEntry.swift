@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias AnswersEntry = PostsEntry<AnswerEntry>
+
 public struct AnswerEntry: Codable {
     
     // MARK: - Nested types

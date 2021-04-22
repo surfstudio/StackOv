@@ -7,8 +7,10 @@
 //
 
 import Foundation
-import Network
+import Common
+import Combine
 import DataTransferObjects
+import Errors
 
 public struct StackexchangeNetworkService {
     
@@ -22,32 +24,44 @@ public struct StackexchangeNetworkService {
         static let quotaKey = "P8uUWwsGz2WbRs6)qHu)yw(("
     }
     
-    // MARK: - Endpoints
+    // MARK: - Properties
     
-    public enum LoadQuestions {}
-    public enum SearchQuestions {}
-    public enum LoadQuestion {}
-    public enum LoadAnswer {}
-    public enum LoadAnswers {}
+    let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .secondsSince1970
+        return decoder
+    }()
+    let session = URLSession(configuration: .default)
+    private(set) var baseUrl: URL = Constants.baseUrl
+    
     
     // MARK: - Initialization
     
     public init() {}
     
     // MARK: - Requests
-    
-    @GET(Constants.baseUrl, "/questions?order=desc&sort=votes&page=%d&pagesize=%d")
-    public var loadQuestions: Request<LoadQuestions, PostsEntry<QuestionEntry>>
-    
-    @GET(Constants.baseUrl, "/search/advanced?order=desc&sort=votes&q=%@&page=%d&pagesize=%d")
-    public var searchQuestions: Request<SearchQuestions, PostsEntry<QuestionEntry>>
-    
-    @GET(Constants.baseUrl, "/questions/%d")
-    public var loadQuestion: Request<LoadQuestion, PostsEntry<QuestionEntry>>
-    
-    @GET(Constants.baseUrl, "/answers/%d")
-    public var loadAnswer: Request<LoadAnswer, PostsEntry<AnswerEntry>>
-    
-    @GET(Constants.baseUrl, "/questions/%d/answers?order=desc&sort=votes&page=%d&pagesize=%d")
-    public var loadAnswers: Request<LoadAnswers, PostsEntry<AnswerEntry>>
+     
+    public func get<Output: Decodable>(_ urlString: String) -> AnyPublisher<Output, Error> {
+        Just(urlString)
+            .tryMap { urlString -> URL in
+                guard var urlComponents = URLComponents(string: urlString) else {
+                    throw ServiceError.url(code: URLError.badURL, urlString: urlString)
+                }
+                urlComponents.queryItems = [
+                    URLQueryItem(name: "key", value: StackexchangeNetworkService.Constants.quotaKey),
+                    URLQueryItem(name: "site", value: "stackoverflow")
+                ]
+                guard let url = urlComponents.url(relativeTo: baseUrl) else {
+                    throw ServiceError.urlComponents(urlComponents)
+                }
+                return url
+            }
+            .flatMap { url in
+                session.dataTaskPublisher(for: url)
+                    .catchHTTPError()
+                    .map { $0.data }
+            }
+            .decode(type: Output.self, decoder: decoder)
+            .eraseToAnyPublisher()
+    }
 }

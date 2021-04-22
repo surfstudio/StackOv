@@ -43,7 +43,6 @@
 		6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DataTransferObjects; sourceTree = "<group>"; };
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
 		6FF33D382530917E00C316D7 /* Components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Components; sourceTree = "<group>"; };
-		6FF362BE25324920009F9908 /* Network */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Network; sourceTree = "<group>"; };
 		CE2FF97E26090CCD00FDA68D /* FavoriteStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FavoriteStore; sourceTree = "<group>"; };
 		CE9E15A325C722FA003D8E93 /* FilterStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FilterStore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,7 +68,6 @@
 				6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */,
 				6FC21BAC25929B93003387CE /* AppScript */,
 				6FC0280A252CB0E7002150F5 /* Common */,
-				6FF362BE25324920009F9908 /* Network */,
 				6F2E47FA2524A8460080F778 /* Palette */,
 				6FF33D382530917E00C316D7 /* Components */,
 			);
