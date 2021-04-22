@@ -17,7 +17,7 @@ public extension URLSession.DataTaskPublisher {
         case unknownHTTPCode(response: HTTPURLResponse)
     }
 
-    func tryCatchHTTPError() -> Publishers.TryMap<Self, Self.Output> {
+    func catchHTTPError() -> Publishers.TryMap<Self, Self.Output> {
         return tryMap { (data: Data, response: URLResponse) in
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw Errors.invalidResponse(response)

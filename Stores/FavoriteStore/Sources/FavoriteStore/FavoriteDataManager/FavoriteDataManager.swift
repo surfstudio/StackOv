@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import StackexchangeNetworkService
+import DataTransferObjects
 import Palette
 import Common
 import struct SwiftUI.Color
@@ -84,7 +85,8 @@ public extension FavoriteDataManager {
     func fetch(receiveCompletion: @escaping ResultHandler) {
         guard !isLoading, hasMoreData else { return }
         
-        loadingProcess = service.loadQuestions(page: page, pageSize: Constants.defaultPageSize)
+        loadingProcess = service
+            .get("/questions?order=desc&sort=votes&page=\(page)&pagesize=\(Constants.defaultPageSize)")
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 cancelLoadingProcess()
@@ -94,7 +96,7 @@ public extension FavoriteDataManager {
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }
-            }) { [unowned self] data in
+            }) { [unowned self] (data: QuestionsEntry) in
                 let newData: [QuestionModel] = data.items.enumerated().map { index, item in
                     let colors = nextBunchOfColors(step: index)
                     return QuestionModel.from(entry: item, withGradientColors: colors)
@@ -107,7 +109,8 @@ public extension FavoriteDataManager {
     
     func reload(receiveCompletion: @escaping ResultHandler) {
         cancelLoadingProcess()
-        loadingProcess = service.loadQuestions(page: Constants.defaultPage, pageSize: Constants.defaultPageSize)
+        loadingProcess = service
+            .get("/questions?order=desc&sort=votes&page=\(Constants.defaultPage)&pagesize=\(Constants.defaultPageSize)")
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 cancelLoadingProcess()
@@ -118,7 +121,7 @@ public extension FavoriteDataManager {
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }
-            }) { [unowned self] data in
+            }) { [unowned self] (data: QuestionsEntry) in
                 let newData: [QuestionModel] = data.items.enumerated().map { index, item in
                     let colors = nextBunchOfColors(step: index)
                     return QuestionModel.from(entry: item, withGradientColors: colors)

@@ -10,14 +10,14 @@ let package = Package(
         .library(name: "StackexchangeNetworkService", targets: ["StackexchangeNetworkService"])
     ],
     dependencies: [
-        .package(path: "../Network"),
+        .package(path: "../Common"),
         .package(path: "../DataTransferObjects")
     ],
     targets: [
         .target(
             name: "StackexchangeNetworkService",
             dependencies: [
-                "Network",
+                "Common",
                 "DataTransferObjects"
             ]),
         .testTarget(name: "StackexchangeNetworkServiceTests", dependencies: ["StackexchangeNetworkService"])

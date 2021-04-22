@@ -10,6 +10,7 @@ import Foundation
 import Common
 import Combine
 import StackexchangeNetworkService
+import DataTransferObjects
 
 final public class ThreadDataManager: ThreadDataManagerProtocol {
     
@@ -68,7 +69,8 @@ public extension ThreadDataManager {
     func fetch(questionId: Int, receiveCompletion: @escaping ResultHandler) {
         guard !isLoading, hasMoreData else { return }
         
-        loadingProcess = service.loadAnswers(questionId: questionId, page: page, pageSize: Constants.defaultPageSize)
+        loadingProcess = service
+            .get("/questions/\(questionId)/answers?order=desc&sort=votes&page=\(page)&pagesize=\(Constants.defaultPageSize)")
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 cancelLoadingProcess()
@@ -78,7 +80,7 @@ public extension ThreadDataManager {
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }
-            }, receiveValue: { [unowned self] data in
+            }, receiveValue: { [unowned self] (data: AnswersEntry) in
                 let newData: [AnswerModel] = data.items.enumerated().map { index, item in
                     return AnswerModel.from(entry: item)
                 }
@@ -92,7 +94,8 @@ public extension ThreadDataManager {
     
     func reload(questionId: Int, receiveCompletion: @escaping ResultHandler) {
         cancelLoadingProcess()
-        loadingProcess = service.loadAnswers(questionId: questionId, page: Constants.defaultPage, pageSize: Constants.defaultPageSize)
+        loadingProcess = service
+            .get("/questions/\(questionId)/answers?order=desc&sort=votes&page=\(Constants.defaultPage)&pagesize=\(Constants.defaultPageSize)")
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 cancelLoadingProcess()
@@ -103,7 +106,7 @@ public extension ThreadDataManager {
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }
-            }) { [unowned self] data in
+            }) { [unowned self] (data: AnswersEntry) in
                 let newData: [AnswerModel] = data.items.enumerated().map { index, item in
                     return AnswerModel.from(entry: item)
                 }
@@ -115,7 +118,8 @@ public extension ThreadDataManager {
     
     func reload(acceptedId: Int, receiveCompletion: @escaping ResultHandler) {
         cancelLoadingProcess()
-        loadingProcess = service.loadAnswer(answerId: acceptedId)
+        loadingProcess = service
+            .get("/answers/\(acceptedId)")
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 cancelLoadingProcess()
@@ -125,7 +129,7 @@ public extension ThreadDataManager {
                 case let .failure(error):
                     receiveCompletion(.failure(error))
                 }
-            }) { [unowned self] data in
+            }) { [unowned self] (data: AnswersEntry) in
                 let newData: [AnswerModel] = data.items.enumerated().map { index, item in
                     return AnswerModel.from(entry: item)
                 }
