@@ -13,13 +13,12 @@ public enum SidebarConstants {
     static let compactNormalWidth: CGFloat = 50
     static let compactAccessibilityWidth: CGFloat = 70
     
-    public static func sidebarWidth(isRegular: Bool, isAccessibility: Bool) -> CGFloat {
-        if isRegular {
+    public static func sidebarWidth(style: SidebarStyle, isAccessibility: Bool) -> CGFloat {
+        switch style {
+        case .regular:
             return SidebarConstants.regularWidth
-        } else if isAccessibility {
-            return SidebarConstants.compactAccessibilityWidth
-        } else {
-            return SidebarConstants.compactNormalWidth
+        case .compact:
+            return isAccessibility ? SidebarConstants.compactAccessibilityWidth : SidebarConstants.compactNormalWidth
         }
     }
 }
