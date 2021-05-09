@@ -47,12 +47,12 @@ public extension HTTPError {
     
     var errorDescription: String? {
         #if DEBUG
-        return localizedDescription
+        return statusCode.localizedDescription
         #else
         switch statusCode {
         case .badRequest, .unauthorized, .forbidden,
              .notFound, .teapot, .tooManyRequests, .noResponse:
-            return localizedDescription
+            return statusCode.localizedDescription
         case .serviceUnavailable:
             return "The server is currently unavailable"
         default:
