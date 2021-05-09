@@ -11,6 +11,7 @@ import Common
 import Combine
 import DataTransferObjects
 import Errors
+import struct os.Logger
 
 public struct StackexchangeNetworkService {
     
@@ -18,14 +19,14 @@ public struct StackexchangeNetworkService {
     
     enum Constants {
         static let baseUrl = URL(string: "https://api.stackexchange.com/2.2")!
-        static let questionsFilter = "!aihcQYcFVbLExG" //"!gB66lk5yFs_jDNjfXUw05bhJZ(a*QmeMZkH" //"!*7PZ(S77sKA3Rc8i4h4)QI0bM8HG"
-        static let questionFilter = "!PvyfxTBzonJRcqwIa*BHYvqSvHDWMY"
-        static let answerFilter = "!3tp2yiVOGrYbU8opi"//"!3xJkL2qoqNZw7Litv"
         static let quotaKey = "P8uUWwsGz2WbRs6)qHu)yw(("
     }
     
     // MARK: - Properties
     
+    /// If you what customize the logger, see
+    /// https://developer.apple.com/documentation/os/logging/generating_log_messages_from_your_code
+    let logger = Logger()
     let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
@@ -39,26 +40,40 @@ public struct StackexchangeNetworkService {
     
     public init() {}
     
+    // MARK: - Methods
+    
+    func getFilterQueryItem<Output: Decodable>(forOutput output: Output.Type) -> URLQueryItem? {
+        switch output {
+        case _ as AnswersEntry.Type:
+            return URLQueryItem(name: "filter", value: "!*MeGkcG9287BD5-a")
+        case _ as QuestionsEntry.Type:
+            return URLQueryItem(name: "filter", value: "!T2q4lEgoRVrpJOn8R1")
+        default:
+            return nil
+        }
+    }
+    
     // MARK: - Requests
      
     public func get<Output: Decodable>(_ urlString: String) -> AnyPublisher<Output, Error> {
         Just(urlString)
             .tryMap { urlString -> URL in
-                guard var urlComponents = URLComponents(string: urlString) else {
+                guard var urlComponents = URLComponents(string: baseUrl.path + urlString) else {
                     throw ServiceError.url(code: URLError.badURL, urlString: urlString)
                 }
                 urlComponents.queryItems = [
-                    URLQueryItem(name: "key", value: StackexchangeNetworkService.Constants.quotaKey),
+                    URLQueryItem(name: "key", value: Constants.quotaKey),
                     URLQueryItem(name: "site", value: "stackoverflow"),
-                    URLQueryItem(name: "sort", value: "votes")
-                ]
+                    getFilterQueryItem(forOutput: Output.self),
+                    URLQueryItem(name: "sort", value: "votes"),
+                ].compactMap { $0 }
                 guard let url = urlComponents.url(relativeTo: baseUrl) else {
                     throw ServiceError.urlComponents(urlComponents)
                 }
                 return url
             }
             .flatMap { url in
-                session.dataTaskPublisher(for: url)
+                session.dataTaskPublisher(for: url, logger: logger)
                     .catchHTTPError()
                     .map { $0.data }
             }
