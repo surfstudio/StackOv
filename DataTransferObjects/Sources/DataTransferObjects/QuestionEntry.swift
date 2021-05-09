@@ -23,7 +23,7 @@ public struct QuestionEntry: Codable {
         case score
         case tags
         case link
-        case body = "body_markdown"
+        case body
         case owner
         case acceptedAnswerId = "accepted_answer_id"
         case creationDate = "creation_date"

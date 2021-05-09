@@ -10,9 +10,9 @@ import Foundation
 import struct DataTransferObjects.QuestionEntry
 import struct SwiftUI.Color
 
-public struct QuestionModel: Identifiable {
+public struct QuestionModel: Identifiable, Hashable {
     
-    public let id: Int
+    public let questionId: Int
     public let title: String
     public let body: String
     public let viewsNumber: Int
@@ -30,10 +30,16 @@ public struct QuestionModel: Identifiable {
 
 // MARK: - Extensions
 
-extension QuestionModel: Equatable {
+public extension QuestionModel {
     
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    var id: Int { hashValue }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(questionId)
     }
 }
 
@@ -73,7 +79,7 @@ public extension QuestionModel {
     
     static func mock() -> QuestionModel {
         QuestionModel(
-            id: 0,
+            questionId: 0,
             title: "How to make TouchableOpacity wrap its content when nested inside parent that has flex = 1",
             body: "How can I set a SwiftUI `Text` to display rendered HTML or Markdown?\r\n\r\nSomething like this:  \r\n    \r\n    Text(HtmlRenderedString(fromString: &quot;&lt;b&gt;Hi!&lt;/b&gt;&quot;))\r\nor for MD:  \r\n\r\n    Text(MarkdownRenderedString(fromString: &quot;**Bold**&quot;))\r\n\r\nPerhaps I need a different View?",
             viewsNumber: 207,
@@ -152,7 +158,7 @@ extension QuestionModel {
     
     public static func from(entry: QuestionEntry, withGradientColors colors: (top: Color, bottom: Color)) -> QuestionModel {
         QuestionModel(
-            id: entry.id,
+            questionId: entry.id,
             title: String(htmlString: entry.title) ?? entry.title,
             body: entry.body ?? "",
             viewsNumber: entry.viewCount,

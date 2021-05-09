@@ -9,7 +9,7 @@
 import Foundation
 import struct DataTransferObjects.CommentEntry
 
-public struct CommentModel {
+public struct CommentModel: Identifiable, Hashable {
     
     // MARK: - Nested Types
     
@@ -21,7 +21,7 @@ public struct CommentModel {
     
     // MARK: - Public Methods
     
-    public let body: String?
+    public let body: String
     public let bodyMarkdown: String?
     public let commentId: Int
     public let creationDate: Date
@@ -40,6 +40,22 @@ public struct CommentModel {
         return formatter.string(from: creationDate)
     }
     
+}
+
+// MARK: - Extensions
+
+public extension CommentModel {
+    
+    var id: Int { hashValue }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(commentId)
+        hasher.combine(postId)
+    }
 }
 
 // MARK: - Entry converter

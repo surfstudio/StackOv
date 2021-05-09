@@ -29,7 +29,7 @@ public struct CommentEntry: Codable {
     
     // MARK: - Public Properties
     
-    public let body: String?
+    public let body: String
     public let bodyMarkdown: String?
     public let commentId: Int
     public let creationDate: Date

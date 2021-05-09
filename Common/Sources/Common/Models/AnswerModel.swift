@@ -9,16 +9,16 @@
 import Foundation
 import struct DataTransferObjects.AnswerEntry
 
-public struct AnswerModel: Identifiable, Equatable {
+public struct AnswerModel: Identifiable, Hashable {
     
     // MARK: - Properties
     
-    public let id: Int
+    public let answerId: Int
     public let questionId: Int
     public let isAccepted: Bool
     public let score: Int
     public let link: URL?
-    public let body: String?
+    public let body: String
     public let comments: [CommentModel]
     public let lastEditDate: Date?
     
@@ -51,8 +51,14 @@ private extension AnswerModel {
 
 public extension AnswerModel {
     
+    var id: Int { hashValue }
+    
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(answerId)
     }
 }
 
@@ -61,7 +67,7 @@ public extension AnswerModel {
 public extension AnswerModel {
 
     static func from(entry: AnswerEntry) -> AnswerModel {
-        AnswerModel(id: entry.id,
+        AnswerModel(answerId: entry.id,
                     questionId: entry.questionId,
                     isAccepted: entry.isAccepted,
                     score: entry.score,
@@ -78,7 +84,7 @@ public extension AnswerModel {
 public extension AnswerModel {
     
     static func mock() -> AnswerModel {
-        AnswerModel(id: 0,
+        AnswerModel(answerId: 0,
                     questionId: 0,
                     isAccepted: true,
                     score: 10,

@@ -20,7 +20,7 @@ public struct AnswerEntry: Codable {
         case isAccepted = "is_accepted"
         case score
         case link
-        case body = "body_markdown"
+        case body
         case owner
         case comments
         case lastEditDate = "last_edit_date"
@@ -33,7 +33,7 @@ public struct AnswerEntry: Codable {
     public let isAccepted: Bool
     public let score: Int
     public let link: URL?
-    public let body: String?
+    public let body: String
     public let owner: ShallowUserEntry
     public let comments: [CommentEntry]?
     public let lastEditDate: Date?
