@@ -11,10 +11,11 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Services/StackexchangeNetworkService"),
-        .package(path: "../Stores/PageStore")
+        .package(path: "../Stores/PageStore"),
+        .package(path: "../HTMLMarkdown")
     ],
     targets: [
-        .target(name: "ThreadStore", dependencies: ["StackexchangeNetworkService", "PageStore"]),
+        .target(name: "ThreadStore", dependencies: ["StackexchangeNetworkService", "PageStore", "HTMLMarkdown"]),
         .testTarget(name: "ThreadStoreTests", dependencies: ["ThreadStore"]),
     ]
 )

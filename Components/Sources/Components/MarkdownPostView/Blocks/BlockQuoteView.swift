@@ -7,55 +7,35 @@
 //
 
 import SwiftUI
-import Markdown
+import HTMLMarkdown
 import Palette
 
-extension Markdown {
+extension MarkdownPostView {
     
-    struct BlockQuoteView: MarkdownUnitView {
+    struct BlockQuoteView: StyleableUnitView {
         
         // MARK: - Properties
         
-        let unit: Unit
+        let style: Style
+        let unit: HTMLMarkdown.Unit
         
         // MARK: - View
         
         var body: some View {
-            HStack(alignment: .top, spacing: 6) {
-                Color.background.frame(width: 4)
-                GlobalBlockView(unit: unit)
+            if unit.type == .blockQuote {
+                HStack(alignment: .top, spacing: 6) {
+                    Color.background.frame(width: 4)
+                    RepetitiveView(style: style, unit: unit)
+                }
+                .fixedSize(horizontal: false, vertical: true)
+            } else {
+                fatalError("BlockQuoteView has got unsupported unit \(unit)")
             }
-            .padding(.bottom, 3)
-            .fixedSize(horizontal: false, vertical: true)
-        }
-    }
-    
-}
-
-// MARK: - Previews
-
-struct BlockQuoteView_Previews: PreviewProvider {
-    
-    static let unit = Markdown.Unit("> Test test test")!.children.first!
-    
-    static var previews: some View {
-        Group {
-            Markdown.BlockQuoteView(unit: unit)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Palette.bluishblack)
-                .environment(\.colorScheme, .light)
-            
-            Markdown.BlockQuoteView(unit: unit)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Palette.bluishblack)
-                .environment(\.colorScheme, .dark)
         }
     }
 }
 
-// MARK: - Extensions
+// MARK: - Colors
 
 fileprivate extension Color {
     

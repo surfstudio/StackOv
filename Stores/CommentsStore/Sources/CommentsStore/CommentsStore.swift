@@ -2,20 +2,22 @@
 import Foundation
 import Combine
 import Common
+import HTMLMarkdown
 
 public final class CommentsStore: ObservableObject {
     
-    // MARK: - Public Properties
+    // MARK: - Public properties
     
     @Published public private(set) var comments: [CommentModel]
     @Published public private(set) var numberOfFollowingItems: Int = 0
     
-    // MARK: - Internal Properties
+    // MARK: - Internal properties
     
     var models: [CommentModel]
     var activeModelsCount: Int = 0
 
     let step: Int = 5
+    let unitsCash = Cache<Int, HTMLMarkdown.Unit>()
     
     // MARK: - Initialization
     
@@ -26,12 +28,28 @@ public final class CommentsStore: ObservableObject {
         calculateNumberOfFollowingItems()
     }
     
-    // MARK: - Internal Methods
+    // MARK: - Public methods
+    
+    public func unit(of model: CommentModel) -> Result<HTMLMarkdown.Unit, Error> {
+        unit(forId: model.id, htmlText: model.body)
+    }
+    
+    // MARK: - Internal methods
     
     func calculateNumberOfFollowingItems() {
         numberOfFollowingItems = models.count - activeModelsCount > step ? step : models.count - activeModelsCount
     }
     
+    func unit(forId id: Int, htmlText: String) -> Result<HTMLMarkdown.Unit, Error> {
+        if let unit = unitsCash[id] { return .success(unit) }
+        do {
+            let unit = try HTMLMarkdown.Unit.make(with: htmlText)
+            unitsCash[id] = unit
+            return .success(unit)
+        } catch {
+            return .failure(error)
+        }
+    }
 }
 
 // MARK: - Actions

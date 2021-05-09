@@ -10,10 +10,11 @@ let package = Package(
         .library(name: "CommentsStore", targets: ["CommentsStore"]),
     ],
     dependencies: [
-        .package(path: "../Common")
+        .package(path: "../Common"),
+        .package(path: "../HTMLMarkdown")
     ],
     targets: [
-        .target(name: "CommentsStore", dependencies: ["Common"]),
+        .target(name: "CommentsStore", dependencies: ["Common", "HTMLMarkdown"]),
         .testTarget(name: "CommentsStoreTests", dependencies: ["CommentsStore"]),
     ]
 )

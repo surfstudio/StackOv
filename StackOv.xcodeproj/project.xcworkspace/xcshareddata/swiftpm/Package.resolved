@@ -20,15 +20,6 @@
         }
       },
       {
-        "package": "Down",
-        "repositoryURL": "https://github.com/johnxnguyen/Down.git",
-        "state": {
-          "branch": null,
-          "revision": "f2e4658f79f2c1a482b1e73fbfce6ac9e0aad8b8",
-          "version": "0.9.5"
-        }
-      },
-      {
         "package": "Firebase",
         "repositoryURL": "https://github.com/firebase/firebase-ios-sdk.git",
         "state": {
@@ -92,12 +83,12 @@
         }
       },
       {
-        "package": "HTMLEntities",
-        "repositoryURL": "https://github.com/Kitura/swift-html-entities.git",
+        "package": "SwiftSoup",
+        "repositoryURL": "https://github.com/scinfu/SwiftSoup.git",
         "state": {
           "branch": null,
-          "revision": "2b14531d0c36dbb7c1c45a4d38db9c2e7898a307",
-          "version": "3.0.200"
+          "revision": "774dc9c7213085db8aa59595e27c1cd22e428904",
+          "version": "2.3.2"
         }
       },
       {

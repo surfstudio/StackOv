@@ -7,21 +7,25 @@
 //
 
 import SwiftUI
-import Markdown
+import HTMLMarkdown
 
-extension Markdown {
+extension MarkdownPostView {
     
-    struct DocumentView: MarkdownUnitView {
+    struct DocumentView: StyleableUnitView {
         
         // MARK: - Properties
         
-        let unit: Unit
+        let style: Style
+        let unit: HTMLMarkdown.Unit
         
         // MARK: - View
         
         var body: some View {
-            GlobalBlockView(unit: unit)
+            if unit.type == .document {
+                RepetitiveView(style: style, unit: unit)
+            } else {
+                fatalError("DocumentView has got unsupported unit \(unit)")
+            }
         }
     }
-    
 }

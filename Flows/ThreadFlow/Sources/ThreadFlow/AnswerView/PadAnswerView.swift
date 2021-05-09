@@ -10,25 +10,34 @@ import SwiftUI
 import Components
 import Common
 import Palette
+import AppScript
 
 struct PadAnswerView: View {
     
     // MARK: - Properties
     
     let model: AnswerModel
+    @EnvironmentObject var store: ThreadStore
     
     // MARK: - Views
     
     var body: some View {
-        HStack(alignment: .top, spacing: 20) {
-            RetingView(viewed: model.formattedVotesNumber, isVertical: true)
+        HStack(alignment: .top, spacing: .zero) {
+            HStack(alignment: .center, spacing: .zero) {
+                RetingView(viewed: model.formattedVotesNumber, isVertical: true)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+            .padding(.trailing, 34)
+            .frame(width: 60, alignment: .leading)
+            
             content
         }
     }
     
     var content: some View {
         VStack(spacing: 24) {
-            MarkdownPostView(text: .constant(model.body ?? ""))
+            MarkdownPostView(store.unit(of: model), style: .post)
+                .fixedSize(horizontal: false, vertical: true)
             buttons
         }
     }

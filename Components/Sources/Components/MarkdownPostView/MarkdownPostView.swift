@@ -7,50 +7,117 @@
 //
 
 import SwiftUI
-import HTMLEntities
-import Markdown
+import HTMLMarkdown
 import Palette
+import Common
+import Errors
 
 public struct MarkdownPostView: View {
     
-    // MARK: - States
+    // MARK: - Nested types
     
-    @Binding var text: String
+    public enum Style: Comparable {
+        case post
+        case comment
+    }
+    
+    // MARK: - Properties
+    
+    let value: Result<HTMLMarkdown.Unit, Error>
+    let style: Style
     
     // MARK: - Initialization
     
-    public init(text: Binding<String>) {
-        self._text = text
+    public init(_ value: Result<HTMLMarkdown.Unit, Error>, style: Style) {
+        self.value = value
+        self.style = style
     }
     
     // MARK: - View
     
     public var body: some View {
-        if let unit = Markdown.Unit(text.htmlUnescape()), unit.type == .document {
-            Markdown.DocumentView(unit: unit)
+        switch value {
+        case let .success(unit):
+            DocumentView(style: style, unit: unit)
+                .font(style == .post ? .subheadline : .footnote)
+                .foregroundColor(Color.foreground)
+                .background(Color.background)
+                .contextMenu {
+                    Button("Copy") {
+                        do {
+                            UIPasteboard.general.string = try unit.rootElement.text()
+                        } catch {
+                            GlobalBanner.show(error: PasteboardError.unknown)
+                        }
+                    }
+                }
+        case let .failure(error):
+            #if DEBUG
+            Text(error.localizedDescription)
+                .bold()
+                .foregroundColor(.red)
+            #else
+            EmptyView()
+            #endif
         }
     }
 }
 
-// MARK: - Previews
+// MARK: - Colors
 
-struct MarkdownPostView_Previews: PreviewProvider {
+fileprivate extension Color {
     
-    static let text = "How can I set a SwiftUI `Text` to display rendered HTML or Markdown?\r\n\r\nSomething like this:  \r\n    \r\n    Text(HtmlRenderedString(fromString: &quot;&lt;b&gt;Hi!&lt;/b&gt;&quot;))\r\nor for MD:  \r\n\r\n    Text(MarkdownRenderedString(fromString: &quot;**Bold**&quot;))\r\n\r\nPerhaps I need a different View?"
+    static let foreground = Palette.black | Color.white
+    static let background = Palette.bluishwhite | Palette.bluishblack
+}
+
+// MARK: - Extensions
+
+public extension MarkdownPostView {
     
-    static var previews: some View {
-        Group {
-            MarkdownPostView(text: .constant(text.htmlUnescape()))
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Palette.bluishblack)
-                .environment(\.colorScheme, .light)
-            
-            MarkdownPostView(text: .constant(text.htmlUnescape()))
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Palette.bluishblack)
-                .environment(\.colorScheme, .dark)
-        }
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func font(_ font: Font?) -> some View {
+        self
+    }
+    
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func foregroundColor(_ color: Color?) -> some View {
+        self
+    }
+    
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func multilineTextAlignment(_ alignment: TextAlignment) -> some View {
+        self
+    }
+
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func truncationMode(_ mode: Text.TruncationMode) -> some View {
+        self
+    }
+
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func lineSpacing(_ lineSpacing: CGFloat) -> some View {
+        self
+    }
+
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func allowsTightening(_ flag: Bool) -> some View {
+        self
+    }
+
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func lineLimit(_ number: Int?) -> some View {
+        self
+    }
+
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @inlinable func minimumScaleFactor(_ factor: CGFloat) -> some View {
+        self
+    }
+
+    @available(*, deprecated, message: "MarkdownPostView uses only its styles")
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    @inlinable func textCase(_ textCase: Text.Case?) -> some View {
+        self
     }
 }

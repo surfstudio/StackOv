@@ -25,6 +25,7 @@ struct PadQuestionView: View {
     // MARK: - Properties
     
     let model: QuestionModel
+    @EnvironmentObject var store: ThreadStore
 
     // MARK: - Views
     
@@ -36,6 +37,7 @@ struct PadQuestionView: View {
             content
             tags
             footer
+                .padding(.leading, 60)
         }
     }
     
@@ -65,10 +67,15 @@ struct PadQuestionView: View {
     
     var content: some View {
         HStack(alignment: .top, spacing: .zero) {
-            RetingView(viewed: model.formattedViewsNumber, isVertical: true)
-                .padding(.trailing, 34)
+            HStack(alignment: .center, spacing: .zero) {
+                RetingView(viewed: model.formattedViewsNumber, isVertical: true)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+            .padding(.trailing, 34)
+            .frame(width: 60, alignment: .leading)
 
-            MarkdownPostView(text: .constant(model.body))
+            MarkdownPostView(store.unit(of: model), style: .post)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
     

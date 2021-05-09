@@ -25,6 +25,7 @@ struct PhoneQuestionView: View {
     // MARK: - Properties
     
     var model: QuestionModel
+    @EnvironmentObject var store: ThreadStore
     
     // MARK: - Views
     
@@ -33,7 +34,8 @@ struct PhoneQuestionView: View {
             header
             Divider()
                 .padding(.top, 10)
-            MarkdownPostView(text: .constant(model.body))
+            MarkdownPostView(store.unit(of: model), style: .post)
+                .fixedSize(horizontal: false, vertical: true)
             tags
             footer
         }
