@@ -44,6 +44,7 @@ fileprivate struct StackModifier: ViewModifier {
     let axis: Axis
     let spacing: CGFloat?
     
+    @ViewBuilder
     func body(content: Content) -> some View {
         switch axis {
         case .vertical:
