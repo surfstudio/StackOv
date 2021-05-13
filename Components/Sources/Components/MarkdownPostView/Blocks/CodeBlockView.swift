@@ -72,6 +72,7 @@ fileprivate struct CodeBlockStyle: ViewModifier {
     
     let isSnippet: Bool
     
+    @ViewBuilder
     func body(content: Content) -> some View {
         if isSnippet {
             VStack(spacing: 13) {
