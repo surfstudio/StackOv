@@ -243,9 +243,9 @@ fileprivate extension Element {
             return .thematicBreak
         case "pre":
             if let codeNode = children().first(), codeNode.tagNameNormal() == "code" {
-                let className = (try? className()) ?? ""
-                let isSnippet = className.hasPrefix("snippet-code-")
-                let lang = try? className.firstMatch(regex: #"lang\-(\w*)"#, group: 1)
+                let classNameString = (try? className()) ?? ""
+                let isSnippet = classNameString.hasPrefix("snippet-code-")
+                let lang = try? classNameString.firstMatch(regex: #"lang\-(\w*)"#, group: 1)
                 if let code = try? codeNode.text() {
                     return .codeBlock(code: code, lang: lang, isSnippet: isSnippet)
                 } else {
