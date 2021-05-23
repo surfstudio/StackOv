@@ -7,16 +7,11 @@
 //
 
 import Foundation
+import Common
+
 import enum SwiftUI.UserInterfaceSizeClass
 
 public final class SidebarStore: ObservableObject {
-    
-    // MARK: - Neasted types
-    
-    public enum SidebarStyle: Comparable {
-        case regular
-        case compact
-    }
 
     // MARK: - Public properties
         

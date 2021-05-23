@@ -20,20 +20,22 @@ struct PageView: View {
     
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.mainContentSize) var mainContentSize
     
     @Store var store: PageStore
+    @Store var sidebarStore: SidebarStore
     @State var isFilterViewPresented = false
     
     // MARK: - Properties
     
     var columns: [GridItem] {
         sizeCategory.isAccessibilityCategory
-            ? [GridItem(.flexible(minimum: 267), spacing: defaultSpacing)]
-            : [GridItem(.adaptive(minimum: 267), spacing: defaultSpacing)]
+            ? [GridItem(.flexible(minimum: PageConstrants.gridItemMinimumWidth), spacing: defaultSpacing)]
+            : [GridItem(.adaptive(minimum: PageConstrants.gridItemMinimumWidth), spacing: defaultSpacing)]
     }
     
     var defaultSpacing: CGFloat {
-        UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
+        PageConstrants.defaultSpacing
     }
     
     // MARK: - Views
@@ -44,12 +46,16 @@ struct PageView: View {
             case .unknown:
                 Text("")
                     .onAppear {
+                        store.prepareCollectionItemWidthFor(mainContentWidth: mainContentSize.width)
                         store.firstReloadQuestions()
                     }
             case .emptyContent:
                 Text("empty")
             case let .content(model):
                 content(model)
+                    .onChange(of: mainContentSize) { value in
+                        store.prepareCollectionItemWidthFor(mainContentWidth: value.width)
+                    }
             case .loading:
                 loadingView(shimmerIsActive: true)
             case .error:
@@ -124,7 +130,7 @@ struct PageView: View {
     
     func itemView(_ item: QuestionModel) -> some View {
         NavigationLink(destination: destinationView(item)) {
-            ThreadItemView(model: item)
+            ThreadItemView(model: item, preferredCollectionWidth: .init(get: { store.itemCollectionWidth }, set: { _ in }))
         }.buttonStyle(ThreadItemNavigationLinkStyle())
     }
     
@@ -173,7 +179,7 @@ struct PageView: View {
         if UIDevice.current.userInterfaceIdiom.isPhone  {
             sideBarWidth = 0
         } else {
-            sideBarWidth = SidebarConstants.sidebarWidth(isRegular: horizontalSizeClass == .regular,
+            sideBarWidth = SidebarConstants.sidebarWidth(style: sidebarStore.sidebarStyle,
                                                          isAccessibility: sizeCategory.isAccessibilityCategory)
         }
         

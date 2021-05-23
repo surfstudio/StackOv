@@ -15,6 +15,13 @@ import AppScript
 
 struct PadQuestionView: View {
 
+    // MARK: - States
+    
+    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    @Store var sidebarStore: SidebarStore
+    
     // MARK: - Properties
     
     let model: QuestionModel
@@ -27,7 +34,7 @@ struct PadQuestionView: View {
             Divider()
                 .padding(.top, 4)
             content
-//            tags
+            tags
             footer
         }
     }
@@ -66,20 +73,14 @@ struct PadQuestionView: View {
     }
     
     var tags: some View {
-//        VStack {
-            GeometryReader { frame in
-                TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
-                    TagButton(tag: tag, style: .large) { selectedItem in
-                        // TODO: In the future, you will need to process this data
-                    }
-                }
+        AdaptiveTagsCollectionView(model.tags, alignment: .top) { tag in
+            TagButton(tag: tag, style: .large) { selectedItem in
+                // TODO: In the future, you will need to process this data
             }
-//            TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width, alignment: .top) { tag in
-//                TagButton(tag: tag, isAdaptColor: true) { selectedItem in
-//                    // TODO: In the future, you will need to process this data
-//                }
-//            }
-//        }
+        } prepareCollectionWidth: { mainContentWidth in
+            let inset = ThreadFlowScreenConfiguration.horisontalInset(horizontalSizeClass: horizontalSizeClass)
+            return mainContentWidth - inset * 2
+        }
     }
     
     var footer: some View {

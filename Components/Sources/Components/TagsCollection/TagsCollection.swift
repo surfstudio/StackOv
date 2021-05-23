@@ -10,18 +10,22 @@ import SwiftUI
 
 public struct TagsCollectionView: View {
     
+    @Binding var preferredWidth: CGFloat
+    
     let data: [String]
-    let preferredWidth: CGFloat
     let alignment: VerticalAlignment?
     let elementContent: (String) -> TagButton
     
-    @State private var frame: CGSize = .zero
     private let spacing = UIOffset(horizontal: 6, vertical: 6)
     
-    public init(_ data: [String], preferredWidth: CGFloat, alignment: VerticalAlignment = .bottom, elementContent: @escaping (String) -> TagButton) {
+    public init(
+        _ data: [String],
+        alignment: VerticalAlignment = .bottom,
+        preferredWidth: Binding<CGFloat>,
+        elementContent: @escaping (String) -> TagButton) {
         self.data = data
-        self.preferredWidth = preferredWidth
         self.alignment = alignment
+        self._preferredWidth = preferredWidth
         self.elementContent = elementContent
     }
     
@@ -32,10 +36,10 @@ public struct TagsCollectionView: View {
     private func content(_ data: [TagsSection]) -> some View {
         VStack(alignment: .leading, spacing: spacing.vertical) {
             if alignment == .bottom { Spacer() }
-            ForEach(data.suffix(2)) { section in
-                HStack(spacing: self.spacing.horizontal) {
+            ForEach(data.prefix(2)) { section in
+                HStack(spacing: spacing.horizontal) {
                     ForEach(section.items, id: \.self) {
-                        self.elementContent($0).fixedSize()
+                        elementContent($0).fixedSize()
                     }
                 }
                 .fixedSize(horizontal: false, vertical: true)

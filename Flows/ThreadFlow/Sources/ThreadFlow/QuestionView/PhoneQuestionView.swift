@@ -15,6 +15,13 @@ import AppScript
 
 struct PhoneQuestionView: View {
     
+    // MARK: - States
+
+    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+
+    @Store var sidebarStore: SidebarStore
+    
     // MARK: - Properties
     
     var model: QuestionModel
@@ -27,7 +34,7 @@ struct PhoneQuestionView: View {
             Divider()
                 .padding(.top, 10)
             MarkdownPostView(text: .constant(model.body))
-//            tags
+            tags
             footer
         }
     }
@@ -64,13 +71,14 @@ struct PhoneQuestionView: View {
     }
     
     var tags: some View {
-//        GeometryReader { frame in
-        TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width - 32, alignment: .top) { tag in
+        AdaptiveTagsCollectionView(model.tags, alignment: .top) { tag in
             TagButton(tag: tag, style: .large) { selectedItem in
                 // TODO: In the future, you will need to process this data
             }
+        } prepareCollectionWidth: { mainContentWidth in
+            let inset = ThreadFlowScreenConfiguration.horisontalInset(horizontalSizeClass: horizontalSizeClass)
+            return mainContentWidth - inset * 2
         }
-//        }
     }
     
     var footer: some View {

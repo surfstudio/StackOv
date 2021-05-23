@@ -49,7 +49,8 @@ public struct StackexchangeNetworkService {
                 }
                 urlComponents.queryItems = [
                     URLQueryItem(name: "key", value: StackexchangeNetworkService.Constants.quotaKey),
-                    URLQueryItem(name: "site", value: "stackoverflow")
+                    URLQueryItem(name: "site", value: "stackoverflow"),
+                    URLQueryItem(name: "sort", value: "votes")
                 ]
                 guard let url = urlComponents.url(relativeTo: baseUrl) else {
                     throw ServiceError.urlComponents(urlComponents)

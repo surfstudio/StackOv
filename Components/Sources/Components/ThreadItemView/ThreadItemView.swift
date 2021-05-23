@@ -17,6 +17,7 @@ public struct ThreadItemView: View {
     // MARK: - States
     
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+    @Binding var preferredCollectionWidth: CGFloat
     
     // MARK: - Properties
     
@@ -24,8 +25,9 @@ public struct ThreadItemView: View {
     
     // MARK: - Initialization
     
-    public init (model: QuestionModel) {
+    public init (model: QuestionModel, preferredCollectionWidth: Binding<CGFloat>) {
         self.model = model
+        self._preferredCollectionWidth = preferredCollectionWidth
     }
     
     // MARK: - View
@@ -45,7 +47,9 @@ public struct ThreadItemView: View {
                     )
                     .drawingGroup()
             )
-            .frame(minWidth: 267, minHeight: 223)
+            .frame(
+                minWidth: PageConstrants.gridItemMinimumWidth,
+                minHeight: PageConstrants.gridItemMaximumHeight)
             .cornerRadius(20)
     }
     
@@ -57,7 +61,7 @@ public struct ThreadItemView: View {
                 bottomContent
             }
         }
-        .padding(EdgeInsets.all(16))
+        .padding(EdgeInsets.all(ThreadItemConstants.defaultPadding))
     }
     
     var topContent: some View {
@@ -72,7 +76,7 @@ public struct ThreadItemView: View {
                 .fixedSize(horizontal: false, vertical: true)
             
             if !sizeCategory.isAccessibilityCategory {
-                TagsCollectionView(model.tags, preferredWidth: 235, alignment: .top) { tag in
+                TagsCollectionView(model.tags, alignment: .top, preferredWidth: $preferredCollectionWidth) { tag in
                     TagButton(tag: tag, style: .small) { selectedItem in
                         // TODO: In the future, you will need to process this data
                     }
@@ -125,7 +129,7 @@ public struct ThreadItemView: View {
 struct ThreadItemView_Previews: PreviewProvider {
     
     static var previews: some View {
-        ThreadItemView(model: QuestionModel.mock())
+        ThreadItemView(model: QuestionModel.mock(), preferredCollectionWidth: .constant(226))
             .padding()
             .previewLayout(.sizeThatFits)
     }
