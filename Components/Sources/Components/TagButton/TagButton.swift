@@ -57,15 +57,14 @@ public struct TagButton: View {
     }
     
     public static func size(for text: String, style: TagButton.Style) -> CGSize {
-        let trait = UITraitCollection(preferredContentSizeCategory: .medium)
-        let tagSize = (text as NSString).size(
-            withAttributes: [.font: UIFont.preferredFont(forTextStyle: .subheadline, compatibleWith: trait)]
-        )
+        let font = UIFontMetrics(forTextStyle: .subheadline)
+            .scaledFont(for: UIFont.systemFont(ofSize: 15, weight: .medium))
+        let tagSize = (text as NSString).size(withAttributes: [.font: font])
         switch style {
         case .small:
-            return CGSize(width: ceil(20 + tagSize.width), height: ceil(6 + tagSize.height))
+            return CGSize(width: 20 + ceil(tagSize.width), height: 6 + ceil(tagSize.height))
         case .large:
-            return CGSize(width: ceil(20 + tagSize.width), height: ceil(12 + tagSize.height))
+            return CGSize(width: 20 + ceil(tagSize.width), height: 12 + ceil(tagSize.height))
         }
     }
 }

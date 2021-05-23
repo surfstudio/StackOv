@@ -22,27 +22,9 @@ struct PhoneQuestionView: View {
 
     @Store var sidebarStore: SidebarStore
     
-    @State var tagCollectionWidth: CGFloat = 0
-    
     // MARK: - Properties
     
     var model: QuestionModel
-    
-    var contentWidth: CGFloat {
-        let screenSize = UIApplication.shared.windows.first {$0.isKeyWindow}?.frame.size ?? UIScreen.main.bounds.size
-        let width: CGFloat = UIDevice.current.orientation.isLandscape
-            ? max(screenSize.width, screenSize.height)
-            : min(screenSize.height, screenSize.width)
-        let horisontalInset = ThreadFlowScreenConfiguration.horisontalInset(horizontalSizeClass: horizontalSizeClass)
-
-        var sidebarWidth: CGFloat = 0
-        if sidebarStore.isShown {
-             sidebarWidth = SidebarConstants.sidebarWidth(style: sidebarStore.sidebarStyle,
-                                                          isAccessibility: sizeCategory.isAccessibilityCategory)
-        }
-        
-        return screenSize.width - sidebarWidth - horisontalInset * 2
-    }
     
     // MARK: - Views
     
@@ -54,14 +36,6 @@ struct PhoneQuestionView: View {
             MarkdownPostView(text: .constant(model.body))
             tags
             footer
-        }
-        .onAppear {
-            self.tagCollectionWidth = contentWidth
-        }
-        .onRotate { _ in
-            if UIDevice.current.orientation.isValidInterfaceOrientation {
-                tagCollectionWidth = contentWidth
-            }
         }
     }
     
@@ -97,13 +71,14 @@ struct PhoneQuestionView: View {
     }
     
     var tags: some View {
-//        GeometryReader { frame in
-        TagsCollectionView(model.tags, preferredWidth: tagCollectionWidth, alignment: .top) { tag in
+        AdaptiveTagsCollectionView(model.tags, alignment: .top) { tag in
             TagButton(tag: tag, style: .large) { selectedItem in
                 // TODO: In the future, you will need to process this data
             }
+        } prepareCollectionWidth: { mainContentWidth in
+            let inset = ThreadFlowScreenConfiguration.horisontalInset(horizontalSizeClass: horizontalSizeClass)
+            return mainContentWidth - inset * 2
         }
-//        }
     }
     
     var footer: some View {

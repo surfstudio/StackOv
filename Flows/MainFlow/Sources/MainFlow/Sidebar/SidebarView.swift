@@ -53,6 +53,7 @@ struct SidebarView: View {
 // MARK: - Previews
 
 struct SidebarView_Previews: PreviewProvider {
+    
     static var previews: some View {
         SidebarView(state: .constant(.home))
     }

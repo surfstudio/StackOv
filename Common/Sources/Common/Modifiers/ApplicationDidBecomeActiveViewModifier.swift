@@ -26,13 +26,13 @@ struct ApplicationDidBecomeActiveViewModifier: ViewModifier {
                 action()
             }
     }
-    
 }
 
 // MARK: - View extension
 
 public extension View {
-    func onDidBecomeActive(perform action: @escaping () -> Void) -> some View {
-        self.modifier(ApplicationDidBecomeActiveViewModifier(action: action))
+    
+    func onApplicationDidBecomeActive(perform action: @escaping () -> Void) -> some View {
+        modifier(ApplicationDidBecomeActiveViewModifier(action: action))
     }
 }

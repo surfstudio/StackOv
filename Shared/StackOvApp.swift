@@ -14,14 +14,19 @@ import Firebase
 
 @main
 struct StackOvApp: App {
-
+    
+    // MARK: - View
+    
     var body: some Scene {
         #if canImport(Firebase)
         FirebaseApp.configure()
         #endif
         
         return WindowGroup {
-            MainFlow()
+            GeometryReader { geometry in
+                MainFlow()
+                    .environment(\.windowSize, geometry.size)
+            }
         }
     }
 }

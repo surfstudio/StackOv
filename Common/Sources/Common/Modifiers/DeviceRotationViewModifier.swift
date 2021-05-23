@@ -17,7 +17,7 @@ struct DeviceRotationViewModifier: ViewModifier {
             .makeConnectable()
             .autoconnect()
     
-    // MARK: - Views
+    // MARK: - View
     
     func body(content: Content) -> some View {
         content
@@ -26,13 +26,13 @@ struct DeviceRotationViewModifier: ViewModifier {
                 action(UIDevice.current.orientation)
             }
     }
-    
 }
 
 // MARK: - View extension
 
 public extension View {
-    func onRotate(perform action: @escaping (UIDeviceOrientation) -> Void) -> some View {
-        self.modifier(DeviceRotationViewModifier(action: action))
+    
+    func onDeviceOrientationDidChange(perform action: @escaping (UIDeviceOrientation) -> Void) -> some View {
+        modifier(DeviceRotationViewModifier(action: action))
     }
 }
