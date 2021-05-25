@@ -35,9 +35,8 @@ struct PadQuestionView: View {
             Divider()
                 .padding(.top, 4)
             content
-            tags
-            footer
-                .padding(.leading, 60)
+            tags.padding(.leading, 60)
+            footer.padding(.leading, 60)
         }
     }
     
@@ -86,7 +85,7 @@ struct PadQuestionView: View {
             }
         } prepareCollectionWidth: { mainContentWidth in
             let inset = ThreadFlowScreenConfiguration.horisontalInset(horizontalSizeClass: horizontalSizeClass)
-            return mainContentWidth - inset * 2
+            return mainContentWidth - inset * 2 - 60
         }
     }
     
