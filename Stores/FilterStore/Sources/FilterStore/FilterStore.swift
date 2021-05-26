@@ -34,7 +34,22 @@ public final class FilterStore: ObservableObject {
     
     // MARK: - Initialization and deinitialization
     
-    public init() {}
+    public init() {
+        fetchStates()
+    }
+    
+    // MARK: - Private methods
+    
+    private func fetchStates() {
+        if let filterData = UserDefaults.standard.value(forKey: "filterState") as? [Int] {
+            let filterOptions = filterData.compactMap { FilterOption.init(rawValue: $0) }
+            filterState = Set(filterOptions)
+        }
+        if let sortData = UserDefaults.standard.value(forKey: "sortState") as? Int {
+            guard let sortOption = SortOption.init(rawValue: sortData) else { return }
+            sortState = sortOption
+        }
+    }
 }
 
 // MARK: - Actions
@@ -47,6 +62,11 @@ public extension FilterStore {
     
     func setSortState(to sortState: SortOption) {
         self.sortState = sortState
+    }
+    
+    func saveStates() {
+        UserDefaults.standard.set(filterState.map { $0.rawValue }, forKey: "filterState")
+        UserDefaults.standard.set(sortState.rawValue, forKey: "sortState")
     }
 }
 

@@ -33,8 +33,9 @@ struct FilterView: View {
                         }
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: { isOpened = false }) {
-                            Text("Done")
+                        Button("Done") {
+                            isOpened = false
+                            store.saveStates()
                         }
                     }
                 }
