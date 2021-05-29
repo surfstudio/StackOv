@@ -25,7 +25,8 @@ struct PageView: View {
     @Store var store: PageStore
     @Store var sidebarStore: SidebarStore
     @State var isFilterViewPresented = false
-    
+    @State private var searchText: String = ""
+
     // MARK: - Properties
     
     var columns: [GridItem] {
@@ -36,6 +37,9 @@ struct PageView: View {
     
     var defaultSpacing: CGFloat {
         PageConstrants.defaultSpacing
+    }
+    var searchBarWidth: CGFloat {
+        UIDevice.current.userInterfaceIdiom.isPad ? 413 : 200
     }
     
     // MARK: - Views
@@ -63,19 +67,29 @@ struct PageView: View {
             }
         }
         .padToolbar {
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                SidebarLeftButton()
+            ToolbarItem(placement: .navigationBarLeading) {
+                    SidebarLeftButton()
+                }
+            ToolbarItem(placement: .principal) {
+                SearchView(searchText: $searchText)
+                    .frame(idealWidth: searchBarWidth, alignment: .center)
             }
         }
         .phoneToolbar {
-            ToolbarItemGroup(placement: ToolbarItemPlacement.navigationBarTrailing) {
+            ToolbarItem(placement: .principal) {
+                SearchView(searchText: $searchText)
+                    .frame(idealWidth: searchBarWidth, alignment: .center)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
                 filterButton(style: .short)
-                #if DEBUG
+            }
+            #if DEBUG
+            ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {}) {
                     Image(systemName: "person.crop.circle.fill")
                 }
-                #endif
             }
+            #endif
         }
     }
     
@@ -106,6 +120,7 @@ struct PageView: View {
         VStack(spacing: .zero) {
             if UIDevice.current.userInterfaceIdiom.isPad {
                 sectionHeader
+                SearchView(searchText: $searchText)
             }
             
             LazyVGrid(columns: columns, spacing: defaultSpacing) {
