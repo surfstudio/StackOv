@@ -22,7 +22,6 @@
 		31FEECA42614D5C100D08F7B /* ThreadFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ThreadFlow; sourceTree = "<group>"; };
 		6F2E47FA2524A8460080F778 /* Palette */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Palette; sourceTree = "<group>"; };
 		6F3415C52525E6430077F65A /* StackOv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StackOv.entitlements; sourceTree = "<group>"; };
-		6F4AC2DE25BC3FF3002D0D86 /* Markdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Markdown; sourceTree = "<group>"; };
 		6F61730025D7F76F0011AB44 /* Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons; sourceTree = "<group>"; };
 		6F7542D625F509250099A297 /* MainFlow */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MainFlow; sourceTree = "<group>"; };
 		6F780A97261B5F0100C8C0E4 /* GlobalBannerStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GlobalBannerStore; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 		6FCC9B2A25237C5500BDD827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DataTransferObjects; sourceTree = "<group>"; };
 		6FEDA8EF25AF7D8B008B3A25 /* StackexchangeNetworkService */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StackexchangeNetworkService; sourceTree = "<group>"; };
+		6FEE9B84262D8A3700AD0B55 /* HTMLMarkdown */ = {isa = PBXFileReference; lastKnownFileType = folder; path = HTMLMarkdown; sourceTree = "<group>"; };
 		6FF33D382530917E00C316D7 /* Components */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Components; sourceTree = "<group>"; };
 		CE2FF97E26090CCD00FDA68D /* FavoriteStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FavoriteStore; sourceTree = "<group>"; };
 		CE9E15A325C722FA003D8E93 /* FilterStore */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FilterStore; sourceTree = "<group>"; };
@@ -62,9 +62,9 @@
 		6F2E47F92524A7F50080F778 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6FEE9B84262D8A3700AD0B55 /* HTMLMarkdown */,
 				31C1A4AE260C938400B0D665 /* Errors */,
 				6F61730025D7F76F0011AB44 /* Icons */,
-				6F4AC2DE25BC3FF3002D0D86 /* Markdown */,
 				6FEDA8CB25AF62F4008B3A25 /* DataTransferObjects */,
 				6FC21BAC25929B93003387CE /* AppScript */,
 				6FC0280A252CB0E7002150F5 /* Common */,

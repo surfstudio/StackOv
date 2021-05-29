@@ -16,18 +16,10 @@ struct RetingView: View {
     var viewed: String
     var isVertical: Bool
     
-    // MARK: - Views
+    // MARK: - View
     
     var body: some View {
-        if isVertical {
-            verticalContent
-        } else {
-            horisontalContent
-        }
-    }
-    
-    var verticalContent: some View {
-        VStack(alignment: .center, spacing: 8) {
+        Group {
             Button(action: {}, icon: .handThumbsupFill)
                 .frame(width: 24, height: 24)
             Text(viewed)
@@ -35,21 +27,45 @@ struct RetingView: View {
             Button(action: {}, icon: .handThumbsdownFill)
                 .frame(width: 24, height: 24)
         }
+        .stack(axis: isVertical ? .vertical : .horizontal, spacing: isVertical ? 8 : 12)
         .foregroundColor(Palette.slateGray | Palette.dullGray)
     }
+}
+
+// MARK: - View Modifiers
+
+fileprivate struct StackModifier: ViewModifier {
     
-    var horisontalContent: some View {
-        HStack(alignment: .center, spacing: 12) {
-            Button(action: {}, icon: .handThumbsupFill)
-                .frame(width: 24, height: 24)
-            Text(viewed)
-                .font(.footnote)
-            Button(action: {}, icon: .handThumbsdownFill)
-                .frame(width: 24, height: 24)
+    enum Axis {
+        case vertical
+        case horizontal
+    }
+    
+    let axis: Axis
+    let spacing: CGFloat?
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        switch axis {
+        case .vertical:
+            VStack(alignment: .center, spacing: spacing) {
+                content
+            }
+        case .horizontal:
+            HStack(alignment: .center, spacing: spacing) {
+                content
+            }
         }
-        .foregroundColor(Palette.slateGray | Palette.dullGray)
     }
+}
+
+// MARK: - Extensions
+
+fileprivate extension View {
     
+    func stack(axis: StackModifier.Axis, spacing: CGFloat? = nil) -> some View {
+        modifier(StackModifier(axis: axis, spacing: spacing))
+    }
 }
 
 // MARK: - Previews

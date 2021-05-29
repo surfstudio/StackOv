@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import StackexchangeNetworkService
 import Common
+import HTMLMarkdown
 
 public final class ThreadStore: ObservableObject {
     
@@ -26,6 +27,7 @@ public final class ThreadStore: ObservableObject {
     // MARK: - Substores & Services
     
     let dataManager: ThreadDataManagerProtocol
+    let unitsCash = Cache<Int, HTMLMarkdown.Unit>()
 
     // MARK: - States
     
@@ -41,6 +43,29 @@ public final class ThreadStore: ObservableObject {
     public init(model: QuestionModel, dataManager: ThreadDataManagerProtocol) {
         self.questionModel = model
         self.dataManager = dataManager
+    }
+    
+    // MARK: - Public methods
+    
+    public func unit(of model: QuestionModel) -> Result<HTMLMarkdown.Unit, Error> {
+        unit(forId: model.id, htmlText: model.body)
+    }
+    
+    public func unit(of model: AnswerModel) -> Result<HTMLMarkdown.Unit, Error> {
+        unit(forId: model.id, htmlText: model.body)
+    }
+    
+    // MARK: - Internal methods
+    
+    func unit(forId id: Int, htmlText: String) -> Result<HTMLMarkdown.Unit, Error> {
+        if let unit = unitsCash[id] { return .success(unit) }
+        do {
+            let unit = try HTMLMarkdown.Unit.make(with: htmlText)
+            unitsCash[id] = unit
+            return .success(unit)
+        } catch {
+            return .failure(error)
+        }
     }
 }
 
@@ -67,7 +92,7 @@ public extension ThreadStore {
         if questionModel.hasAcceptedAnswer, let id = questionModel.acceptedAnswerId {
             dataManager.reload(acceptedId: id, receiveCompletion: receiveCompletion)
         } else {
-            dataManager.reload(questionId: questionModel.id, receiveCompletion: receiveCompletion)
+            dataManager.reload(questionId: questionModel.questionId, receiveCompletion: receiveCompletion)
         }
     }
     
@@ -75,7 +100,7 @@ public extension ThreadStore {
         guard dataManager.hasMoreData else { return }
         
         loadMore = true
-        dataManager.fetch(questionId: questionModel.id) { [unowned self] result in
+        dataManager.fetch(questionId: questionModel.questionId) { [unowned self] result in
             loadMore = false
             switch result {
             case let .success(models):

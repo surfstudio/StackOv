@@ -46,20 +46,6 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "MarkdownTests"
-               BuildableName = "MarkdownTests"
-               BlueprintName = "MarkdownTests"
-               ReferencedContainer = "container:Markdown">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CommonTests"
                BuildableName = "CommonTests"
                BlueprintName = "CommonTests"
@@ -92,20 +78,6 @@
                BuildableName = "DataTransferObjectsTests"
                BlueprintName = "DataTransferObjectsTests"
                ReferencedContainer = "container:DataTransferObjects">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NetworkTests"
-               BuildableName = "NetworkTests"
-               BlueprintName = "NetworkTests"
-               ReferencedContainer = "container:Network">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -191,16 +163,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "MarkdownTests"
-               BuildableName = "MarkdownTests"
-               BlueprintName = "MarkdownTests"
-               ReferencedContainer = "container:Markdown">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CommonTests"
                BuildableName = "CommonTests"
                BlueprintName = "CommonTests"
@@ -225,16 +187,6 @@
                BuildableName = "DataTransferObjectsTests"
                BlueprintName = "DataTransferObjectsTests"
                ReferencedContainer = "container:DataTransferObjects">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "NetworkTests"
-               BuildableName = "NetworkTests"
-               BlueprintName = "NetworkTests"
-               ReferencedContainer = "container:Network">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -315,6 +267,16 @@
                BuildableName = "CommentsStoreTests"
                BlueprintName = "CommentsStoreTests"
                ReferencedContainer = "container:Stores/CommentsStore">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "HTMLMarkdownTests"
+               BuildableName = "HTMLMarkdownTests"
+               BlueprintName = "HTMLMarkdownTests"
+               ReferencedContainer = "container:HTMLMarkdown">
             </BuildableReference>
          </TestableReference>
       </Testables>

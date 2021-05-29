@@ -7,22 +7,40 @@
 //
 
 import SwiftUI
-import Markdown
+import HTMLMarkdown
 import Palette
+import Common
+import Errors
 
-extension Markdown {
+extension MarkdownPostView {
     
-    struct CodeBlockView: MarkdownUnitView {
+    struct CodeBlockView: StyleableUnitView {
         
         // MARK: - Properties
         
-        let unit: Unit
+        let style: Style
+        let unit: HTMLMarkdown.Unit
         
         // MARK: - View
         
         var body: some View {
-            if case let .codeBlock(_, code) = unit.type {
+            if case let .codeBlock(code, _, isSnippet) = unit.type {
                 content(code: code)
+                    .modifier(CodeBlockStyle(isSnippet: isSnippet))
+                    .contextMenu {
+                        Button("Copy of the code") {
+                            UIPasteboard.general.string = code
+                        }
+                        Button("Full copy") {
+                            do {
+                                UIPasteboard.general.string = try unit.rootElement.text()
+                            } catch {
+                                GlobalBanner.show(error: PasteboardError.unknown)
+                            }
+                        }
+                    }
+            } else {
+                fatalError("CodeBlockView has got unsupported unit \(unit)")
             }
         }
         
@@ -32,12 +50,15 @@ extension Markdown {
             ScrollView(.horizontal, showsIndicators: true) {
                 VStack(alignment: .center, spacing: .zero) {
                     Text(code)
-                        .font(.custom("Menlo-Regular", size: 13))
+                        .font(.custom("Menlo-Regular",
+                                      size: style == .post ? 15 : 13,
+                                      relativeTo: style == .post ? .subheadline : .footnote))
+                        .fontWeight(.regular)
                         .foregroundColor(.foreground)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            .padding([.leading, .top, .trailing], 12)
+            .padding(12)
             .background(Color.background)
             .cornerRadius(6)
             .padding(.bottom, 3)
@@ -45,44 +66,31 @@ extension Markdown {
     }
 }
 
-// MARK: - Previews
+// MARK: - View modifiers
 
-struct CodeBlockView_Previews: PreviewProvider {
+fileprivate struct CodeBlockStyle: ViewModifier {
     
-    static let unit = Markdown.Unit("""
-    ```
-    func convertHtml() -> NSAttributedString {
-        guard let data = data(using: .utf8) else { return NSAttributedString() }
-        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-            return attributedString
+    let isSnippet: Bool
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if isSnippet {
+            VStack(spacing: 13) {
+                content
+            }
+            .padding(.all, 12)
+            .border(Color.snippetBorder)
         } else {
-            return NSAttributedString()
-        }
-    }
-    ```
-    """)!.children.first!
-    
-    static var previews: some View {
-        Group {
-            Markdown.CodeBlockView(unit: unit)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Palette.bluishblack)
-                .environment(\.colorScheme, .light)
-            
-            Markdown.CodeBlockView(unit: unit)
-                .padding()
-                .previewLayout(.sizeThatFits)
-                .background(Palette.bluishblack)
-                .environment(\.colorScheme, .dark)
+            content
         }
     }
 }
 
-// MARK: - Extensions
+// MARK: - Colors
 
 fileprivate extension Color {
     
-    static let background = Color.white.opacity(0.04)
-    static let foreground = Color.white
+    static let snippetBorder = Palette.main.opacity(0.12) | Color.white.opacity(0.08)
+    static let background = Palette.lightGray | Color.white.opacity(0.04)
+    static let foreground = Palette.black | Color.white
 }

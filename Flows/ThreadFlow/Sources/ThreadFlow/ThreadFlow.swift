@@ -41,6 +41,7 @@ public struct ThreadFlow: View {
             ScrollView {
                 VStack(spacing: 0) {
                     QuestionView(model: store.questionModel)
+                        .environmentObject(store)
                     
                     switch store.state {
                     case .unknown:
@@ -94,12 +95,13 @@ public struct ThreadFlow: View {
             HStack {
                 Text("\(answersNumber) Answers")
                 Spacer()
-            }.frame(height: 60)
+            }
+            .frame(height: 60)
             
             LazyVStack(spacing: .zero) {
                 ForEach(models) { item in
-                    AnswerView(model: item)
-                        .padding(.bottom, 20)
+                    AnswerView(model: item, isLast: item == models.last)
+                        .environmentObject(store)
                         .onAppear {
                             if item == models.last {
                                 store.loadNextAnswers()

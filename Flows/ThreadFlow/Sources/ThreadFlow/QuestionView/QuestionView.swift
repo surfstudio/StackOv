@@ -18,6 +18,7 @@ struct QuestionView: View {
     // MARK: - States
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var store: ThreadStore
     
     // MARK: - Properties
     
@@ -26,18 +27,25 @@ struct QuestionView: View {
     // MARK: - View
     
     var body: some View {
-        if UIDevice.current.userInterfaceIdiom.isPad && horizontalSizeClass == .regular {
-            PadQuestionView(model: model)
-        } else {
-            PhoneQuestionView(model: model)
-        }
-        
-        Divider()
-            .padding(.vertical, 24)
-
-        if model.comments.count > 0 {
-            CommentsView()
-                .environmentObject(StoresAssembler.shared.resolve(CommentsStore.self, argument: model.comments)!)
+        VStack(spacing: .zero){
+            if UIDevice.current.userInterfaceIdiom.isPad && horizontalSizeClass == .regular {
+                PadQuestionView(model: model)
+                    .environmentObject(store)
+            } else {
+                PhoneQuestionView(model: model)
+                    .environmentObject(store)
+            }
+            
+            VStack(spacing: .zero) {
+                Divider()
+                    .padding(.top, 24)
+                    .padding(.bottom, 8)
+                
+                if model.comments.count > 0 {
+                    CommentsView()
+                        .environmentObject(StoresAssembler.shared.resolve(CommentsStore.self, argument: model.comments)!)
+                }
+            }.padding(.leading, 60)
         }
     }
 }
@@ -49,5 +57,4 @@ struct QuestionView_Previews: PreviewProvider {
     static var previews: some View {
         QuestionView(model: QuestionModel.mock())
     }
-
 }

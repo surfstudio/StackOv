@@ -23,15 +23,15 @@ final class ServicesAssembly: Assembly {
         
         container.register(PageDataManager.self) { resolver in
             PageDataManager(service: resolver.resolve(StackexchangeNetworkService.self)!)
-        }.inObjectScope(.weak)
+        }.inObjectScope(.transient)
         
         container.register(FavoriteDataManager.self) { resolver in
             FavoriteDataManager(service: resolver.resolve(StackexchangeNetworkService.self)!)
-        }.inObjectScope(.weak)
+        }.inObjectScope(.transient)
         
         container.register(ThreadDataManager.self) { reslover in
             ThreadDataManager(service: reslover.resolve(StackexchangeNetworkService.self)!)
-        }.inObjectScope(.weak)
+        }.inObjectScope(.transient)
     }
 }
 

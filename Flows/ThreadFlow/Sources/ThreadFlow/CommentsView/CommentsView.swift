@@ -32,8 +32,8 @@ struct CommentsView: View {
     // MARK: - Views
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
+        VStack(alignment: .leading, spacing: .zero) {
+            HStack(spacing: .zero) {
                 Text("Comments")
                     .foregroundColor(Color.headerColor)
                     .font(.headline)
@@ -46,17 +46,21 @@ struct CommentsView: View {
                     .foregroundColor(Palette.main)
                     .font(.subheadline)
                 }
-            }.padding(.bottom, 34)
+            }
+            .frame(height: 62)
+            .padding(.bottom, 10)
             
-            ForEach(store.comments, id: \.commentId) { item in
-                comment(model: item)
+            ForEach(store.comments) { item in
+                comment(model: item, isLast: item == store.comments.last)
                     .fixedSize(horizontal: false, vertical: true)
             }
             
-            if (store.numberOfFollowingItems != 0) {
-                Button("Show \(store.numberOfFollowingItems) more comment") {
-                    store.showMore()
+            if store.numberOfFollowingItems != .zero {
+                Button(action: { store.showMore() }) {
+                    Text("Show \(store.numberOfFollowingItems) more comment")
+                    Spacer()
                 }
+                .frame(height: 48)
                 .font(.footnote)
                 .foregroundColor(Palette.main)
                 .padding(.leading, 45)
@@ -66,45 +70,45 @@ struct CommentsView: View {
     
     // MARK: - View Methdos
     
-    func comment(model: CommentModel) -> some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                if let score = model.score, score != 0 {
-                    HStack {
-                        Text("\(score)")
-                            .font(.footnote)
-                            .foregroundColor(Palette.slateGray)
-                        Spacer()
-                    }
-                    .frame(width: 45)
-                } else {
-                    Spacer()
-                        .frame(width: 45)
-                }
-                
-                VStack(alignment: .leading) {
-                    MarkdownPostView(text: .constant(model.body ?? ""))
+    func comment(model: CommentModel, isLast: Bool) -> some View {
+        HStack(alignment: .top, spacing: .zero) {
+            if let score = model.score, score != .zero {
+                HStack(spacing: .zero) {
+                    Text("\(score)")
                         .font(.footnote)
-                        .foregroundColor(Color.bodyColor)
-                    HStack {
-                        if let name = model.owner?.name {
-                            Button(name) {
-                                // TODO: Add functionality in the future
-                            }
-                            .font(.footnote)
-                            .foregroundColor(Palette.main)
+                        .foregroundColor(Palette.slateGray)
+                    Spacer()
+                }
+                .frame(width: 45)
+            } else {
+                Spacer()
+                    .frame(width: 45)
+            }
+            
+            VStack(alignment: .leading, spacing: .zero) {
+                MarkdownPostView(store.unit(of: model), style: .comment)
+                
+                HStack {
+                    if let name = model.owner?.name {
+                        Button(name) {
+                            // TODO: Add functionality in the future
                         }
-                        Text(model.formattedCreationDate)
-                            .font(.footnote)
-                            .foregroundColor(Palette.slateGray)
-                        if model.edited {
-                            Icons.pencil.image.frame(width: 16, height: 16)
-                        }
-                    }.padding(.top, 8)
+                        .font(.footnote)
+                        .foregroundColor(Palette.main)
+                    }
+                    Text(model.formattedCreationDate)
+                        .font(.footnote)
+                        .foregroundColor(Palette.slateGray)
+                    if model.edited {
+                        Icons.pencil.image.frame(width: 16, height: 16)
+                    }
+                }.padding(.top, 8)
+                
+                if !isLast {
+                    Divider()
+                        .padding(.vertical, 10)
                 }
             }
-            Divider()
-                .padding(.vertical, 10)
         }
     }
     
@@ -113,13 +117,14 @@ struct CommentsView: View {
 // MARK: - Colors
 
 fileprivate extension Color {
-    static let bodyColor: Color = Palette.black | .white
+
     static let headerColor: Color = Palette.black | Color.white.opacity(0.7)
 }
 
 // MARK: - Previews
 
 struct CommentsView_Previews: PreviewProvider {
+    
     static var previews: some View {
         CommentsView()
     }

@@ -10,18 +10,21 @@ import SwiftUI
 import Common
 import Components
 import Palette
+import AppScript
 
 struct PhoneAnswerView: View {
     
     // MARK: - Properties
     
     let model: AnswerModel
+    @EnvironmentObject var store: ThreadStore
     
     // MARK: - Views
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            MarkdownPostView(text: .constant(model.body ?? ""))
+            MarkdownPostView(store.unit(of: model), style: .post)
+                .fixedSize(horizontal: false, vertical: true)
             buttons
             PersonInfoView(model: UserModel.mock(), indent: 12, isFullScreen: true)
             
@@ -58,6 +61,7 @@ struct PhoneAnswerView: View {
 // MARK: - Previews
 
 struct PhoneAnswerView_Previews: PreviewProvider {
+    
     static var previews: some View {
         PhoneAnswerView(model: AnswerModel.mock())
     }

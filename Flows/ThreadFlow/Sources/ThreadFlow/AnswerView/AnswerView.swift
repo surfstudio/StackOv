@@ -15,27 +15,39 @@ struct AnswerView: View {
     // MARK: - States
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @EnvironmentObject var store: ThreadStore
     
     // MARK: - Properties
 
-    var model: AnswerModel
+    let model: AnswerModel
+    let isLast: Bool
     
     // MARK: - Views
     
     var body: some View {
-        VStack {
+        VStack(spacing: .zero) {
             if UIDevice.current.userInterfaceIdiom.isPad && horizontalSizeClass == .regular {
                 PadAnswerView(model: model)
+                    .environmentObject(store)
             } else {
                 PhoneAnswerView(model: model)
+                    .environmentObject(store)
             }
             
-            Divider()
-                .padding(.vertical, 24)
-
-            if model.comments.count > 0 {
-                CommentsView(isNeedShowButton: false)
-                    .environmentObject(StoresAssembler.shared.resolve(CommentsStore.self, argument: model.comments)!)
+            VStack(spacing: .zero) {
+                Divider()
+                    .padding(.top, 24)
+                    .padding(.bottom, 8)
+                
+                if model.comments.count > 0 {
+                    CommentsView(isNeedShowButton: false)
+                        .environmentObject(StoresAssembler.shared.resolve(CommentsStore.self, argument: model.comments)!)
+                }
+            }.padding(.leading, 60)
+            
+            if !isLast {
+                Divider()
+                    .padding(.vertical, 32)
             }
         }
     }
@@ -46,6 +58,6 @@ struct AnswerView: View {
 
 struct AnswerView_Previews: PreviewProvider {
     static var previews: some View {
-        AnswerView(model: AnswerModel.mock())
+        AnswerView(model: AnswerModel.mock(), isLast: true)
     }
 }
