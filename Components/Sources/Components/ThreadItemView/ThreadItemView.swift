@@ -17,6 +17,7 @@ public struct ThreadItemView: View {
     // MARK: - States
     
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+    @State var tagHeight: CGFloat = 10
     
     // MARK: - Properties
     
@@ -72,12 +73,20 @@ public struct ThreadItemView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             if !sizeCategory.isAccessibilityCategory {
-                TagsCollectionView(model.tags, preferredWidth: 235, alignment: .top) { tag in
-                    TagButton(tag: tag, style: .small) { selectedItem in
-                        // TODO: In the future, you will need to process this data
-                    }
-                }
+                GeometryReader { proxy in
+                    TagsCollectionView(model.tags, preferredWidth: 235, alignment: .top) { tag in
+                        TagButton(tag: tag, style: .small) { selectedItem in
+                            // TODO: In the future, you will need to process this data
+                        }
+                    }.background(GeometryReader {gp -> Color in
+                        DispatchQueue.main.async {
+                            self.tagHeight = gp.size.height
+                        }
+                        return Color.clear
+                    })
+                }.frame(height: tagHeight)
             }
+
         }
     }
     
