@@ -22,6 +22,7 @@ struct PageView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     @Store var store: PageStore
+    @Store var sidebarStore: SidebarStore
     @State var isFilterViewPresented = false
     
     // MARK: - Properties
@@ -173,7 +174,7 @@ struct PageView: View {
         if UIDevice.current.userInterfaceIdiom.isPhone  {
             sideBarWidth = 0
         } else {
-            sideBarWidth = SidebarConstants.sidebarWidth(isRegular: horizontalSizeClass == .regular,
+            sideBarWidth = SidebarConstants.sidebarWidth(style: sidebarStore.sidebarStyle,
                                                          isAccessibility: sizeCategory.isAccessibilityCategory)
         }
         
