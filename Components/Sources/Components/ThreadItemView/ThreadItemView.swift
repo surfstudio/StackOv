@@ -70,6 +70,14 @@ public struct ThreadItemView: View {
                 .foregroundColor(Color.foreground)
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
+
+            if !sizeCategory.isAccessibilityCategory {
+                TagsCollectionView(model.tags, preferredWidth: 235, alignment: .top) { tag in
+                    TagButton(tag: tag, style: .small) { selectedItem in
+                        // TODO: In the future, you will need to process this data
+                    }
+                }
+            }
         }
     }
     
