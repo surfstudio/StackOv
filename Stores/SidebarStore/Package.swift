@@ -9,8 +9,11 @@ let package = Package(
     products: [
         .library(name: "SidebarStore", targets: ["SidebarStore"]),
     ],
+    dependencies: [
+        .package(path: "../Common")
+    ],
     targets: [
-        .target(name: "SidebarStore", dependencies: []),
+        .target(name: "SidebarStore", dependencies: ["Common"]),
         .testTarget(name: "SidebarStoreTests", dependencies: ["SidebarStore"])
     ]
 )

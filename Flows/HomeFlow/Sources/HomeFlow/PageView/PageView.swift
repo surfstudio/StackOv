@@ -15,21 +15,45 @@ import AppScript
 import ThreadFlow
 
 struct PageView: View {
-    
+
+    // MARK: - Constants
+
+    private enum Constants {
+        static let minItemWidth: CGFloat = 267
+    }
+
     // MARK: - States
     
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     @Store var store: PageStore
+    @Store var sidebarStore: SidebarStore
     @State var isFilterViewPresented = false
+    @State var itemWidth: CGFloat = 267
     
     // MARK: - Properties
-    
+
+    var contentWidth: CGFloat {
+        let screenSize = UIApplication.shared.windows.first {$0.isKeyWindow}?.frame.size ?? UIScreen.main.bounds.size
+        let width: CGFloat = UIDevice.current.orientation.isLandscape
+            ? max(screenSize.width, screenSize.height)
+            : min(screenSize.height, screenSize.width)
+        let horisontalInset = horisontalInset(horizontalSizeClass: horizontalSizeClass)
+
+        var sidebarWidth: CGFloat = 0
+        if sidebarStore.isShown {
+            sidebarWidth = SidebarConstants.sidebarWidth(style: sidebarStore.sidebarStyle,
+                                                         isAccessibility: sizeCategory.isAccessibilityCategory)
+        }
+        
+        return width - sidebarWidth - horisontalInset * 2
+    }
+
     var columns: [GridItem] {
         sizeCategory.isAccessibilityCategory
-            ? [GridItem(.flexible(minimum: 267), spacing: defaultSpacing)]
-            : [GridItem(.adaptive(minimum: 267), spacing: defaultSpacing)]
+            ? [GridItem(.flexible(minimum: Constants.minItemWidth), spacing: defaultSpacing)]
+            : [GridItem(.adaptive(minimum: Constants.minItemWidth), spacing: defaultSpacing)]
     }
     
     var defaultSpacing: CGFloat {
@@ -50,6 +74,19 @@ struct PageView: View {
                 Text("empty")
             case let .content(model):
                 content(model)
+                    .onAppear {
+                        self.itemWidth = self.calculateItemWidth()
+                    }
+                    .onDidBecomeActive {
+                        if itemWidth != self.calculateItemWidth() {
+                            itemWidth = calculateItemWidth()
+                        }
+                    }
+                    .onRotate { _ in
+                        if UIDevice.current.orientation.isValidInterfaceOrientation {
+                            itemWidth = calculateItemWidth()
+                        }
+                    }
             case .loading:
                 loadingView(shimmerIsActive: true)
             case .error:
@@ -124,7 +161,7 @@ struct PageView: View {
     
     func itemView(_ item: QuestionModel) -> some View {
         NavigationLink(destination: destinationView(item)) {
-            ThreadItemView(model: item)
+            ThreadItemView(model: item, width: itemWidth)
         }.buttonStyle(ThreadItemNavigationLinkStyle())
     }
     
@@ -173,7 +210,7 @@ struct PageView: View {
         if UIDevice.current.userInterfaceIdiom.isPhone  {
             sideBarWidth = 0
         } else {
-            sideBarWidth = SidebarConstants.sidebarWidth(isRegular: horizontalSizeClass == .regular,
+            sideBarWidth = SidebarConstants.sidebarWidth(style: sidebarStore.sidebarStyle,
                                                          isAccessibility: sizeCategory.isAccessibilityCategory)
         }
         
@@ -182,7 +219,16 @@ struct PageView: View {
         return Int((((contentWidht - defaultSpacing) / (267 + defaultSpacing)).rounded(.down)))
             * Int((((contentHeight - defaultSpacing) / (223 + defaultSpacing)).rounded(.down)))
     }
-    
+
+    func horisontalInset(horizontalSizeClass: UserInterfaceSizeClass?) -> CGFloat {
+        return UIDevice.current.userInterfaceIdiom.isPad ? 18 : 12
+    }
+
+    func calculateItemWidth() -> CGFloat {
+        let numberInRow = floor((contentWidth + defaultSpacing) / (267 + defaultSpacing))
+        return ((contentWidth + defaultSpacing) / numberInRow) - defaultSpacing
+    }
+
 }
 
 // MARK: - Previews
