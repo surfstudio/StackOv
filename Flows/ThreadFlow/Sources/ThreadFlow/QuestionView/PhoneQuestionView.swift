@@ -62,17 +62,7 @@ struct PhoneQuestionView: View {
             }
         }
     }
-    
-    var tags: some View {
-//        GeometryReader { frame in
-        TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width - 32, alignment: .top) { tag in
-            TagButton(tag: tag, style: .large) { selectedItem in
-                // TODO: In the future, you will need to process this data
-            }
-        }
-//        }
-    }
-    
+
     var footer: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .center, spacing: 24) {

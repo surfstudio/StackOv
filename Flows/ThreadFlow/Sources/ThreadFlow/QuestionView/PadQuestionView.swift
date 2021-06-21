@@ -65,23 +65,6 @@ struct PadQuestionView: View {
         }
     }
     
-    var tags: some View {
-//        VStack {
-            GeometryReader { frame in
-                TagsCollectionView(model.tags, preferredWidth: frame.size.width, alignment: .top) { tag in
-                    TagButton(tag: tag, style: .large) { selectedItem in
-                        // TODO: In the future, you will need to process this data
-                    }
-                }
-            }
-//            TagsCollectionView(model.tags, preferredWidth: UIScreen.main.bounds.width, alignment: .top) { tag in
-//                TagButton(tag: tag, isAdaptColor: true) { selectedItem in
-//                    // TODO: In the future, you will need to process this data
-//                }
-//            }
-//        }
-    }
-    
     var footer: some View {
         HStack(alignment: .center, spacing: 24) {
             Group {
