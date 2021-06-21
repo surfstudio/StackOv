@@ -20,7 +20,9 @@ struct PageView: View {
     
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.mainContentSize) var mainContentSize
     
+    @Store var sidebarStore: SidebarStore
     @Store var store: PageStore
     @State var isFilterViewPresented = false
     
@@ -44,12 +46,16 @@ struct PageView: View {
             case .unknown:
                 Text("")
                     .onAppear {
+                        store.prepareCollectionItemWidthFor(mainContentWidth: mainContentSize.width)
                         store.firstReloadQuestions()
                     }
             case .emptyContent:
                 Text("empty")
             case let .content(model):
                 content(model)
+                    .onChange(of: mainContentSize) { value in
+                        store.prepareCollectionItemWidthFor(mainContentWidth: value.width)
+                    }
             case .loading:
                 loadingView(shimmerIsActive: true)
             case .error:
@@ -124,7 +130,7 @@ struct PageView: View {
     
     func itemView(_ item: QuestionModel) -> some View {
         NavigationLink(destination: destinationView(item)) {
-            ThreadItemView(model: item)
+            ThreadItemView(model: item, preferredCollectionWidth: store.itemCollectionWidth)
         }.buttonStyle(ThreadItemNavigationLinkStyle())
     }
     
@@ -173,7 +179,7 @@ struct PageView: View {
         if UIDevice.current.userInterfaceIdiom.isPhone  {
             sideBarWidth = 0
         } else {
-            sideBarWidth = SidebarConstants.sidebarWidth(isRegular: horizontalSizeClass == .regular,
+            sideBarWidth = SidebarConstants.sidebarWidth(style: sidebarStore.sidebarStyle,
                                                          isAccessibility: sizeCategory.isAccessibilityCategory)
         }
         

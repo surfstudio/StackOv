@@ -21,11 +21,14 @@ public struct ThreadItemView: View {
     // MARK: - Properties
     
     let model: QuestionModel
+    let preferredCollectionWidth: CGFloat
+
     
     // MARK: - Initialization
     
-    public init (model: QuestionModel) {
+    public init (model: QuestionModel, preferredCollectionWidth: CGFloat = 267) {
         self.model = model
+        self.preferredCollectionWidth = preferredCollectionWidth
     }
     
     // MARK: - View
@@ -72,7 +75,7 @@ public struct ThreadItemView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             if !sizeCategory.isAccessibilityCategory {
-                TagsCollectionView(model.tags, preferredWidth: 235, alignment: .top) { tag in
+                TagsCollectionView(model.tags, preferredWidth: preferredCollectionWidth - 40, alignment: .top) { tag in
                     TagButton(tag: tag, style: .small) { selectedItem in
                         // TODO: In the future, you will need to process this data
                     }

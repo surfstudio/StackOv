@@ -80,6 +80,12 @@ fileprivate struct MainView: View {
     @Binding var state: MainBar.ItemType
     
     var body: some View {
+        GeometryReader { geomentry in
+            content(geomentry)
+        }
+    }
+    
+    func content(_ geomentry: GeometryProxy) -> some View {
         TabView(selection: $state) {
             MainBar.tabs
         }
@@ -91,7 +97,9 @@ fileprivate struct MainView: View {
                 (subview as? UIScrollView)?.isScrollEnabled = false
             }
         }
+        .environment(\.mainContentSize, CGSize(width: geomentry.size.width - 1, height: geomentry.size.height))
     }
+
 }
 
 // MARK: - Previews

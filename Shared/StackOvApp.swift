@@ -21,7 +21,10 @@ struct StackOvApp: App {
         #endif
         
         return WindowGroup {
-            MainFlow()
+            GeometryReader { geometry in
+                MainFlow()
+                    .environment(\.windowSize, geometry.size)
+            }
         }
     }
 }

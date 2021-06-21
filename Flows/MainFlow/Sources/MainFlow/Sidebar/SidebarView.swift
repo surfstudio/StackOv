@@ -36,7 +36,7 @@ struct SidebarView: View {
         RegularSidebarView(state: $state)
             .padding(EdgeInsets(top: 20, leading: 10, bottom: 20, trailing: 10))
             .background(Color.backgound)
-            .frame(maxWidth: SidebarConstants.sidebarWidth(isRegular: true, isAccessibility: sizeCategory.isAccessibilityCategory))
+            .frame(maxWidth: SidebarConstants.sidebarWidth(style: .regular, isAccessibility: sizeCategory.isAccessibilityCategory))
             .ignoresSafeArea(.container, edges: .top)
     }
     
@@ -44,7 +44,7 @@ struct SidebarView: View {
         CompactSidebarView(state: $state)
             .padding(.vertical, 20)
             .background(Color.backgound)
-            .frame(maxWidth: SidebarConstants.sidebarWidth(isRegular: false, isAccessibility: sizeCategory.isAccessibilityCategory))
+            .frame(maxWidth: SidebarConstants.sidebarWidth(style: .compact, isAccessibility: sizeCategory.isAccessibilityCategory))
             .ignoresSafeArea(.container, edges: .top)
     }
 
